@@ -5,8 +5,8 @@ const bcrypt = require("bcryptjs");
 module.exports = (sequelize, DataTypes) => {
 	class User extends Model {
 		toSafeObject() {
-			const { id, username, email } = this; // context will be the User instance
-			return { id, username, email };
+			const { id, username, email, firstName, lastName } = this; // context will be the User instance
+			return { id, username, email, firstName, lastName };
 		}
 		static associate(models) {
 			// define association here
@@ -46,6 +46,12 @@ module.exports = (sequelize, DataTypes) => {
 
 	User.init(
 		{
+			id: {
+				type: DataTypes.INTEGER,
+				allowNull: false,
+				primaryKey: true,
+				autoIncrement: true,
+			},
 			username: {
 				type: DataTypes.STRING,
 				allowNull: false,
@@ -73,13 +79,21 @@ module.exports = (sequelize, DataTypes) => {
 					len: [60, 60],
 				},
 			},
+			firstName: {
+				type: DataTypes.STRING,
+				allowNull: false,
+			},
+			lastName: {
+				type: DataTypes.STRING,
+				allowNull: false,
+			},
 		},
 		{
 			sequelize,
 			modelName: "User",
 			defaultScope: {
 				attributes: {
-					exclude: ["hashedPassword", "email", "createdAt", "updatedAt"],
+					exclude: ["hashedPassword", "email"],
 				},
 			},
 			scopes: {
