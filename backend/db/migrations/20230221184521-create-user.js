@@ -30,15 +30,13 @@ module.exports = {
 					type: Sequelize.STRING.BINARY,
 					allowNull: false,
 				},
-				createdAt: {
+				firstName: {
+					type: Sequelize.STRING(30),
 					allowNull: false,
-					type: Sequelize.DATE,
-					defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
 				},
-				updatedAt: {
+				lastName: {
+					type: Sequelize.STRING(30),
 					allowNull: false,
-					type: Sequelize.DATE,
-					defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
 				},
 			},
 			options
