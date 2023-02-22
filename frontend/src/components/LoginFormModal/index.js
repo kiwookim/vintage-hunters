@@ -22,6 +22,11 @@ function LoginFormModal() {
 				if (data && data.errors) setErrors(data.errors);
 			});
 	};
+	const demoLogin = () => {
+		setCredential("demo@aa.io");
+		setPassword("password");
+		dispatch(sessionActions.login({ credential, password }));
+	};
 
 	return (
 		<>
@@ -51,6 +56,7 @@ function LoginFormModal() {
 					/>
 				</label>
 				<button type='submit'>Log In</button>
+				<button onClick={demoLogin}>Demo User</button>
 			</form>
 		</>
 	);
