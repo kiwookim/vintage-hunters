@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
 		}
 		static associate(models) {
 			// define association here
+			User.hasOne(models.Shop, { foreignKey: "userId" });
 		}
 		static getCurrentUserById(id) {
 			return User.scope("currentUser").findByPk(id);
