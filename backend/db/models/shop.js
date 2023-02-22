@@ -9,6 +9,13 @@ module.exports = (sequelize, DataTypes) => {
 		 */
 		static associate(models) {
 			// define association here
+			Shop.belongsTo(models.User, {
+				foreignKey: "userId",
+			});
+			//Shop has many Listings (One --> Many)
+			Shop.hasMany(models.Listing, {
+				foreignKey: "shopId",
+			});
 		}
 	}
 	Shop.init(

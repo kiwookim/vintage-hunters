@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
 		 */
 		static associate(models) {
 			// define association here
+			//ListingImage belong to ONE listing
+			ListingImage.belongsTo(models.Listing, { foreignKey: "listingId" });
 		}
 	}
 	ListingImage.init(
