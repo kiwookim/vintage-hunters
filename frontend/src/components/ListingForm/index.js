@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { countries, categories, conditions } from "../../choices";
 import { thunkCreateListing } from "../../store/listingsReducer";
 export default function ListingForm({ listing, formType }) {
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const [brandName, setBrandName] = useState(listing.brandName);
 	const [model, setModel] = useState(listing.model);
 	const [year, setYear] = useState(listing.year);

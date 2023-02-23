@@ -11,7 +11,7 @@ export default function HomePage() {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const allListingsObj = useSelector((state) => state.listings.allListings);
 	const allListingsArr = Object.values(allListingsObj);
-	console.log(allListingsArr);
+	// console.log(allListingsArr);
 	useEffect(() => {
 		dispatch(thunkGetAllListings()).then(() => setIsLoaded(true));
 	}, [dispatch]);
