@@ -18,6 +18,15 @@ export const thunkGetAllListings = () => async (dispatch) => {
 		return allListings;
 	}
 };
+export const thunkCreateListing = (listing, imgObj) => async (dispatch) => {
+	const response = await csrfFetch("/api/listings/new", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(listing),
+	});
+};
 
 const normalize = (arr) => {
 	const resultObj = {};

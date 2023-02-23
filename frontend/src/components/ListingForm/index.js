@@ -1,28 +1,61 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { countries, categories, conditions } from "../../choices";
-export default function ListingForm() {
-	const [brandName, setBrandName] = useState("");
-	const [model, setModel] = useState("");
-	const [year, setYear] = useState("");
-	const [originCountry, setOriginCountry] = useState("");
-	const [category, setCategory] = useState("");
-	const [listingTitle, setListingTitle] = useState("");
+import { thunkCreateListing } from "../../store/listingsReducer";
+export default function ListingForm({ listing, formType }) {
+	const dispatch = useDispatch();
+	const [brandName, setBrandName] = useState(listing.brandName);
+	const [model, setModel] = useState(listing.model);
+	const [year, setYear] = useState(listing.year);
+	const [originCountry, setOriginCountry] = useState(listing.originCountry);
+	const [category, setCategory] = useState(listing.category);
+	const [listingTitle, setListingTitle] = useState(listing.listingTitle);
 	const [photoUrl, setPhotoUrl] = useState("");
-	const [condition, setCondition] = useState("");
-	const [description, setDescription] = useState("");
-	const [localPickUp, setLocalPickUp] = useState("");
-	const [returnPolicy, setReturnPolicy] = useState("");
-	const [shippingCost, setShippingCost] = useState(0);
-	const [listingPrice, setListingPrice] = useState(0);
-	const [acceptOffers, setAcceptOffers] = useState(true);
+	const [condition, setCondition] = useState(listing.condition);
+	const [description, setDescription] = useState(listing.description);
+	const [localPickUp, setLocalPickUp] = useState(
+		listing.localPickUp ? "Yes" : "No"
+	);
+	const [returnPolicy, setReturnPolicy] = useState(listing.returnPolicy);
+	const [shippingCost, setShippingCost] = useState(listing.shippingCost);
+	const [listingPrice, setListingPrice] = useState(listing.listingPrice);
+	const [acceptOffers, setAcceptOffers] = useState(
+		listing.acceptOffers ? "Yes" : "No"
+	);
 
-	console.log(conditions);
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		listing = {
+			...listing,
+			brandName,
+			model,
+			year,
+			originCountry,
+			category,
+			listingTitle,
+			condition,
+			description,
+			localPickUp: localPickUp === "Yes",
+			returnPolicy,
+			shippingCost,
+			listingPrice,
+			acceptOffers: acceptOffers === "Yes",
+		};
+		const imgObj = {
+			url: photoUrl,
+			preview: true,
+		};
+		// dispatch based on TYPE (Create Listing or Edit Listing)
+		if (formType === "Create Listing") {
+			dispatch(thunkCreateListing(listing, imgObj));
+		}
+	};
 	return (
 		<section>
 			<h3>Tell us about your gear</h3>
-			<form>
+			<form onSubmit={handleSubmit}>
 				<label className='input-label-container'>
-					Brand<span className='required-tag'>REQUIRED</span>
+					Brand<small className='required-tag'>REQUIRED</small>
 					<input
 						type='text'
 						value={brandName}
@@ -30,7 +63,7 @@ export default function ListingForm() {
 					/>
 				</label>
 				<label className='input-label-container'>
-					Model<span className='required-tag'>REQUIRED</span>
+					Model<small className='required-tag'>REQUIRED</small>
 					<input
 						type='text'
 						value={model}
@@ -52,18 +85,19 @@ export default function ListingForm() {
 					</p>
 				</div>
 				<label className='input-label-container'>
-					Manufacturer's Country <span className='required-tag'>REQUIRED</span>
+					Manufacturer's Country
 					<select
 						onChange={(e) => setOriginCountry(e.target.value)}
 						value={originCountry}
 					>
+						<option>Please choose an option if available</option>
 						{countries.map((country) => (
 							<option key={country}>{country}</option>
 						))}
 					</select>
 				</label>
 				<label className='input-label-container'>
-					Categories <span className='required-tag'>REQUIRED</span>
+					Categories <small className='required-tag'>REQUIRED</small>
 					<select
 						onChange={(e) => setCategory(e.target.value)}
 						value={category}
@@ -74,7 +108,7 @@ export default function ListingForm() {
 					</select>
 				</label>
 				<label className='input-label-container'>
-					Listing Title <span className='required-tag'>REQUIRED</span>
+					Listing Title <small className='required-tag'>REQUIRED</small>
 					<input
 						type='text'
 						value={listingTitle}
@@ -82,7 +116,7 @@ export default function ListingForm() {
 					/>
 				</label>
 				<label className='input-label-container'>
-					Upload Photo <span className='required-tag'>REQUIRED</span>
+					Upload Photo <small className='required-tag'>REQUIRED</small>
 					<input
 						type='text'
 						value={photoUrl}
@@ -91,11 +125,12 @@ export default function ListingForm() {
 					/>
 				</label>
 				<label className='input-label-container'>
-					Condition <span className='required-tag'>REQUIRED</span>
+					Condition <small className='required-tag'>REQUIRED</small>
 					<select
 						onChange={(e) => setCondition(e.target.value)}
 						value={condition}
 					>
+						<option>Please choose an option</option>
 						{conditions.map((category) => (
 							<option key={category}>{category}</option>
 						))}
@@ -103,14 +138,14 @@ export default function ListingForm() {
 				</label>
 				<label className='input-label-container'>
 					Describe this item and its condition
-					<span className='required-tag'>REQUIRED</span>
+					<small className='required-tag'>REQUIRED</small>
 					<textarea
 						value={description}
 						onChange={(e) => setDescription(e.target.value)}
 					/>
 				</label>
 				<label className='input-label-container'>
-					local picup?
+					local pickup?
 					<select
 						onChange={(e) => setLocalPickUp(e.target.value)}
 						value={localPickUp}
@@ -130,7 +165,7 @@ export default function ListingForm() {
 					</select>
 				</label>
 				<label className='input-label-container'>
-					Shipping Costs<span className='required-tag'>REQUIRED</span>
+					Shipping Costs<small className='required-tag'>REQUIRED</small>
 					<input
 						type='number'
 						value={shippingCost}
@@ -138,7 +173,7 @@ export default function ListingForm() {
 					/>
 				</label>
 				<label className='input-label-container'>
-					Listing Price<span className='required-tag'>REQUIRED</span>
+					Listing Price<small className='required-tag'>REQUIRED</small>
 					<input
 						type='number'
 						value={listingPrice}
@@ -155,6 +190,7 @@ export default function ListingForm() {
 						<option>No</option>
 					</select>
 				</label>
+				<input id='submit-button' type='submit' value={formType} />
 			</form>
 		</section>
 	);

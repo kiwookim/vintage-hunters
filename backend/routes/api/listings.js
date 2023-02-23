@@ -25,5 +25,9 @@ router.get("/", async (req, res) => {
 	}
 	return res.json({ Listings: payload });
 });
+//create listing
+router.post("/new", async (req, res) => {
+	console.log("BACKEND: REQUEST BODY", req.body);
+});
 
 module.exports = router;

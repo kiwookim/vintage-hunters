@@ -1,0 +1,21 @@
+import ListingForm from "../ListingForm";
+
+export default function CreateListing() {
+	const newListing = {
+		brandName: "",
+		model: "",
+		year: "",
+		originCountry: "",
+		category: "",
+		listingTitle: "",
+		condition: "",
+		description: "",
+		localPickUp: false,
+		returnPolicy: "",
+		shippingCost: 0,
+		listingPrice: 0,
+		acceptOffers: true,
+	};
+
+	return <ListingForm listing={newListing} formType='Create Listing' />;
+}
