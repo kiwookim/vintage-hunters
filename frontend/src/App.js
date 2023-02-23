@@ -6,6 +6,8 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import HomePage from "./components/HomePage";
 import SplashPage from "./components/SplashPage";
+import CreateListingForm from "./components/ListingForm";
+import ListingForm from "./components/ListingForm";
 
 function App() {
 	const dispatch = useDispatch();
@@ -25,6 +27,9 @@ function App() {
 					</Route>
 					<Route path='/listings'>
 						{sessionUser ? <HomePage /> : <Redirect to='/' />}
+					</Route>
+					<Route path='/sell/listings/new'>
+						<ListingForm />
 					</Route>
 				</Switch>
 			)}
