@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGetAllListings } from "../../store/listingsReducer";
+import ListingCard from "../ListingCard";
+import "./HomePage.css";
 
 export default function HomePage() {
 	const dispatch = useDispatch();
@@ -16,7 +18,9 @@ export default function HomePage() {
 
 	return isLoaded ? (
 		<div className='all-listings-container'>
-			<h1>Render ListingCards here</h1>
+			{allListingsArr.map((listing) => (
+				<ListingCard listing={listing} key={listing.id} />
+			))}
 		</div>
 	) : (
 		<h1>Loading...</h1>

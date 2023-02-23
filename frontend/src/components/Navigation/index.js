@@ -1,21 +1,30 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignUpFormModal from "../SignUpFormModal";
-// import "./Navigation.css";
+import "./Navigation.css";
 
 function Navigation({ isLoaded }) {
 	const sessionUser = useSelector((state) => state.session.user);
+	//if currUser don't have shop created, Link to  '/myshop/create'
+	//if currUser have shop created already, Link to '/sell'
 
 	let sessionLinks;
 	if (sessionUser) {
 		sessionLinks = (
-			<li>
-				<ProfileButton user={sessionUser} />
-			</li>
+			<div className='top-right-navigation'>
+				<button id='sell-btn'>
+					<Link exact to='/sell'>
+						Sell Your Gear
+					</Link>
+				</button>
+				<li>
+					<ProfileButton user={sessionUser} />
+				</li>
+			</div>
 		);
 	} else {
 		sessionLinks = (
@@ -33,8 +42,8 @@ function Navigation({ isLoaded }) {
 	}
 
 	return (
-		<ul>
-			<li>
+		<ul className='navigation'>
+			<li id='logo'>
 				<NavLink exact to='/'>
 					Vintage Hunters
 				</NavLink>

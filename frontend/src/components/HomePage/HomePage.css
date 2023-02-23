@@ -1,0 +1,8 @@
+.all-listings-container {
+	display: flex;
+	justify-content: start;
+	gap: 25px;
+	margin: 30px;
+	align-content: center;
+	flex-wrap: wrap;
+}
