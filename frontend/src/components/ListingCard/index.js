@@ -11,7 +11,7 @@ export default function ListingCard({ listing }) {
 						: listing.listingTitle}
 				</h4>
 				<h2>${listing.listingPrice}</h2>
-				<p>{listing.condition}</p>
+				<p>Used-{listing.condition}</p>
 				{listing.shippingCost === 0 ? <p>Free Shipping</p> : null}
 				<p>{listing.returnPolicy} Return Policy</p>
 			</div>

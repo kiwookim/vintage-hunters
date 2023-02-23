@@ -251,3 +251,12 @@ export const categories = [
 	"Keyboards and Synths",
 	"Audio",
 ];
+
+export const conditions = [
+	"Mint",
+	"Excellent",
+	"Good",
+	"Fair",
+	"Poor",
+	"Non-Functioning",
+];
