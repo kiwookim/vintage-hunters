@@ -17,12 +17,12 @@ const actionGetDetails = (listingDetails) => {
 		payload: listingDetails,
 	};
 };
-// const actionCreateListing = (createdListing, createdListingImg) => {
-// 	return {
-// 		type: CREATE_LISTING,
-// 		payload: createdListing,
-// 	};
-// };
+const actionCreateListing = (createdListing, createdListingImg) => {
+	return {
+		type: CREATE_LISTING,
+		payload: createdListing,
+	};
+};
 //THUNKS
 export const thunkGetAllListings = () => async (dispatch) => {
 	const response = await csrfFetch("/api/listings");
@@ -49,7 +49,8 @@ export const thunkCreateListing = (listing, imgObj) => async (dispatch) => {
 		body: JSON.stringify(listing),
 	});
 	if (response.ok) {
-		const createdListing = response.json();
+		const createdListing = await response.json();
+		// console.log("INSIDE CREATE LISTING THUNK", createdListing);
 		const responseAddImage = await csrfFetch(
 			`/api/listings/${createdListing.id}/images`,
 			{
@@ -62,6 +63,7 @@ export const thunkCreateListing = (listing, imgObj) => async (dispatch) => {
 		);
 		if (responseAddImage.ok) {
 			const createdListingImg = await responseAddImage.json();
+			// console.log("INSIDE CREATE LISTING THUNK", createdListingImg);
 			dispatch(actionCreateListing(createdListing, createdListingImg));
 		}
 	}
@@ -85,6 +87,12 @@ export default function listingsReducer(state = initialState, action) {
 			return newState;
 		case GET_DETAILS:
 			newState.singleListing = { ...action.payload };
+			return newState;
+		case CREATE_LISTING:
+			newState.allListings = {
+				...newState.allListings,
+				[action.payload.id]: action.payload,
+			};
 			return newState;
 		default:
 			return state;

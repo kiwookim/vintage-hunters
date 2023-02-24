@@ -62,6 +62,37 @@ router.post("/new", async (req, res) => {
 		listingPrice,
 		acceptOffers,
 	} = req.body;
+	const currUserShop = await Shop.findOne({ where: { userId: req.user.id } });
+	console.log(currUserShop);
+	const newListing = await Listing.create({
+		shopId: currUserShop.id,
+		brandName,
+		model,
+		year,
+		originCountry,
+		category,
+		listingTitle,
+		condition,
+		description,
+		localPickUp,
+		returnPolicy,
+		shippingCost,
+		listingPrice,
+		acceptOffers,
+	});
+	return res.json(newListing);
+});
+//add listing Image
+router.post("/:listingId/images", async (req, res) => {
+	const { listingId } = req.params;
+	// const specificListing = await Listing.findByPk(listingId);
+	const { url, preview } = req.body;
+	const newListingImg = await ListingImage.create({
+		listingId: Number(listingId),
+		url,
+		preview,
+	});
+	return res.json(newListingImg);
 });
 
 module.exports = router;

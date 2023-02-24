@@ -20,6 +20,7 @@ export default function ListingDetails() {
 	);
 	return isLoaded ? (
 		<div>
+			{/* display multiple images would be good here(carousel or something) */}
 			<img
 				src={thisListing.ListingImages[0].url}
 				alt={thisListing.listingTitle}
