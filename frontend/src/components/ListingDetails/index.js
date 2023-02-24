@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	thunkGetDetails,
@@ -24,7 +24,9 @@ export default function ListingDetails() {
 	};
 	const buttonContent = (
 		<>
-			<button>Edit Listing</button>
+			<Link to={`/sell/${listingId}/edit`}>
+				<button>Edit Listing</button>
+			</Link>
 			<button onClick={handleDelete}>Delete Listing</button>
 		</>
 	);

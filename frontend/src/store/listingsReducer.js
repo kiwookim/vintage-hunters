@@ -4,6 +4,7 @@ import { csrfFetch } from "./csrf";
 const GET_ALL = "listings/getAll";
 const GET_DETAILS = "listings/:listingId";
 const CREATE_LISTING = "listings/new";
+const UPDATE_LISTING = "listings/:listingId/edit";
 const DELETE_LISTING = "listings/:listingId/delete";
 //ACTIONS
 const actionGetAll = (allListings) => {
@@ -22,6 +23,12 @@ const actionCreateListing = (createdListing, createdListingImg) => {
 	return {
 		type: CREATE_LISTING,
 		payload: createdListing,
+	};
+};
+const actionEditListing = (updatedListing) => {
+	return {
+		type: UPDATE_LISTING,
+		payload: updatedListing,
 	};
 };
 const actionDeleteListing = (listingId) => {
@@ -76,6 +83,22 @@ export const thunkCreateListing = (listing, imgObj) => async (dispatch) => {
 		}
 	}
 };
+export const thunkEditListing = (listing) => async (dispatch) => {
+	const response = await csrfFetch(`/api/listings/${listing.id}/edit`, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(listing),
+	});
+	console.log("RESPONSE", response);
+	if (response.ok) {
+		const updatedListing = await response.json();
+		console.log("INSIDE EDIT THUNK", updatedListing);
+		dispatch(actionEditListing(updatedListing));
+		return updatedListing;
+	}
+};
 export const thunkDeleteListing = (listingId) => async (dispatch) => {
 	const response = await csrfFetch(`/api/listings/${listingId}/delete`, {
 		method: "DELETE",
@@ -111,6 +134,15 @@ export default function listingsReducer(state = initialState, action) {
 				...newState.allListings,
 				[action.payload.id]: action.payload,
 			};
+			return newState;
+		case UPDATE_LISTING:
+			newState.allListings = {
+				...newState.allListings,
+				[action.payload.id]: action.payload,
+			};
+			return newState;
+		case DELETE_LISTING:
+			delete newState.allListings[action.payload];
 			return newState;
 		default:
 			return state;

@@ -94,6 +94,43 @@ router.post("/:listingId/images", async (req, res) => {
 	});
 	return res.json(newListingImg);
 });
+//edit listing
+router.put("/:listingId/edit", async (req, res) => {
+	const { listingId } = req.params;
+	const {
+		brandName,
+		model,
+		year,
+		originCountry,
+		category,
+		listingTitle,
+		condition,
+		description,
+		localPickUp,
+		returnPolicy,
+		shippingCost,
+		listingPrice,
+		acceptOffers,
+	} = req.body;
+	const specificListing = await Listing.findByPk(Number(listingId));
+	const updatedListing = await specificListing.update({
+		brandName,
+		model,
+		year,
+		originCountry,
+		category,
+		listingTitle,
+		condition,
+		description,
+		localPickUp,
+		returnPolicy,
+		shippingCost,
+		listingPrice,
+		acceptOffers,
+	});
+	console.log("IN THE BACKEND");
+	return res.json(updatedListing);
+});
 //delete Listing
 router.delete("/:listingId/delete", async (req, res) => {
 	const { listingId } = req.params;

@@ -7,6 +7,7 @@ import Navigation from "./components/Navigation";
 import HomePage from "./components/HomePage";
 import SplashPage from "./components/SplashPage";
 import CreateListing from "./components/CreateEditListing/CreateListing";
+import EditListing from "./components/CreateEditListing/EditListing";
 import ListingDetails from "./components/ListingDetails";
 
 function App() {
@@ -33,6 +34,9 @@ function App() {
 					</Route>
 					<Route path='/sell/listings/new'>
 						<CreateListing />
+					</Route>
+					<Route path='/sell/:listingId/edit'>
+						<EditListing />
 					</Route>
 				</Switch>
 			)}

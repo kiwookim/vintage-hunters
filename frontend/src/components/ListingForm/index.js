@@ -2,7 +2,10 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { countries, categories, conditions } from "../../choices";
-import { thunkCreateListing } from "../../store/listingsReducer";
+import {
+	thunkCreateListing,
+	thunkEditListing,
+} from "../../store/listingsReducer";
 export default function ListingForm({ listing, formType }) {
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -54,6 +57,13 @@ export default function ListingForm({ listing, formType }) {
 			);
 			if (returnedListing.id) {
 				history.push(`/listings/${returnedListing.id}`);
+			}
+		}
+		// Edit Listing
+		if (formType === "Edit Listing") {
+			const editedListing = await dispatch(thunkEditListing(listing));
+			if (editedListing.id) {
+				history.push(`/listings/${editedListing.id}`);
 			}
 		}
 	};
@@ -109,6 +119,7 @@ export default function ListingForm({ listing, formType }) {
 						onChange={(e) => setCategory(e.target.value)}
 						value={category}
 					>
+						<option>{}</option>
 						{categories.map((category) => (
 							<option key={category}>{category}</option>
 						))}
@@ -122,15 +133,17 @@ export default function ListingForm({ listing, formType }) {
 						onChange={(e) => setListingTitle(e.target.value)}
 					/>
 				</label>
-				<label className='input-label-container'>
-					Upload Photo <small className='required-tag'>REQUIRED</small>
-					<input
-						type='text'
-						value={photoUrl}
-						onChange={(e) => setPhotoUrl(e.target.value)}
-						placeholder='put photo url here'
-					/>
-				</label>
+				{formType === "Create Listing" && (
+					<label className='input-label-container'>
+						Upload Photo <small className='required-tag'>REQUIRED</small>
+						<input
+							type='text'
+							value={photoUrl}
+							onChange={(e) => setPhotoUrl(e.target.value)}
+							placeholder='put photo url here'
+						/>
+					</label>
+				)}
 				<label className='input-label-container'>
 					Condition <small className='required-tag'>REQUIRED</small>
 					<select
@@ -167,6 +180,7 @@ export default function ListingForm({ listing, formType }) {
 						onChange={(e) => setReturnPolicy(e.target.value)}
 						value={returnPolicy}
 					>
+						<option>{}</option>
 						<option>14 days</option>
 						<option>30 days</option>
 					</select>
