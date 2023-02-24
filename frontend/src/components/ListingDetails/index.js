@@ -22,7 +22,11 @@ export default function ListingDetails() {
 		<div>
 			{/* display multiple images would be good here(carousel or something) */}
 			<img
-				src={thisListing.ListingImages[0].url}
+				onError={(ev) =>
+					(ev.target.src =
+						"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.jr_ZltLCrkS1ZmAB3-B_IgHaGZ%26pid%3DApi&f=1&ipt=976e27ed4e4601b5fc08f5fc9b8f07ef671de7909421e65a56d3997ada849a9e&ipo=images")
+				}
+				src={thisListing.ListingImages[0]?.url}
 				alt={thisListing.listingTitle}
 			/>
 			<p>{thisListing.Shop.name}</p>

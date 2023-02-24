@@ -25,7 +25,7 @@ export default function ListingForm({ listing, formType }) {
 		listing.acceptOffers ? "Yes" : "No"
 	);
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		listing = {
 			...listing,
@@ -49,7 +49,12 @@ export default function ListingForm({ listing, formType }) {
 		};
 		// dispatch based on TYPE (Create Listing or Edit Listing)
 		if (formType === "Create Listing") {
-			dispatch(thunkCreateListing(listing, imgObj));
+			const returnedListing = await dispatch(
+				thunkCreateListing(listing, imgObj)
+			);
+			if (returnedListing.id) {
+				history.push(`/listings/${returnedListing.id}`);
+			}
 		}
 	};
 	return (

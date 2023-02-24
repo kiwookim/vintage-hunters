@@ -65,6 +65,7 @@ export const thunkCreateListing = (listing, imgObj) => async (dispatch) => {
 			const createdListingImg = await responseAddImage.json();
 			// console.log("INSIDE CREATE LISTING THUNK", createdListingImg);
 			dispatch(actionCreateListing(createdListing, createdListingImg));
+			return createdListing;
 		}
 	}
 };
