@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkGetDetails } from "../../store/listingsReducer";
+import {
+	thunkGetDetails,
+	thunkDeleteListing,
+} from "../../store/listingsReducer";
 
 export default function ListingDetails() {
 	const { listingId } = useParams();
+	const history = useHistory();
 	const [isLoaded, setIsLoaded] = useState(false);
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -12,10 +16,16 @@ export default function ListingDetails() {
 	}, [dispatch]);
 	const thisListing = useSelector((state) => state.listings.singleListing);
 	const currUserId = useSelector((state) => state.session.user.id);
+	const handleDelete = () => {
+		dispatch(thunkDeleteListing(listingId)).then(() =>
+			//can also redirect to Shop Profile
+			history.push("/listings")
+		);
+	};
 	const buttonContent = (
 		<>
 			<button>Edit Listing</button>
-			<button>Delete Listing</button>
+			<button onClick={handleDelete}>Delete Listing</button>
 		</>
 	);
 	return isLoaded ? (

@@ -94,5 +94,15 @@ router.post("/:listingId/images", async (req, res) => {
 	});
 	return res.json(newListingImg);
 });
+//delete Listing
+router.delete("/:listingId/delete", async (req, res) => {
+	const { listingId } = req.params;
+	const specificListing = await Listing.findByPk(Number(listingId));
+	await specificListing.destroy();
+	return res.json({
+		message: "deleted",
+		statusCode: 200,
+	});
+});
 
 module.exports = router;

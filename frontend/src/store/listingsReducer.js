@@ -4,6 +4,7 @@ import { csrfFetch } from "./csrf";
 const GET_ALL = "listings/getAll";
 const GET_DETAILS = "listings/:listingId";
 const CREATE_LISTING = "listings/new";
+const DELETE_LISTING = "listings/:listingId/delete";
 //ACTIONS
 const actionGetAll = (allListings) => {
 	return {
@@ -21,6 +22,12 @@ const actionCreateListing = (createdListing, createdListingImg) => {
 	return {
 		type: CREATE_LISTING,
 		payload: createdListing,
+	};
+};
+const actionDeleteListing = (listingId) => {
+	return {
+		type: DELETE_LISTING,
+		payload: listingId,
 	};
 };
 //THUNKS
@@ -67,6 +74,16 @@ export const thunkCreateListing = (listing, imgObj) => async (dispatch) => {
 			dispatch(actionCreateListing(createdListing, createdListingImg));
 			return createdListing;
 		}
+	}
+};
+export const thunkDeleteListing = (listingId) => async (dispatch) => {
+	const response = await csrfFetch(`/api/listings/${listingId}/delete`, {
+		method: "DELETE",
+	});
+	if (response.ok) {
+		const data = await response.json();
+		dispatch(actionDeleteListing(listingId));
+		return data;
 	}
 };
 
