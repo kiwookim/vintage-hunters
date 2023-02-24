@@ -28,6 +28,7 @@ export default function ListingForm({ listing, formType }) {
 	const [acceptOffers, setAcceptOffers] = useState(
 		listing.acceptOffers ? "Yes" : "No"
 	);
+	const [validationErr, setValidationErr] = useState([]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -58,6 +59,10 @@ export default function ListingForm({ listing, formType }) {
 			);
 			if (returnedListing.id) {
 				history.push(`/listings/${returnedListing.id}`);
+			} else {
+				//if ther is error
+				console.log("error message from backend", returnedListing);
+				setValidationErr(Object.values(returnedListing));
 			}
 		}
 		// Edit Listing
@@ -71,6 +76,14 @@ export default function ListingForm({ listing, formType }) {
 	return (
 		<section className='section-container'>
 			<h3 id='form-title'>Tell us about your gear</h3>
+			{validationErr &&
+				validationErr.map((err) => (
+					<ul>
+						<li style={{ color: "red" }} key={err}>
+							{err}
+						</li>
+					</ul>
+				))}
 			<form className='form-container' onSubmit={handleSubmit}>
 				<label className='input-label-container'>
 					Brand<small className='required-tag'>REQUIRED</small>
@@ -183,8 +196,9 @@ export default function ListingForm({ listing, formType }) {
 					</select>
 				</label>
 				<label className='input-label-container'>
-					Return Policy
+					Return Policy <small className='required-tag'>REQUIRED</small>
 					<select
+						required
 						onChange={(e) => setReturnPolicy(e.target.value)}
 						value={returnPolicy}
 					>

@@ -2,6 +2,7 @@ const express = require("express");
 const { setTokenCookie, requireAuth } = require("../../utils/auth");
 const { Listing, ListingImage, Shop } = require("../../db/models");
 const router = express.Router();
+const { validateCreateListing } = require("../../utils/validators");
 
 //get all listings for HomePage
 router.get("/", async (req, res) => {
@@ -45,7 +46,7 @@ router.get("/:listingId", async (req, res) => {
 });
 
 //create listing
-router.post("/new", async (req, res) => {
+router.post("/new", requireAuth, validateCreateListing, async (req, res) => {
 	// console.log("BACKEND: REQUEST BODY", req.body);
 	const {
 		brandName,
@@ -83,7 +84,7 @@ router.post("/new", async (req, res) => {
 	return res.json(newListing);
 });
 //add listing Image
-router.post("/:listingId/images", async (req, res) => {
+router.post("/:listingId/images", requireAuth, async (req, res) => {
 	const { listingId } = req.params;
 	// const specificListing = await Listing.findByPk(listingId);
 	const { url, preview } = req.body;
@@ -95,7 +96,7 @@ router.post("/:listingId/images", async (req, res) => {
 	return res.json(newListingImg);
 });
 //edit listing
-router.put("/:listingId/edit", async (req, res) => {
+router.put("/:listingId/edit", requireAuth, async (req, res) => {
 	const { listingId } = req.params;
 	const {
 		brandName,
@@ -132,7 +133,7 @@ router.put("/:listingId/edit", async (req, res) => {
 	return res.json(updatedListing);
 });
 //delete Listing
-router.delete("/:listingId/delete", async (req, res) => {
+router.delete("/:listingId/delete", requireAuth, async (req, res) => {
 	const { listingId } = req.params;
 	const specificListing = await Listing.findByPk(Number(listingId));
 	await specificListing.destroy();
