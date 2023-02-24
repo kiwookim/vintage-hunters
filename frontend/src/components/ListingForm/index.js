@@ -6,6 +6,7 @@ import {
 	thunkCreateListing,
 	thunkEditListing,
 } from "../../store/listingsReducer";
+import "./ListingForm.css";
 export default function ListingForm({ listing, formType }) {
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -68,12 +69,13 @@ export default function ListingForm({ listing, formType }) {
 		}
 	};
 	return (
-		<section>
-			<h3>Tell us about your gear</h3>
-			<form onSubmit={handleSubmit}>
+		<section className='section-container'>
+			<h3 id='form-title'>Tell us about your gear</h3>
+			<form className='form-container' onSubmit={handleSubmit}>
 				<label className='input-label-container'>
 					Brand<small className='required-tag'>REQUIRED</small>
 					<input
+						required
 						type='text'
 						value={brandName}
 						onChange={(e) => setBrandName(e.target.value)}
@@ -82,6 +84,7 @@ export default function ListingForm({ listing, formType }) {
 				<label className='input-label-container'>
 					Model<small className='required-tag'>REQUIRED</small>
 					<input
+						required
 						type='text'
 						value={model}
 						onChange={(e) => setModel(e.target.value)}
@@ -116,6 +119,7 @@ export default function ListingForm({ listing, formType }) {
 				<label className='input-label-container'>
 					Categories <small className='required-tag'>REQUIRED</small>
 					<select
+						required
 						onChange={(e) => setCategory(e.target.value)}
 						value={category}
 					>
@@ -128,6 +132,7 @@ export default function ListingForm({ listing, formType }) {
 				<label className='input-label-container'>
 					Listing Title <small className='required-tag'>REQUIRED</small>
 					<input
+						required
 						type='text'
 						value={listingTitle}
 						onChange={(e) => setListingTitle(e.target.value)}
@@ -137,6 +142,7 @@ export default function ListingForm({ listing, formType }) {
 					<label className='input-label-container'>
 						Upload Photo <small className='required-tag'>REQUIRED</small>
 						<input
+							required
 							type='text'
 							value={photoUrl}
 							onChange={(e) => setPhotoUrl(e.target.value)}
@@ -147,6 +153,7 @@ export default function ListingForm({ listing, formType }) {
 				<label className='input-label-container'>
 					Condition <small className='required-tag'>REQUIRED</small>
 					<select
+						required
 						onChange={(e) => setCondition(e.target.value)}
 						value={condition}
 					>
@@ -160,6 +167,7 @@ export default function ListingForm({ listing, formType }) {
 					Describe this item and its condition
 					<small className='required-tag'>REQUIRED</small>
 					<textarea
+						required
 						value={description}
 						onChange={(e) => setDescription(e.target.value)}
 					/>
@@ -188,6 +196,7 @@ export default function ListingForm({ listing, formType }) {
 				<label className='input-label-container'>
 					Shipping Costs<small className='required-tag'>REQUIRED</small>
 					<input
+						required
 						type='number'
 						value={shippingCost}
 						onChange={(e) => setShippingCost(e.target.value)}
@@ -196,6 +205,7 @@ export default function ListingForm({ listing, formType }) {
 				<label className='input-label-container'>
 					Listing Price<small className='required-tag'>REQUIRED</small>
 					<input
+						required
 						type='number'
 						value={listingPrice}
 						onChange={(e) => setListingPrice(e.target.value)}
