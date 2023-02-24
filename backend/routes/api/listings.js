@@ -1,8 +1,8 @@
 const express = require("express");
 const { setTokenCookie, requireAuth } = require("../../utils/auth");
 const { Listing, ListingImage, Shop } = require("../../db/models");
-const router = express.Router();
 const { validateCreateListing } = require("../../utils/validators");
+const router = express.Router();
 
 //get all listings for HomePage
 router.get("/", async (req, res) => {

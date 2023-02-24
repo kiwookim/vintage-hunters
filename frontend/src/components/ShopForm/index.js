@@ -1,4 +1,9 @@
 export default function ShopForm({ shop, formType }) {
+
+  //give default banner
+  //give default profile pic
+
+
 	return (
 		<section className='section-container'>
 			<h3 className='form-title'>Set Up Shop to become a seller!</h3>

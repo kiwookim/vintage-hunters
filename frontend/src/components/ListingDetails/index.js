@@ -41,7 +41,9 @@ export default function ListingDetails() {
 				src={thisListing.ListingImages[0]?.url}
 				alt={thisListing.listingTitle}
 			/>
-			<p>{thisListing.Shop.name}</p>
+			<Link to={`/shop/${thisListing.Shop.id}`}>
+				<p>{thisListing.Shop.name}</p>
+			</Link>
 			<p>{thisListing.Shop.city}</p>
 			<p>{thisListing.Shop.state}</p>
 			<h1>{thisListing.listingTitle}</h1>
