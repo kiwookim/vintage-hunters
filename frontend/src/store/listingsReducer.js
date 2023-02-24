@@ -90,22 +90,30 @@ export const thunkCreateListing = (listing, imgObj) => async (dispatch) => {
 		return validationError;
 	}
 };
+//edit listing
 export const thunkEditListing = (listing) => async (dispatch) => {
-	const response = await csrfFetch(`/api/listings/${listing.id}/edit`, {
-		method: "PUT",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(listing),
-	});
-	console.log("RESPONSE", response);
-	if (response.ok) {
-		const updatedListing = await response.json();
-		console.log("INSIDE EDIT THUNK", updatedListing);
-		dispatch(actionEditListing(updatedListing));
-		return updatedListing;
+	try {
+		const response = await csrfFetch(`/api/listings/${listing.id}/edit`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(listing),
+		});
+		// console.log("RESPONSE", response);
+		if (response.ok) {
+			const updatedListing = await response.json();
+			console.log("INSIDE EDIT THUNK", updatedListing);
+			dispatch(actionEditListing(updatedListing));
+			return updatedListing;
+		}
+	} catch (e) {
+		const error = await e.json();
+		const validationError = error.errors;
+		return validationError;
 	}
 };
+// delete listing
 export const thunkDeleteListing = (listingId) => async (dispatch) => {
 	const response = await csrfFetch(`/api/listings/${listingId}/delete`, {
 		method: "DELETE",

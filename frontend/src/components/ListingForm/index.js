@@ -60,8 +60,7 @@ export default function ListingForm({ listing, formType }) {
 			if (returnedListing.id) {
 				history.push(`/listings/${returnedListing.id}`);
 			} else {
-				//if ther is error
-				console.log("error message from backend", returnedListing);
+				//if there is error
 				setValidationErr(Object.values(returnedListing));
 			}
 		}
@@ -70,6 +69,10 @@ export default function ListingForm({ listing, formType }) {
 			const editedListing = await dispatch(thunkEditListing(listing));
 			if (editedListing.id) {
 				history.push(`/listings/${editedListing.id}`);
+			} else {
+				//if there is error
+				console.log("error message from backend", editedListing);
+				setValidationErr(Object.values(editedListing));
 			}
 		}
 	};
