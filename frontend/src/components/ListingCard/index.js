@@ -1,20 +1,30 @@
 import "./ListingCard.css";
+import { Link } from "react-router-dom";
 
 export default function ListingCard({ listing }) {
 	return (
-		<div className='listing-card'>
-			<img src={listing.PreviewImage} alt={listing.listingTitle} />
-			<div className='listing-card-bottom'>
-				<h4 className='listing-card-title-h4'>
-					{listing.listingTitle.length > 60
-						? listing.listingTitle.slice(0, 60) + "..."
-						: listing.listingTitle}
-				</h4>
-				<h2>${listing.listingPrice}</h2>
-				<p>{listing.condition}</p>
-				{listing.shippingCost === 0 ? <p>Free Shipping</p> : null}
-				<p>{listing.returnPolicy} Return Policy</p>
+		<Link to={`/listings/${listing.id}`}>
+			<div className='listing-card'>
+				<img
+					onError={(ev) =>
+						(ev.target.src =
+							"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.jr_ZltLCrkS1ZmAB3-B_IgHaGZ%26pid%3DApi&f=1&ipt=976e27ed4e4601b5fc08f5fc9b8f07ef671de7909421e65a56d3997ada849a9e&ipo=images")
+					}
+					src={listing.PreviewImage}
+					alt={listing.listingTitle}
+				/>
+				<div className='listing-card-bottom'>
+					<h4 className='listing-card-title-h4'>
+						{listing.listingTitle.length > 60
+							? listing.listingTitle.slice(0, 60) + "..."
+							: listing.listingTitle}
+					</h4>
+					<h2>${listing.listingPrice}</h2>
+					<p>Used-{listing.condition}</p>
+					{listing.shippingCost === 0 ? <p>Free Shipping</p> : null}
+					<p>{listing.returnPolicy} Return Policy</p>
+				</div>
 			</div>
-		</div>
+		</Link>
 	);
 }

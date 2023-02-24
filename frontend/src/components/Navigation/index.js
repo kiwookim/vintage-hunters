@@ -17,7 +17,7 @@ function Navigation({ isLoaded }) {
 		sessionLinks = (
 			<div className='top-right-navigation'>
 				<button id='sell-btn'>
-					<Link exact to='/sell'>
+					<Link exact to='/sell/listings/new'>
 						Sell Your Gear
 					</Link>
 				</button>

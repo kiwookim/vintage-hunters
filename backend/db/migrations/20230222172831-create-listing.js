@@ -28,8 +28,8 @@ module.exports = {
 					allowNull: false,
 				},
 				year: {
-					type: Sequelize.INTEGER,
-					allowNull: false,
+					type: Sequelize.STRING,
+					allowNull: true,
 				},
 				originCountry: {
 					type: Sequelize.STRING,

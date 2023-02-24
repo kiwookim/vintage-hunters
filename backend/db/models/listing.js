@@ -12,7 +12,10 @@ module.exports = (sequelize, DataTypes) => {
 			//Listings can belong to ONE shop(Many ---> One(shop))
 			Listing.belongsTo(models.Shop, { foreignKey: "shopId" });
 			//Listing can have MANY images
-			Listing.hasMany(models.ListingImage, { foreignKey: "listingId" });
+			Listing.hasMany(models.ListingImage, {
+				foreignKey: "listingId",
+				onDelete: "cascade",
+			});
 		}
 	}
 	Listing.init(
@@ -26,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
 			shopId: { type: DataTypes.INTEGER, allowNull: false },
 			brandName: { type: DataTypes.STRING, allowNull: false },
 			model: { type: DataTypes.STRING, allowNull: false },
-			year: { type: DataTypes.INTEGER, allowNull: false },
+			year: { type: DataTypes.STRING, allowNull: true },
 			originCountry: { type: DataTypes.STRING, allowNull: true },
 			category: { type: DataTypes.STRING, allowNull: false },
 			listingTitle: { type: DataTypes.STRING, allowNull: false },
