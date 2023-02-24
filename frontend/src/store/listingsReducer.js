@@ -55,50 +55,65 @@ export const thunkGetDetails = (listingId) => async (dispatch) => {
 	}
 };
 export const thunkCreateListing = (listing, imgObj) => async (dispatch) => {
-	const response = await csrfFetch("/api/listings/new", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(listing),
-	});
-	if (response.ok) {
-		const createdListing = await response.json();
-		// console.log("INSIDE CREATE LISTING THUNK", createdListing);
-		const responseAddImage = await csrfFetch(
-			`/api/listings/${createdListing.id}/images`,
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(imgObj),
+	try {
+		const response = await csrfFetch("/api/listings/new", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(listing),
+		});
+		if (response.ok) {
+			const createdListing = await response.json();
+			// console.log("INSIDE CREATE LISTING THUNK", createdListing);
+			const responseAddImage = await csrfFetch(
+				`/api/listings/${createdListing.id}/images`,
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(imgObj),
+				}
+			);
+			if (responseAddImage.ok) {
+				const createdListingImg = await responseAddImage.json();
+				// console.log("INSIDE CREATE LISTING THUNK", createdListingImg);
+				dispatch(actionCreateListing(createdListing, createdListingImg));
+				return createdListing;
 			}
-		);
-		if (responseAddImage.ok) {
-			const createdListingImg = await responseAddImage.json();
-			// console.log("INSIDE CREATE LISTING THUNK", createdListingImg);
-			dispatch(actionCreateListing(createdListing, createdListingImg));
-			return createdListing;
 		}
+	} catch (e) {
+		const error = await e.json();
+		const validationError = error.errors;
+		// console.log("validationError", validationError);
+		return validationError;
 	}
 };
+//edit listing
 export const thunkEditListing = (listing) => async (dispatch) => {
-	const response = await csrfFetch(`/api/listings/${listing.id}/edit`, {
-		method: "PUT",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(listing),
-	});
-	console.log("RESPONSE", response);
-	if (response.ok) {
-		const updatedListing = await response.json();
-		console.log("INSIDE EDIT THUNK", updatedListing);
-		dispatch(actionEditListing(updatedListing));
-		return updatedListing;
+	try {
+		const response = await csrfFetch(`/api/listings/${listing.id}/edit`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(listing),
+		});
+		// console.log("RESPONSE", response);
+		if (response.ok) {
+			const updatedListing = await response.json();
+			console.log("INSIDE EDIT THUNK", updatedListing);
+			dispatch(actionEditListing(updatedListing));
+			return updatedListing;
+		}
+	} catch (e) {
+		const error = await e.json();
+		const validationError = error.errors;
+		return validationError;
 	}
 };
+// delete listing
 export const thunkDeleteListing = (listingId) => async (dispatch) => {
 	const response = await csrfFetch(`/api/listings/${listingId}/delete`, {
 		method: "DELETE",
