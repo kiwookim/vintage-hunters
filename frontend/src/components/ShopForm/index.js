@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkCreateShop } from "../../store/shopReducer";
+import { thunkCreateShop, thunkEditShop } from "../../store/shopReducer";
 export default function ShopForm({ shop, formType }) {
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -32,6 +32,9 @@ export default function ShopForm({ shop, formType }) {
 		}
 		// Edit Shop
 		if (formType === "Edit Shop") {
+			dispatch(thunkEditShop(shop)).then(() =>
+				history.push(`/shop/${currUserId}`)
+			);
 		}
 	};
 	return (

@@ -3,7 +3,7 @@ const { requireAuth } = require("../../utils/auth");
 const { Shop, Listing } = require("../../db/models");
 const router = express.Router();
 
-router.get("/my", async (req, res) => {
+router.get("/my", requireAuth, async (req, res) => {
 	console.log("in the backend route(myshop)");
 	const currUserId = req.user.id;
 	const myShop = await Shop.findOne({
@@ -40,6 +40,27 @@ router.post("/", requireAuth, async (req, res) => {
 		description,
 	});
 	return res.json(myShop);
+});
+//edit myshop
+router.put("/my/edit", requireAuth, async (req, res) => {
+	const currUserId = req.user.id;
+	const { city, state, profileUrl, bannerImgUrl, name, description } = req.body;
+	const myShop = await Shop.findOne({
+		where: {
+			userId: currUserId,
+		},
+		include: [{ model: Listing }],
+	});
+	const editedShop = await myShop.update({
+		city,
+		state,
+		profileUrl,
+		bannerImgUrl,
+		name,
+		description,
+	});
+	console.log("INSIDE EDIT SHOP BACKEND ROUTE", editedShop);
+	return res.json(editedShop);
 });
 
 module.exports = router;

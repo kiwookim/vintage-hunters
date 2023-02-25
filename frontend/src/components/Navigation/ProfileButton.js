@@ -1,7 +1,7 @@
 // frontend/src/components/Navigation/ProfileButton.js
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 import "./ProfileButton.css";
 
@@ -44,10 +44,15 @@ function ProfileButton({ user }) {
 			</button>
 			<ul className={ulClassName} ref={ulRef}>
 				<li>{user.username}</li>
-				<li>
+				{/* <li>
 					{user.firstName} {user.lastName}
 				</li>
-				<li>{user.email}</li>
+				<li>{user.email}</li> */}
+				<li>
+					<Link to={`/shop/${user.id}`}>
+						<button>My Shop</button>
+					</Link>
+				</li>
 				<li>
 					<button onClick={logout}>Log Out</button>
 				</li>

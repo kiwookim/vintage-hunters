@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 const GET_DETAILS = "/shop";
 const GET_MYSHOP = "/myshop";
 const CREATE_MYSHOP = "/myshop/create";
+const EDIT_SHOP = "/myshop/edit";
 //ACTIONS
 const actionGetDetails = (shopDetails) => {
 	return {
@@ -20,6 +21,12 @@ const actionCreateShop = (myShop) => {
 	return {
 		type: CREATE_MYSHOP,
 		payload: myShop,
+	};
+};
+const actionEditShop = (editedShop) => {
+	return {
+		type: EDIT_SHOP,
+		payload: editedShop,
 	};
 };
 //THUNKS
@@ -56,6 +63,21 @@ export const thunkCreateShop = (myshop) => async (dispatch) => {
 		dispatch(actionCreateShop(myShop));
 	}
 };
+//edit shop
+export const thunkEditShop = (shop) => async (dispatch) => {
+	const response = csrfFetch("/api/shop/my/edit", {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(shop),
+	});
+	if (response.ok) {
+		const editedShop = await response.json();
+		dispatch(actionEditShop(editedShop));
+		return editedShop;
+	}
+};
 
 const initialState = {
 	shop: {},
@@ -73,6 +95,10 @@ export default function shopReducer(state = initialState, action) {
 			return newState;
 		case CREATE_MYSHOP:
 			newState.myshop = { ...action.payload };
+			return newState;
+		case EDIT_SHOP:
+			newState.myshop = { ...action.payload };
+			newState.shop = { ...action.payload };
 			return newState;
 		default:
 			return state;
