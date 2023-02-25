@@ -72,7 +72,7 @@ export default function shopReducer(state = initialState, action) {
 			newState.myshop = { ...action.payload };
 			return newState;
 		case CREATE_MYSHOP:
-			newState.myShop = { ...action.payload };
+			newState.myshop = { ...action.payload };
 			return newState;
 		default:
 			return state;

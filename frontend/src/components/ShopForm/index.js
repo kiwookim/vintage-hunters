@@ -47,6 +47,7 @@ export default function ShopForm({ shop, formType }) {
 						City <small className='required-tag'>REQUIRED</small>
 					</label>
 					<input
+						value={city}
 						onChange={(e) => setCity(e.target.value)}
 						id='city'
 						type='text'
@@ -58,6 +59,7 @@ export default function ShopForm({ shop, formType }) {
 						State <small className='required-tag'>REQUIRED</small>
 					</label>
 					<input
+						value={state}
 						onChange={(e) => setState(e.target.value)}
 						id='state'
 						type='text'
@@ -69,6 +71,7 @@ export default function ShopForm({ shop, formType }) {
 						Have Profile Pic?
 					</label>
 					<input
+						value={profileUrl}
 						onChange={(e) => setProfileUrl(e.target.value)}
 						placeholder='profile url here'
 						id='profile-pic'
@@ -80,6 +83,7 @@ export default function ShopForm({ shop, formType }) {
 						Have Banner for your Shop?
 					</label>
 					<input
+						value={bannerImgUrl}
 						onChange={(e) => setBannerImgUrl(e.target.value)}
 						placeholder='banner url here'
 						id='banner'
@@ -91,6 +95,7 @@ export default function ShopForm({ shop, formType }) {
 						Shop Name <small className='required-tag'>REQUIRED</small>
 					</label>
 					<input
+						value={name}
 						onChange={(e) => setName(e.target.value)}
 						id='name'
 						type='text'
@@ -102,6 +107,7 @@ export default function ShopForm({ shop, formType }) {
 						Shop Description <small className='required-tag'>REQUIRED</small>
 					</label>
 					<textarea
+						value={description}
 						onChange={(e) => setDescription(e.target.value)}
 						id='desc'
 						type='text'

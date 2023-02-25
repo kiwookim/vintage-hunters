@@ -3,6 +3,6 @@ import ShopForm from "../ShopForm";
 
 export default function EditShop() {
 	// const shop = useSelector(state=>state.)
-
-	return <ShopForm formType='Edit Shop' />;
+	const shop = useSelector((state) => state.shop.myshop);
+	return <ShopForm shop={shop} formType='Edit Shop' />;
 }
