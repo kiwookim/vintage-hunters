@@ -26,17 +26,20 @@ router.get("/:shopId", requireAuth, async (req, res) => {
 router.post("/", requireAuth, async (req, res) => {
 	const currUserId = req.user.id;
 	const { city, state, profileUrl, bannerImgUrl, name, description } = req.body;
-	console.log(city, state, name, description);
-	// const myShop = await Shop.create({
-	// 	userId: currUserId,
-	// 	city,
-	// 	state,
-	// 	profileUrl,
-	// 	bannerImgUrl,
-	// 	name,
-	// 	description,
-	// });
-	// return res.json(myShop);
+
+	const myShop = await Shop.create({
+		userId: currUserId,
+		city,
+		state,
+		profileUrl:
+			profileUrl === ""
+				? "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.Cl56H6WgxJ8npVqyhefTdQHaHa%26pid%3DApi&f=1&ipt=11e91deec8c46277a423de237d3e38748d21acf60fd2cbb378f9ea8b944f1363&ipo=images"
+				: profileUrl,
+		bannerImgUrl,
+		name,
+		description,
+	});
+	return res.json(myShop);
 });
 
 module.exports = router;

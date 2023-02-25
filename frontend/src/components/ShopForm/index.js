@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { thunkCreateShop } from "../../store/shopReducer";
 export default function ShopForm({ shop, formType }) {
 	const dispatch = useDispatch();
@@ -11,6 +11,7 @@ export default function ShopForm({ shop, formType }) {
 	const [bannerImgUrl, setBannerImgUrl] = useState(shop.bannerImgUrl);
 	const [name, setName] = useState(shop.name);
 	const [description, setDescription] = useState(shop.description);
+	const currUserId = useSelector((state) => state.session.user.id);
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		shop = {
@@ -25,7 +26,8 @@ export default function ShopForm({ shop, formType }) {
 		//Create Shop
 		if (formType === "Create Shop") {
 			dispatch(thunkCreateShop(shop)).then(() => {
-				history.push("/listings");
+				//userId and shopId should be the same (one to one relationship)
+				history.push(`/shop/${currUserId}`);
 			});
 		}
 		// Edit Shop
@@ -34,7 +36,11 @@ export default function ShopForm({ shop, formType }) {
 	};
 	return (
 		<section className='section-container'>
-			<h3 className='form-title'>Set Up Shop to become a seller!</h3>
+			{formType === "Create Shop" ? (
+				<h3 className='form-title'>Set Up Shop to become a seller!</h3>
+			) : (
+				<h3 className='form-title'>Edit Shop</h3>
+			)}
 			<form className='form-container' onSubmit={handleSubmit}>
 				<div className='each-input-field'>
 					<label className='input-label-container' htmlFor='city'>

@@ -2,7 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const GET_DETAILS = "/shop";
 const GET_MYSHOP = "/myshop";
-
+const CREATE_MYSHOP = "/myshop/create";
 //ACTIONS
 const actionGetDetails = (shopDetails) => {
 	return {
@@ -13,6 +13,12 @@ const actionGetDetails = (shopDetails) => {
 const actionGetMyShop = (myShop) => {
 	return {
 		type: GET_MYSHOP,
+		payload: myShop,
+	};
+};
+const actionCreateShop = (myShop) => {
+	return {
+		type: CREATE_MYSHOP,
 		payload: myShop,
 	};
 };
@@ -47,7 +53,7 @@ export const thunkCreateShop = (myshop) => async (dispatch) => {
 	});
 	if (response.ok) {
 		const myShop = await response.json();
-		// console.log("INSIDE CREATE SHOP REDUCER", myShop);
+		dispatch(actionCreateShop(myShop));
 	}
 };
 
@@ -64,6 +70,9 @@ export default function shopReducer(state = initialState, action) {
 			return newState;
 		case GET_MYSHOP:
 			newState.myshop = { ...action.payload };
+			return newState;
+		case CREATE_MYSHOP:
+			newState.myShop = { ...action.payload };
 			return newState;
 		default:
 			return state;
