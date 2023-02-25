@@ -1,6 +1,6 @@
 // frontend/src/components/Navigation/ProfileButton.js
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 import "./ProfileButton.css";
@@ -10,6 +10,7 @@ function ProfileButton({ user }) {
 	const history = useHistory();
 	const [showMenu, setShowMenu] = useState(false);
 	const ulRef = useRef();
+	const myShop = useSelector((state) => state.shop.myshop);
 
 	const openMenu = () => {
 		if (showMenu) return;
@@ -49,7 +50,7 @@ function ProfileButton({ user }) {
 				</li>
 				<li>{user.email}</li> */}
 				<li>
-					<Link to={`/shop/${user.id}`}>
+					<Link to={`/shop/${myShop.id}`}>
 						<button>My Shop</button>
 					</Link>
 				</li>

@@ -61,6 +61,7 @@ export const thunkCreateShop = (myshop) => async (dispatch) => {
 	if (response.ok) {
 		const myShop = await response.json();
 		dispatch(actionCreateShop(myShop));
+		return myShop;
 	}
 };
 //edit shop
@@ -72,8 +73,12 @@ export const thunkEditShop = (shop) => async (dispatch) => {
 		},
 		body: JSON.stringify(shop),
 	});
+	console.log("IN EDIT SHOP REDUCER");
+	console.log(response);
 	if (response.ok) {
+		console.log("RESPONSE OK");
 		const editedShop = await response.json();
+		console.log("editedShop, REDUCER", editedShop);
 		dispatch(actionEditShop(editedShop));
 		return editedShop;
 	}
@@ -95,6 +100,7 @@ export default function shopReducer(state = initialState, action) {
 			return newState;
 		case CREATE_MYSHOP:
 			newState.myshop = { ...action.payload };
+			newState.shop = { ...action.payload };
 			return newState;
 		case EDIT_SHOP:
 			newState.myshop = { ...action.payload };

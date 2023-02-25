@@ -10,7 +10,7 @@ export default function ShopDetails() {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(thunkGetDetails(shopId)).then(() => setIsLoaded(true));
-	}, [dispatch]);
+	}, [dispatch, shopId]);
 	const thisShop = useSelector((state) => state.shop.shop);
 	const currUserId = useSelector((state) => state.session.user.id);
 	return isLoaded ? (

@@ -11,7 +11,7 @@ export default function ShopForm({ shop, formType }) {
 	const [bannerImgUrl, setBannerImgUrl] = useState(shop.bannerImgUrl);
 	const [name, setName] = useState(shop.name);
 	const [description, setDescription] = useState(shop.description);
-	const currUserId = useSelector((state) => state.session.user.id);
+	// const currUserId = useSelector((state) => state.session.user.id);
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		shop = {
@@ -25,16 +25,24 @@ export default function ShopForm({ shop, formType }) {
 		};
 		//Create Shop
 		if (formType === "Create Shop") {
-			dispatch(thunkCreateShop(shop)).then(() => {
-				//userId and shopId should be the same (one to one relationship)
-				history.push(`/shop/${currUserId}`);
-			});
+			// dispatch(thunkCreateShop(shop)).then((res) => {
+			// 	history.push(`/shop/${res.id}`);
+			// });
+			const createdShop = await dispatch(thunkCreateShop(shop));
+			if (createdShop.id) {
+				history.push(`/shop/${createdShop.id}`);
+			}
 		}
 		// Edit Shop
 		if (formType === "Edit Shop") {
 			dispatch(thunkEditShop(shop)).then(() =>
-				history.push(`/shop/${currUserId}`)
+				history.push(`/shop/${shop.id}`)
 			);
+			// const editedShop = await dispatch(thunkEditShop(shop));
+			// console.log("FE!!!!!!!!!!", editedShop);
+			// if (editedShop.id) {
+			// 	history.push(`/shop/${editedShop.id}`);
+			// }
 		}
 	};
 	return (

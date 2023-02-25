@@ -59,8 +59,8 @@ router.put("/my/edit", requireAuth, async (req, res) => {
 		name,
 		description,
 	});
-	console.log("INSIDE EDIT SHOP BACKEND ROUTE", editedShop);
-	return res.json(editedShop);
+	console.log("INSIDE EDIT SHOP BACKEND ROUTE", editedShop.toJSON());
+	return res.json(editedShop.toJSON());
 });
 
 module.exports = router;

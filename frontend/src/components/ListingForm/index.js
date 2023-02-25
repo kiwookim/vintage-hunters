@@ -29,7 +29,7 @@ export default function ListingForm({ listing, formType }) {
 		listing.acceptOffers ? "Yes" : "No"
 	);
 	const [validationErr, setValidationErr] = useState([]);
-
+	console.log(validationErr);
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		listing = {
@@ -264,6 +264,7 @@ export default function ListingForm({ listing, formType }) {
 						type='number'
 						value={listingPrice}
 						onChange={(e) => setListingPrice(e.target.value)}
+						placeholder='round up or down your price'
 					/>
 				</div>
 				<div className='each-input-field'>
@@ -279,6 +280,7 @@ export default function ListingForm({ listing, formType }) {
 						<option>No</option>
 					</select>
 				</div>
+
 				<input id='submit-button' type='submit' value={formType} />
 			</form>
 		</section>
