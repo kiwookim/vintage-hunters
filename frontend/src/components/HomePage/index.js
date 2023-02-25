@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGetAllListings } from "../../store/listingsReducer";
+import { thunkGetMyShop } from "../../store/shopReducer";
 import ListingCard from "../ListingCard";
 import "./HomePage.css";
 
@@ -13,7 +14,11 @@ export default function HomePage() {
 	const allListingsArr = Object.values(allListingsObj);
 	// console.log(allListingsArr);
 	useEffect(() => {
-		dispatch(thunkGetAllListings()).then(() => setIsLoaded(true));
+		dispatch(thunkGetAllListings())
+			.then(() => setIsLoaded(true))
+			.then(() => dispatch(thunkGetMyShop()));
+		// const myShop = await dispatch(thunkGetMyShop());
+		// dispatch(thunkGetMyShop());
 	}, [dispatch]);
 
 	return isLoaded ? (

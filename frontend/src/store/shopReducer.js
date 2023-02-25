@@ -1,11 +1,19 @@
 import { csrfFetch } from "./csrf";
 
-const GET_DETAILS = "/myshop";
+const GET_DETAILS = "/shop";
+const GET_MYSHOP = "/myshop";
+
 //ACTIONS
 const actionGetDetails = (shopDetails) => {
 	return {
 		type: GET_DETAILS,
 		payload: shopDetails,
+	};
+};
+const actionGetMyShop = (myShop) => {
+	return {
+		type: GET_MYSHOP,
+		payload: myShop,
 	};
 };
 //THUNKS
@@ -19,8 +27,33 @@ export const thunkGetDetails = (shopId) => async (dispatch) => {
 		return shopDetails;
 	}
 };
+//get My Shop
+export const thunkGetMyShop = () => async (dispatch) => {
+	const response = await csrfFetch("/api/shop/my");
+	if (response.ok) {
+		const myShop = await response.json();
+		dispatch(actionGetMyShop(myShop));
+		return myShop;
+	}
+};
+//create shop
+export const thunkCreateShop = (myshop) => async (dispatch) => {
+	const response = await csrfFetch("/api/shop", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(myshop),
+	});
+	if (response.ok) {
+		const myShop = await response.json();
+		// console.log("INSIDE CREATE SHOP REDUCER", myShop);
+	}
+};
+
 const initialState = {
 	shop: {},
+	myshop: {},
 };
 //REDUCER
 export default function shopReducer(state = initialState, action) {
@@ -28,6 +61,9 @@ export default function shopReducer(state = initialState, action) {
 	switch (action.type) {
 		case GET_DETAILS:
 			newState.shop = { ...action.payload };
+			return newState;
+		case GET_MYSHOP:
+			newState.myshop = { ...action.payload };
 			return newState;
 		default:
 			return state;

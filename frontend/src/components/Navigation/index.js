@@ -1,23 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignUpFormModal from "../SignUpFormModal";
 import "./Navigation.css";
+import { thunkGetMyShop } from "../../store/shopReducer";
 
 function Navigation({ isLoaded }) {
 	const sessionUser = useSelector((state) => state.session.user);
 	//if currUser don't have shop created, Link to  '/myshop/create'
 	//if currUser have shop created already, Link to '/sell'
+	const currUserShop = useSelector((state) => state.shop.myshop);
+	const isShopThere = currUserShop.id ? true : false;
 
 	let sessionLinks;
 	if (sessionUser) {
 		sessionLinks = (
 			<div className='top-right-navigation'>
 				<button id='sell-btn'>
-					<Link exact to='/sell/listings/new'>
+					<Link
+						exact
+						to={isShopThere ? "/sell/listings/new" : "/myshop/create"}
+					>
 						Sell Your Gear
 					</Link>
 				</button>
