@@ -20,6 +20,21 @@ const validateCreateListing = [
 	check("description")
 		.isLength({ min: 50 })
 		.withMessage("description must be 50 characters or more"),
+	check("listingPrice").custom((value, { req }) => {
+		const price = req.body.listingPrice;
+		if (price <= 0) {
+			throw new ValidationError("price cannot be 0 or negative number");
+		}
+		return true;
+	}),
+	check("shippingPrice").custom((value, { req }) => {
+		const price = req.body.listingPrice;
+		if (price <= 0) {
+			throw new ValidationError("shipping cost cannot be a negative number");
+		}
+		return true;
+	}),
+
 	handleValidationErrors,
 ];
 

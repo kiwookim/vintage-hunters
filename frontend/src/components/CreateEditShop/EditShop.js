@@ -8,6 +8,6 @@ export default function EditShop() {
 	useEffect(() => {
 		dispatch(thunkGetMyShop());
 	}, []);
-	const shop = useSelector((state) => state.shop.shop);
+	const shop = useSelector((state) => state.shop.myshop);
 	return <ShopForm shop={shop} formType='Edit Shop' />;
 }

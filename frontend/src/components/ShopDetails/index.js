@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { thunkGetDetails } from "../../store/shopReducer";
+import { thunkGetDetails, thunkGetMyShop } from "../../store/shopReducer";
 import "./ShopDetails.css";
 
 export default function ShopDetails() {
@@ -9,6 +9,7 @@ export default function ShopDetails() {
 	const { shopId } = useParams();
 	const dispatch = useDispatch();
 	useEffect(() => {
+		dispatch(thunkGetMyShop());
 		dispatch(thunkGetDetails(shopId)).then(() => setIsLoaded(true));
 	}, [dispatch, shopId]);
 	const thisShop = useSelector((state) => state.shop.shop);

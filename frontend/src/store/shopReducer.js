@@ -73,8 +73,8 @@ export const thunkEditShop = (shop) => async (dispatch) => {
 		},
 		body: JSON.stringify(shop),
 	});
-	console.log("IN EDIT SHOP REDUCER");
-	console.log(response);
+	// console.log("IN EDIT SHOP REDUCER");
+	// console.log(response);
 	if (response.ok) {
 		console.log("RESPONSE OK");
 		const editedShop = await response.json();
