@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { thunkGetDetails, thunkGetMyShop } from "../../store/shopReducer";
+import ShopForm from "../ShopForm";
 import "./ShopDetails.css";
 
 export default function ShopDetails() {
@@ -14,6 +15,8 @@ export default function ShopDetails() {
 	}, [dispatch, shopId]);
 	const thisShop = useSelector((state) => state.shop.shop);
 	const currUserId = useSelector((state) => state.session.user.id);
+	const myShop = useSelector((state) => state.shop.myshop);
+
 	return isLoaded ? (
 		<>
 			{thisShop.bannerImgUrl && (

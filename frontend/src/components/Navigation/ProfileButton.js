@@ -52,7 +52,7 @@ function ProfileButton({ user }) {
 				</li>
 				<li>{user.email}</li> */}
 				<li>
-					<Link to={`/shop/${myShop.id}`}>
+					<Link to={myShop.id ? `/shop/${myShop.id}` : "/myshop/create"}>
 						<button>My Shop</button>
 					</Link>
 				</li>
