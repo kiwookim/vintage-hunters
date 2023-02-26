@@ -51,36 +51,49 @@ export const thunkGetMyShop = () => async (dispatch) => {
 };
 //create shop
 export const thunkCreateShop = (myshop) => async (dispatch) => {
-	const response = await csrfFetch("/api/shop", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(myshop),
-	});
-	if (response.ok) {
-		const myShop = await response.json();
-		dispatch(actionCreateShop(myShop));
-		return myShop;
+	try {
+		const response = await csrfFetch("/api/shop", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(myshop),
+		});
+		if (response.ok) {
+			const myShop = await response.json();
+			dispatch(actionCreateShop(myShop));
+			return myShop;
+		}
+	} catch (e) {
+		const error = await e.json();
+		const validationError = error.errors;
+		return validationError;
 	}
 };
 //edit shop
 export const thunkEditShop = (shop) => async (dispatch) => {
-	const response = csrfFetch("/api/shop/my/edit", {
-		method: "PUT",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(shop),
-	});
-	// console.log("IN EDIT SHOP REDUCER");
-	// console.log(response);
-	if (response.ok) {
-		console.log("RESPONSE OK");
-		const editedShop = await response.json();
-		console.log("editedShop, REDUCER", editedShop);
-		dispatch(actionEditShop(editedShop));
-		return editedShop;
+	try {
+		const response = await csrfFetch("/api/shop/my/edit", {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(shop),
+		});
+		console.log("IN EDIT SHOP REDUCER");
+		if (response.ok) {
+			console.log("RESPONSE OK?????");
+			const editedShop = await response.json();
+			console.log("editedShop, REDUCER", editedShop);
+			dispatch(actionEditShop(editedShop));
+			return editedShop;
+		} else {
+			console.log("wtf");
+		}
+	} catch (e) {
+		const error = await e.json();
+		const validationError = error.errors;
+		return validationError;
 	}
 };
 

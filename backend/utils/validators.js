@@ -37,5 +37,14 @@ const validateCreateListing = [
 
 	handleValidationErrors,
 ];
+const validateCreateShop = [
+	check("name")
+		.isLength({ max: 40 })
+		.withMessage("Shop name must be 40 characters or less"),
+	check("description")
+		.isLength({ min: 50 })
+		.withMessage("shop description must be 50 characters or more"),
 
-module.exports = { validateCreateListing };
+	handleValidationErrors,
+];
+module.exports = { validateCreateListing, validateCreateShop };

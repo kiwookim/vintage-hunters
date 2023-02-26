@@ -1,6 +1,7 @@
 const express = require("express");
 const { requireAuth } = require("../../utils/auth");
 const { Shop, Listing } = require("../../db/models");
+const { validateCreateShop } = require('../../utils/validators');
 const router = express.Router();
 
 router.get("/my", requireAuth, async (req, res) => {
@@ -23,7 +24,7 @@ router.get("/:shopId", requireAuth, async (req, res) => {
 	});
 	return res.json(thisShop);
 });
-router.post("/", requireAuth, async (req, res) => {
+router.post("/", requireAuth, validateCreateShop, async (req, res) => {
 	const currUserId = req.user.id;
 	const { city, state, profileUrl, bannerImgUrl, name, description } = req.body;
 
@@ -42,7 +43,7 @@ router.post("/", requireAuth, async (req, res) => {
 	return res.json(myShop);
 });
 //edit myshop
-router.put("/my/edit", requireAuth, async (req, res) => {
+router.put("/my/edit", requireAuth, validateCreateShop, async (req, res) => {
 	const currUserId = req.user.id;
 	const { city, state, profileUrl, bannerImgUrl, name, description } = req.body;
 	const myShop = await Shop.findOne({
@@ -59,8 +60,9 @@ router.put("/my/edit", requireAuth, async (req, res) => {
 		name,
 		description,
 	});
-	console.log("INSIDE EDIT SHOP BACKEND ROUTE", editedShop.toJSON());
-	return res.json(editedShop.toJSON());
+	console.log('BACNEND ROUTE', editedShop.toJSON())
+	// console.log("INSIDE EDIT SHOP BACKEND ROUTE", editedShop.toJSON());
+	return res.json(editedShop);
 });
 
 module.exports = router;

@@ -11,6 +11,7 @@ export default function ShopForm({ shop, formType }) {
 	const [bannerImgUrl, setBannerImgUrl] = useState(shop.bannerImgUrl);
 	const [name, setName] = useState(shop.name);
 	const [description, setDescription] = useState(shop.description);
+	const [validationErrors, setValidationErrors] = useState([]);
 	// const currUserId = useSelector((state) => state.session.user.id);
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -31,18 +32,32 @@ export default function ShopForm({ shop, formType }) {
 			const createdShop = await dispatch(thunkCreateShop(shop));
 			if (createdShop.id) {
 				history.push(`/shop/${createdShop.id}`);
+			} else {
+				setValidationErrors(Object.values(createdShop));
 			}
 		}
 		// Edit Shop
 		if (formType === "Edit Shop") {
-			dispatch(thunkEditShop(shop)).then(() =>
-				history.push(`/shop/${shop.id}`)
-			);
+			// dispatch(thunkEditShop(shop)).then(() =>
+			// 	history
+			// 		.push(`/shop/${shop.id}`)
+			// 		.catch((res) => setValidationErrors(Object.values(res)))
+			// );
 			// const editedShop = await dispatch(thunkEditShop(shop));
 			// console.log("FE!!!!!!!!!!", editedShop);
 			// if (editedShop.id) {
 			// 	history.push(`/shop/${editedShop.id}`);
 			// }
+			// const editedShop = await dispatch(thunkEditShop(shop));
+			// if (editedShop.id) {
+			// 	history.push(`/shop/${shop.id}`);
+			// }
+			const editedShop = await dispatch(thunkEditShop(shop));
+			if (editedShop.id) {
+				history.push(`/shop/${editedShop.id}`);
+			} else {
+				setValidationErrors(Object.values(editedShop));
+			}
 		}
 	};
 	return (
@@ -52,6 +67,14 @@ export default function ShopForm({ shop, formType }) {
 			) : (
 				<h3 className='form-title'>Edit Shop</h3>
 			)}
+			{validationErrors &&
+				validationErrors.map((err) => (
+					<ul>
+						<li key={err} style={{ color: "red" }}>
+							{err}
+						</li>
+					</ul>
+				))}
 			<form className='form-container' onSubmit={handleSubmit}>
 				<div className='each-input-field'>
 					<label className='input-label-container' htmlFor='city'>
@@ -59,6 +82,7 @@ export default function ShopForm({ shop, formType }) {
 					</label>
 					<input
 						value={city}
+						maxLength={30}
 						onChange={(e) => setCity(e.target.value)}
 						id='city'
 						type='text'
@@ -71,6 +95,7 @@ export default function ShopForm({ shop, formType }) {
 					</label>
 					<input
 						value={state}
+						maxLength={30}
 						onChange={(e) => setState(e.target.value)}
 						id='state'
 						type='text'
@@ -106,6 +131,7 @@ export default function ShopForm({ shop, formType }) {
 						Shop Name <small className='required-tag'>REQUIRED</small>
 					</label>
 					<input
+						minLength={4}
 						value={name}
 						onChange={(e) => setName(e.target.value)}
 						id='name'
