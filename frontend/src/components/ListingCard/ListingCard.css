@@ -5,6 +5,8 @@
 	flex-direction: column;
 	gap: 5px;
 	margin-bottom: 20px;
+	padding-top: 20px;
+	padding-bottom: 60px;
 }
 .card-img-container {
 	width: 180px;
