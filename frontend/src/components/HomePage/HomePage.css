@@ -1,7 +1,7 @@
 .all-listings-container {
 	display: flex;
 	justify-content: start;
-	gap: 25px;
+	gap: 35px;
 	margin: 35px;
 	align-content: center;
 	flex-wrap: wrap;

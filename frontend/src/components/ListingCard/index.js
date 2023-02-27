@@ -22,8 +22,16 @@ export default function ListingCard({ listing }) {
 					</h4>
 					<h2>${listing.listingPrice}</h2>
 					<p>Used-{listing.condition}</p>
-					{listing.shippingCost === 0 ? <p>Free Shipping</p> : null}
-					<p>{listing.returnPolicy} Return Policy</p>
+					{listing.shippingCost === 0 ? (
+						<p>
+							{" "}
+							<i id='icon-img' className='fa-solid fa-truck'></i>Free Shipping
+						</p>
+					) : null}
+					<p>
+						<i id='icon-img' className='fa-solid fa-box-open'></i>
+						{listing.returnPolicy} Return Policy
+					</p>
 				</div>
 			</div>
 		</Link>

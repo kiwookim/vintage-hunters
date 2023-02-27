@@ -16,3 +16,11 @@
 .hidden {
 	display: none;
 }
+
+#sell-btn {
+	margin-right: 10px;
+}
+#logo-text {
+	padding-left: 0;
+	font-family: "Climate Crisis", cursive;
+}
