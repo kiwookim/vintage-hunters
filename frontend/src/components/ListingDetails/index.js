@@ -30,6 +30,15 @@ export default function ListingDetails() {
 			<button onClick={handleDelete}>Delete Listing</button>
 		</div>
 	);
+	const createAt = new Date(thisListing.createdAt);
+	const dateNow = new Date();
+	const diffInDays = (dateNow - createAt) / (1000 * 3600 * 24);
+	let listedTime;
+	if (diffInDays < 1) {
+		listedTime = "today";
+	} else {
+		listedTime = `${diffInDays} days ago`;
+	}
 
 	return isLoaded ? (
 		<section id='listing-details-section-container'>
@@ -103,7 +112,7 @@ export default function ListingDetails() {
 					<ul className='specs-list'>
 						<div className='each-spec-container'>
 							<h5 className='each-spec-name'>Listed</h5>
-							<span>calculate time</span>
+							<span>{listedTime}</span>
 						</div>
 						<div className='each-spec-container'>
 							<h5 className='each-spec-name'>Condition</h5>
