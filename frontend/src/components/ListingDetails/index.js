@@ -53,7 +53,7 @@ export default function ListingDetails() {
 				<div className='ld-top-right'>
 					<div>
 						<Link to={`/shop/${thisListing.Shop.id}`}>
-							<h4>{thisListing.Shop.name}</h4>
+							<h4 id='ld-shop-name'>{thisListing.Shop.name}</h4>
 						</Link>
 						<div className='city-state'>
 							<small>{thisListing.Shop.city},</small>

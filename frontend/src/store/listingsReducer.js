@@ -155,6 +155,7 @@ export default function listingsReducer(state = initialState, action) {
 			newState.allListings = normalize(action.payload.Listings);
 			return newState;
 		case GET_DETAILS:
+			//more nested need specific
 			newState.singleListing = { ...action.payload };
 			return newState;
 		case CREATE_LISTING:

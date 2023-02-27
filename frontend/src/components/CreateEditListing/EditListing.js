@@ -21,3 +21,6 @@ export default function EditListing() {
 		<h1>Loading...</h1>
 	);
 }
+
+
+//CHECK IF EMPTY
