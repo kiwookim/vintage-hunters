@@ -16,6 +16,7 @@ export default function CreateListing() {
 		listingPrice: 0,
 		acceptOffers: true,
 	};
+	const photoUrl = ''
 
-	return <ListingForm listing={newListing} formType='Create Listing' />;
+	return <ListingForm mainPhoto={photoUrl} listing={newListing} formType='Create Listing' />;
 }

@@ -38,20 +38,6 @@ export default function ShopForm({ shop, formType }) {
 		}
 		// Edit Shop
 		if (formType === "Edit Shop") {
-			// dispatch(thunkEditShop(shop)).then(() =>
-			// 	history
-			// 		.push(`/shop/${shop.id}`)
-			// 		.catch((res) => setValidationErrors(Object.values(res)))
-			// );
-			// const editedShop = await dispatch(thunkEditShop(shop));
-			// console.log("FE!!!!!!!!!!", editedShop);
-			// if (editedShop.id) {
-			// 	history.push(`/shop/${editedShop.id}`);
-			// }
-			// const editedShop = await dispatch(thunkEditShop(shop));
-			// if (editedShop.id) {
-			// 	history.push(`/shop/${shop.id}`);
-			// }
 			const editedShop = await dispatch(thunkEditShop(shop));
 			if (editedShop.id) {
 				history.push(`/shop/${editedShop.id}`);

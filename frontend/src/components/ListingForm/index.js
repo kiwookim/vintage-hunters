@@ -7,7 +7,7 @@ import {
 	thunkEditListing,
 } from "../../store/listingsReducer";
 import "./ListingForm.css";
-export default function ListingForm({ listing, formType }) {
+export default function ListingForm({ mainPhoto,listing, formType }) {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const [brandName, setBrandName] = useState(listing.brandName);
@@ -16,7 +16,7 @@ export default function ListingForm({ listing, formType }) {
 	const [originCountry, setOriginCountry] = useState(listing.originCountry);
 	const [category, setCategory] = useState(listing.category);
 	const [listingTitle, setListingTitle] = useState(listing.listingTitle);
-	const [photoUrl, setPhotoUrl] = useState("");
+	const [photoUrl, setPhotoUrl] = useState(mainPhoto);
 	const [condition, setCondition] = useState(listing.condition);
 	const [description, setDescription] = useState(listing.description);
 	const [localPickUp, setLocalPickUp] = useState(
@@ -66,7 +66,7 @@ export default function ListingForm({ listing, formType }) {
 		}
 		// Edit Listing
 		if (formType === "Edit Listing") {
-			const editedListing = await dispatch(thunkEditListing(listing));
+			const editedListing = await dispatch(thunkEditListing(listing, imgObj));
 			if (editedListing.id) {
 				history.push(`/listings/${editedListing.id}`);
 			} else {
@@ -170,21 +170,21 @@ export default function ListingForm({ listing, formType }) {
 						onChange={(e) => setListingTitle(e.target.value)}
 					/>
 				</div>
-				{formType === "Create Listing" && (
-					<div className='each-input-field'>
-						<label htmlFor='image' className='input-label-container'>
-							Upload Photo <small className='required-tag'>REQUIRED</small>
-						</label>
-						<input
-							id='image'
-							required
-							type='url'
-							value={photoUrl}
-							onChange={(e) => setPhotoUrl(e.target.value)}
-							placeholder='put photo url here'
-						/>
-					</div>
-				)}
+
+				<div className='each-input-field'>
+					<label htmlFor='image' className='input-label-container'>
+						Upload Photo <small className='required-tag'>REQUIRED</small>
+					</label>
+					<input
+						id='image'
+						required
+						type='url'
+						value={photoUrl}
+						onChange={(e) => setPhotoUrl(e.target.value)}
+						placeholder='put photo url here'
+					/>
+				</div>
+
 				<div className='each-input-field'>
 					<label htmlFor='condition' className='input-label-container'>
 						Condition <small className='required-tag'>REQUIRED</small>
