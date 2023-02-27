@@ -9,6 +9,9 @@ import SplashPage from "./components/SplashPage";
 import CreateListing from "./components/CreateEditListing/CreateListing";
 import EditListing from "./components/CreateEditListing/EditListing";
 import ListingDetails from "./components/ListingDetails";
+import CreateShop from "./components/CreateEditShop/CreateShop";
+import EditShop from "./components/CreateEditShop/EditShop";
+import ShopDetails from "./components/ShopDetails";
 
 function App() {
 	const dispatch = useDispatch();
@@ -37,6 +40,15 @@ function App() {
 					</Route>
 					<Route path='/sell/:listingId/edit'>
 						<EditListing />
+					</Route>
+					<Route path='/myshop/create'>
+						<CreateShop />
+					</Route>
+					<Route path='/myshop/edit'>
+						<EditShop />
+					</Route>
+					<Route path='/shop/:shopId'>
+						<ShopDetails />
 					</Route>
 				</Switch>
 			)}

@@ -20,7 +20,34 @@ const validateCreateListing = [
 	check("description")
 		.isLength({ min: 50 })
 		.withMessage("description must be 50 characters or more"),
+	check("listingPrice")
+		.isDecimal()
+		.withMessage("Please round up or down your listing price")
+		.custom((value, { req }) => {
+			const price = req.body.listingPrice;
+			if (price <= 0) {
+				throw new ValidationError("price cannot be 0 or negative number");
+			}
+			return true;
+		}),
+	check("shippingCost").custom((value, { req }) => {
+		const price = req.body.listingPrice;
+		if (price <= 0) {
+			throw new ValidationError("shipping cost cannot be a negative number");
+		}
+		return true;
+	}),
+
 	handleValidationErrors,
 ];
+const validateCreateShop = [
+	check("name")
+		.isLength({ max: 40 })
+		.withMessage("Shop name must be 40 characters or less"),
+	check("description")
+		.isLength({ min: 50 })
+		.withMessage("shop description must be 50 characters or more"),
 
-module.exports = { validateCreateListing };
+	handleValidationErrors,
+];
+module.exports = { validateCreateListing, validateCreateShop };

@@ -79,3 +79,17 @@ ul,
 li {
 	list-style: none;
 }
+button {
+	background-color: transparent;
+	border: 1px solid black;
+	border-radius: 50px;
+	padding: 5px 10px;
+}
+button:hover {
+	color: #cd7f32;
+	cursor: pointer;
+}
+a:hover {
+	color: #cd7f32;
+	cursor: pointer;
+}

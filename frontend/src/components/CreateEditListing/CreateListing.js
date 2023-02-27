@@ -12,10 +12,11 @@ export default function CreateListing() {
 		description: "",
 		localPickUp: false,
 		returnPolicy: "",
-		shippingCost: 0,
+		shippingCost: "",
 		listingPrice: 0,
 		acceptOffers: true,
 	};
+	const photoUrl = ''
 
-	return <ListingForm listing={newListing} formType='Create Listing' />;
+	return <ListingForm mainPhoto={photoUrl} listing={newListing} formType='Create Listing' />;
 }
