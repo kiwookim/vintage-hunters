@@ -1,11 +1,12 @@
 .listing-card {
-	max-width: 180px;
-	max-height: 330px;
+	width: 180px;
+	height: 330px;
 	display: flex;
 	flex-direction: column;
 	gap: 5px;
+	margin-bottom: 20px;
 }
-.listing-card img {
+.card-img-container {
 	width: 180px;
 	height: 50%;
 	margin: 0;

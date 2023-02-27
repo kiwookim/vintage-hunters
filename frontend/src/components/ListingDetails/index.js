@@ -42,7 +42,10 @@ export default function ListingDetails() {
 							(ev.target.src =
 								"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.jr_ZltLCrkS1ZmAB3-B_IgHaGZ%26pid%3DApi&f=1&ipt=976e27ed4e4601b5fc08f5fc9b8f07ef671de7909421e65a56d3997ada849a9e&ipo=images")
 						}
-						src={thisListing.ListingImages[thisListing.ListingImages.length-1]?.url}
+						src={
+							thisListing.ListingImages[thisListing.ListingImages.length - 1]
+								?.url
+						}
 						alt={thisListing.listingTitle}
 					/>
 				</div>
@@ -118,16 +121,20 @@ export default function ListingDetails() {
 							<h5 className='each-spec-name'>Categories</h5>
 							<span>{thisListing.category}</span>
 						</div>
-						<div className='each-spec-container'>
-							<h5 className='each-spec-name'>Year</h5>
-							<span>{thisListing.year && thisListing.year}</span>
-						</div>
-						<div className='each-spec-container'>
-							<h5 className='each-spec-name'>Made In</h5>
-							<span>
-								{thisListing.originCountry && thisListing.originCountry}
-							</span>
-						</div>
+						{thisListing.year !== "" && (
+							<div className='each-spec-container'>
+								<h5 className='each-spec-name'>Year</h5>
+								<span>{thisListing.year && thisListing.year}</span>
+							</div>
+						)}
+						{thisListing.originCountry !== "" && (
+							<div className='each-spec-container'>
+								<h5 className='each-spec-name'>Made In</h5>
+								<span>
+									{thisListing.originCountry && thisListing.originCountry}
+								</span>
+							</div>
+						)}
 					</ul>
 				</div>
 			</div>

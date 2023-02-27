@@ -47,17 +47,20 @@ function ProfileButton({ user }) {
 			</button>
 			<ul className={ulClassName} ref={ulRef}>
 				<li>{user.username}</li>
+				<hr />
 				{/* <li>
 					{user.firstName} {user.lastName}
 				</li>
 				<li>{user.email}</li> */}
 				<li>
 					<Link to={myShop.id ? `/shop/${myShop.id}` : "/myshop/create"}>
-						<button>My Shop</button>
+						<button className='inside-profile-btns'>My Shop</button>
 					</Link>
 				</li>
 				<li>
-					<button onClick={logout}>Log Out</button>
+					<button className='inside-profile-btns' onClick={logout}>
+						Log Out
+					</button>
 				</li>
 			</ul>
 		</>

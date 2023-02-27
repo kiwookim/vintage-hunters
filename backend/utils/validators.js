@@ -32,7 +32,7 @@ const validateCreateListing = [
 		}),
 	check("shippingCost").custom((value, { req }) => {
 		const price = req.body.listingPrice;
-		if (price <= 0) {
+		if (price < 0) {
 			throw new ValidationError("shipping cost cannot be a negative number");
 		}
 		return true;
