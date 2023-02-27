@@ -34,7 +34,7 @@ export default function ListingDetails() {
 	const dateNow = new Date();
 	const diffInDays = (dateNow - createAt) / (1000 * 3600 * 24);
 	let listedTime;
-	if (diffInDays < 1) {
+	if (diffInDays <= 1) {
 		listedTime = "today";
 	} else {
 		listedTime = `${diffInDays} days ago`;
