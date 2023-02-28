@@ -5,14 +5,14 @@
 	margin: 35px;
 	align-content: center;
 	flex-wrap: wrap;
-	padding-bottom: 40px;
+	padding-bottom: 70px;
 }
 .all-listings-by-shop-container {
 	display: flex;
 	justify-content: start;
 	gap: 35px;
-
+	height: 100%;
 	align-content: center;
 	flex-wrap: wrap;
-	padding-bottom: 40px;
+	padding-bottom: 70px;
 }

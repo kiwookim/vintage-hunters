@@ -81,7 +81,7 @@ export default function ShopDetails() {
 					<div className='shop-empty-container'>
 						<h2>Your shop is empty right now. Why not list some gear?</h2>
 						<Link to='/sell/listings/new'>
-							<button>List an Item</button>
+							<button id='list-btn'>List an Item</button>
 						</Link>
 					</div>
 				) : (
