@@ -39,7 +39,9 @@
 	align-items: center;
 	justify-content: flex-end;
 	gap: 30px;
-	margin: 25px;
+	margin-top: 25px;
+	margin-bottom: 0px;
+	padding-bottom: 0;
 }
 .select-border-bottom {
 	border-bottom: 1px solid #cd7f32;

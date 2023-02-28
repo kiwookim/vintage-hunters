@@ -77,23 +77,24 @@ export default function ShopDetails() {
 					<Link>Reviews</Link> */}
 				</nav>
 				<h2 id='results-tag'>{thisShop.Listings.length} Results</h2>
-				{thisShop.Listings.length === 0 && (
+				{thisShop.Listings.length === 0 ? (
 					<div className='shop-empty-container'>
 						<h2>Your shop is empty right now. Why not list some gear?</h2>
 						<Link to='/sell/listings/new'>
 							<button>List an Item</button>
 						</Link>
 					</div>
+				) : (
+					<Switch>
+						<Route>
+							<div className='all-listings-by-shop-container'>
+								{Object.values(allListingsByShop).map((listing) => (
+									<ListingCard key={listing.id} listing={listing} />
+								))}
+							</div>
+						</Route>
+					</Switch>
 				)}
-				<Switch>
-					<Route>
-						<div className='all-listings-by-shop-container'>
-							{Object.values(allListingsByShop).map((listing) => (
-								<ListingCard key={listing.id} listing={listing} />
-							))}
-						</div>
-					</Route>
-				</Switch>
 			</div>
 		</div>
 	) : (
