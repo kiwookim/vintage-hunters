@@ -1,3 +1,60 @@
 #splash-bg {
 	background-image: url(https://images.unsplash.com/photo-1620455992636-3118c85e30f6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fG11c2ljJTIwZ2VhcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60);
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 50%;
+	display: flex;
+}
+#splash-bg h1,
+small {
+	color: white;
+}
+#splash-txt {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	align-content: center;
+	gap: 15px;
+	margin: 35px;
+}
+#splash-bottom-half h2 {
+	margin: 35px;
+	font-weight: 400;
+}
+#splash-bottom-half {
+	display: flex;
+	height: 50%;
+	flex-direction: column;
+}
+.seller-steps-container {
+	display: flex;
+	height: 30%;
+}
+
+.step-container {
+	background-color: #cd7f32;
+	display: flex;
+	align-items: center;
+	margin: 0 25px;
+	margin-right: 20px;
+	gap: 100px;
+	width: 100%;
+}
+.step-container {
+	width: 40%;
+}
+.step-container span {
+	margin-left: 35px;
+	font-size: 1.5em;
+	border-bottom: 1px solid rgb(232, 222, 222);
+}
+.step-txt {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+	width: 80%;
+	gap: 10px;
+	margin-top: 10px;
 }
