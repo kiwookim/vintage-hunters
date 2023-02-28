@@ -4,6 +4,7 @@ const GET_DETAILS = "/shop";
 const GET_MYSHOP = "/myshop";
 const CREATE_MYSHOP = "/myshop/create";
 const EDIT_SHOP = "/myshop/edit";
+const GET_LISTINGS_BYSHOP = "/shop/:shopId/listings";
 //ACTIONS
 const actionGetDetails = (shopDetails) => {
 	return {
@@ -15,6 +16,12 @@ const actionGetMyShop = (myShop) => {
 	return {
 		type: GET_MYSHOP,
 		payload: myShop,
+	};
+};
+const actionGetListingsByShop = (allListings) => {
+	return {
+		type: GET_LISTINGS_BYSHOP,
+		payload: allListings,
 	};
 };
 const actionCreateShop = (myShop) => {
@@ -49,6 +56,17 @@ export const thunkGetMyShop = () => async (dispatch) => {
 		return myShop;
 	}
 };
+//get All Listings by SHOP
+export const thunkAllListingsByShop = (shopId) => async (dispatch) => {
+	const response = await csrfFetch(`/api/shop/${shopId}/listings`);
+	if (response.ok) {
+		const allListingsByShop = await response.json();
+		console.log("REDUCER", allListingsByShop);
+		dispatch(actionGetListingsByShop(allListingsByShop));
+		return allListingsByShop;
+	}
+};
+
 //create shop
 export const thunkCreateShop = (myshop) => async (dispatch) => {
 	try {
@@ -96,10 +114,16 @@ export const thunkEditShop = (shop) => async (dispatch) => {
 		return validationError;
 	}
 };
-
+const normalize = (arr) => {
+	const resultObj = {};
+	console.log("REDUCER NORMALIZE", arr);
+	arr.forEach((element) => (resultObj[element.id] = element));
+	return resultObj;
+};
 const initialState = {
 	shop: {},
 	myshop: {},
+	shoplistings: {},
 };
 //REDUCER
 export default function shopReducer(state = initialState, action) {
@@ -118,6 +142,9 @@ export default function shopReducer(state = initialState, action) {
 		case EDIT_SHOP:
 			newState.myshop = { ...action.payload };
 			newState.shop = { ...action.payload };
+			return newState;
+		case GET_LISTINGS_BYSHOP:
+			newState.shoplistings = normalize(action.payload.Listings);
 			return newState;
 		default:
 			return state;

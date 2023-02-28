@@ -6,3 +6,11 @@
 	align-content: center;
 	flex-wrap: wrap;
 }
+.all-listings-by-shop-container {
+	display: flex;
+	justify-content: start;
+	gap: 35px;
+
+	align-content: center;
+	flex-wrap: wrap;
+}

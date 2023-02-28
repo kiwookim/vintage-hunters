@@ -54,6 +54,7 @@ export const thunkGetDetails = (listingId) => async (dispatch) => {
 		dispatch(actionGetDetails(listingDetails));
 	}
 };
+
 export const thunkCreateListing = (listing, imgObj) => async (dispatch) => {
 	try {
 		const response = await csrfFetch("/api/listings/new", {
