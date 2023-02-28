@@ -1,8 +1,17 @@
 .all-listings-container {
 	display: flex;
 	justify-content: start;
-	gap: 25px;
+	gap: 35px;
 	margin: 35px;
 	align-content: center;
 	flex-wrap: wrap;
+}
+.all-listings-by-shop-container {
+	display: flex;
+	justify-content: start;
+	gap: 35px;
+
+	align-content: center;
+	flex-wrap: wrap;
+	padding-bottom: 50px;
 }

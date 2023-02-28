@@ -19,7 +19,7 @@ function LoginFormModal() {
 			.then(closeModal)
 			.catch(async (res) => {
 				const data = await res.json();
-				if (data && data.errors) setErrors(data.errors);
+				if (data && data.errors) setErrors(Object.values(data.errors));
 			});
 	};
 	const demoLogin = () => {
@@ -29,36 +29,46 @@ function LoginFormModal() {
 	};
 
 	return (
-		<>
-			<h1>Log In</h1>
-			<form onSubmit={handleSubmit}>
+		<div className='login-signup-modal'>
+			<h1 id='login-txt'>Log In to Vintage Hunters</h1>
+			<form className='login-signup-form-container' onSubmit={handleSubmit}>
 				<ul>
 					{errors.map((error, idx) => (
-						<li key={idx}>{error}</li>
+						<li style={{ color: "red" }} key={idx}>
+							{error}
+						</li>
 					))}
 				</ul>
-				<label>
-					Username or Email
+				<div className='each-input-field'>
+					<label className='input-label-container' htmlFor='usernameemail'>
+						Username or Email
+					</label>
 					<input
+						id='usernameemail'
 						type='text'
 						value={credential}
 						onChange={(e) => setCredential(e.target.value)}
 						required
 					/>
-				</label>
-				<label>
-					Password
+				</div>
+				<div className='each-input-field'>
+					<label htmlFor='password' className='input-label-container'>
+						Password
+					</label>
 					<input
+						id='password'
 						type='password'
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 						required
 					/>
-				</label>
-				<button type='submit'>Log In</button>
+				</div>
+				<button id='login-btn' type='submit'>
+					Log In
+				</button>
 				<button onClick={demoLogin}>Demo User</button>
 			</form>
-		</>
+		</div>
 	);
 }
 

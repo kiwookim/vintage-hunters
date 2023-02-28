@@ -1,7 +1,7 @@
 const express = require("express");
 const { requireAuth } = require("../../utils/auth");
-const { Shop, Listing } = require("../../db/models");
-const { validateCreateShop } = require('../../utils/validators');
+const { Shop, Listing, ListingImage } = require("../../db/models");
+const { validateCreateShop } = require("../../utils/validators");
 const router = express.Router();
 
 router.get("/my", requireAuth, async (req, res) => {
@@ -24,6 +24,47 @@ router.get("/:shopId", requireAuth, async (req, res) => {
 	});
 	return res.json(thisShop);
 });
+//get all listings by shop
+router.get("/:shopId/listings", requireAuth, async (req, res) => {
+	const { shopId } = req.params;
+	const payload = [];
+	// const listingsByShop = await Listing.findAll({
+	// 	where: {
+	// 		shopId: Number(shopId),
+	// 	},
+	// 	include: [{ model: ListingImage }],
+	// });
+	// console.log("BACEKDN");
+	// console.log(listingsByShop);
+	// for (let listing of listingsByShop) {
+	// 	payload.push(listing);
+	// }
+	// console.log(payload);
+	// return res.json(payload);
+	const listingsByShop = await Listing.findAll({
+		where: {
+			shopId: Number(shopId),
+		},
+	});
+	for (let listing of listingsByShop) {
+		listing = listing.toJSON();
+		let previewUrl = await ListingImage.findAll({
+			where: {
+				listingId: listing.id,
+				preview: true,
+			},
+		});
+		const lastPreviewImg = previewUrl[previewUrl.length - 1];
+		if (previewUrl.length) {
+			listing.PreviewImage = lastPreviewImg.url;
+		} else {
+			listing.PreviewImage = "N/A";
+		}
+		payload.push(listing);
+	}
+	return res.json({ Listings: payload });
+});
+
 router.post("/", requireAuth, validateCreateShop, async (req, res) => {
 	const currUserId = req.user.id;
 	const { city, state, profileUrl, bannerImgUrl, name, description } = req.body;
@@ -60,7 +101,7 @@ router.put("/my/edit", requireAuth, validateCreateShop, async (req, res) => {
 		name,
 		description,
 	});
-	console.log('BACNEND ROUTE', editedShop.toJSON())
+	console.log("BACNEND ROUTE", editedShop.toJSON());
 	// console.log("INSIDE EDIT SHOP BACKEND ROUTE", editedShop.toJSON());
 	return res.json(editedShop);
 });

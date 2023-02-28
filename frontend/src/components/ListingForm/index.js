@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { countries, categories, conditions } from "../../choices";
@@ -7,7 +7,7 @@ import {
 	thunkEditListing,
 } from "../../store/listingsReducer";
 import "./ListingForm.css";
-export default function ListingForm({ mainPhoto,listing, formType }) {
+export default function ListingForm({ mainPhoto, listing, formType }) {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const [brandName, setBrandName] = useState(listing.brandName);
@@ -52,6 +52,7 @@ export default function ListingForm({ mainPhoto,listing, formType }) {
 			url: photoUrl,
 			preview: true,
 		};
+
 		// dispatch based on TYPE (Create Listing or Edit Listing)
 		if (formType === "Create Listing") {
 			const returnedListing = await dispatch(
@@ -76,6 +77,7 @@ export default function ListingForm({ mainPhoto,listing, formType }) {
 			}
 		}
 	};
+
 	return (
 		<section className='section-container'>
 			<h3 className='form-title'>Tell us about your gear</h3>
@@ -195,7 +197,7 @@ export default function ListingForm({ mainPhoto,listing, formType }) {
 						onChange={(e) => setCondition(e.target.value)}
 						value={condition}
 					>
-						<option>Please choose an option</option>
+						<option>{}</option>
 						{conditions.map((category) => (
 							<option key={category}>{category}</option>
 						))}

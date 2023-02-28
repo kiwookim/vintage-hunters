@@ -1,0 +1,27 @@
+.login-signup-modal {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	padding: 20px;
+	width: 570px;
+}
+.login-signup-form-container {
+	display: flex;
+	flex-direction: column;
+	gap: 25px;
+}
+
+#login-btn {
+	background-color: black;
+	color: white;
+}
+#login-txt {
+	text-align: center;
+}
+#signup-btn {
+	background-color: black;
+	color: white;
+}
+#signuptext {
+	text-align: center;
+}

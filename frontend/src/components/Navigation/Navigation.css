@@ -13,3 +13,18 @@
 	display: flex;
 	align-items: center;
 }
+.hidden {
+	display: none;
+}
+
+#sell-btn {
+	margin-right: 10px;
+}
+#logo-text {
+	padding-left: 0;
+	font-family: "Climate Crisis", cursive;
+}
+#navlogin {
+	display: flex;
+	gap: 10px;
+}

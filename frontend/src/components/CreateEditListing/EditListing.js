@@ -1,19 +1,22 @@
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { thunkGetDetails } from "../../store/listingsReducer";
 import ListingForm from "../ListingForm";
 
 export default function EditListing() {
 	const { listingId } = useParams();
-	// const listing = useSelector(
-	// 	(state) => state.listings.allListings[Number(listingId)]
-	// );
+	const [isLoaded, setIsLoaded] = useState(false);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(thunkGetDetails(listingId)).then(() => setIsLoaded(true));
+	}, []);
 	const listing = useSelector((state) => state.listings.singleListing);
-	const mainPhoto = listing.ListingImages[listing.ListingImages.length - 1].url;
-	console.log(mainPhoto);
-	console.log(listing);
-	return listing ? (
+
+	return isLoaded ? (
 		<ListingForm
-			mainPhoto={mainPhoto}
+			mainPhoto={listing.ListingImages[listing.ListingImages.length - 1].url}
 			listing={listing}
 			formType='Edit Listing'
 		/>

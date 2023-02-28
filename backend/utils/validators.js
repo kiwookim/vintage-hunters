@@ -21,8 +21,13 @@ const validateCreateListing = [
 		.isLength({ min: 50 })
 		.withMessage("description must be 50 characters or more"),
 	check("listingPrice")
-		.isDecimal()
-		.withMessage("Please round up or down your listing price")
+		.custom((value, { req }) => {
+			const price = req.body.listingPrice;
+			if (price.toString().includes(".")) {
+				throw new ValidationError("please round your price up or down");
+			}
+			return true;
+		})
 		.custom((value, { req }) => {
 			const price = req.body.listingPrice;
 			if (price <= 0) {
@@ -32,7 +37,7 @@ const validateCreateListing = [
 		}),
 	check("shippingCost").custom((value, { req }) => {
 		const price = req.body.listingPrice;
-		if (price <= 0) {
+		if (price < 0) {
 			throw new ValidationError("shipping cost cannot be a negative number");
 		}
 		return true;

@@ -41,71 +41,81 @@ function SignupFormModal() {
 	};
 
 	return (
-		<>
-			<h1>Sign Up</h1>
-			<form onSubmit={handleSubmit}>
+		<div className='login-signup-modal'>
+			<h1 id='signuptext'>Sign Up</h1>
+			<form className='login-signup-form-container' onSubmit={handleSubmit}>
 				<ul>
 					{errors.map((error, idx) => (
-						<li key={idx}>{error}</li>
+						<li style={{ color: "red" }} key={idx}>
+							{error}
+						</li>
 					))}
 				</ul>
-				<label>
-					Email
+				<div className='each-input-field'>
+					<label htmlFor='emailsignup'>Email</label>
 					<input
+						id='emailsignup'
 						type='text'
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 						required
 					/>
-				</label>
-				<label>
-					Username
+				</div>
+				<div className='each-input-field'>
+					<label htmlFor='username'>Username</label>
 					<input
+						id='username'
 						type='text'
 						value={username}
 						onChange={(e) => setUsername(e.target.value)}
 						required
 					/>
-				</label>
-				<label>
-					First Name
+				</div>
+				<div className='each-input-field'>
+					<label htmlFor='firstname'>First Name</label>
 					<input
+						id='firstname'
 						type='text'
 						value={firstName}
 						onChange={(e) => setFirstName(e.target.value)}
 						required
 					/>
-				</label>
-				<label>
-					Last Name
+				</div>
+				<div className='each-input-field'>
+					<label htmlFor='lastname'>Last Name</label>
 					<input
+						id='lastname'
 						type='text'
 						value={lastName}
 						onChange={(e) => setLastName(e.target.value)}
 						required
 					/>
-				</label>
-				<label>
-					Password
+				</div>
+				<div className='each-input-field'>
+					<label htmlFor='signuppassword'>Password</label>
 					<input
+						id='signuppassword'
 						type='password'
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 						required
 					/>
-				</label>
-				<label>
-					Confirm Password
+				</div>
+				<div className='each-input-field'>
+					<label htmlFor='confirmpassword'>Confirm Password</label>
 					<input
+						id='confirmpassword'
 						type='password'
 						value={confirmPassword}
 						onChange={(e) => setConfirmPassword(e.target.value)}
 						required
 					/>
-				</label>
-				<button type='submit'>Sign Up</button>
+				</div>
+				<button id='signup-btn' type='submit'>
+					Sign Up
+				</button>
 			</form>
-		</>
+		</div>
 	);
 }
 

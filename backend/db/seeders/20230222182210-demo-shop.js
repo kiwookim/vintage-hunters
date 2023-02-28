@@ -52,7 +52,7 @@ module.exports = {
 					city: "Seattle",
 					state: "Washington",
 					profileUrl:
-						"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.cL7I__td7Nfsz5ElpVdVcgHaHa%26pid%3DApi&f=1&ipt=fc8f0453d05d40dbd320d52930877d4a227f61d0ef93f0629da0f8429394da5e&ipo=images",
+						"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.ghTClzMsEuMgzAUdUdEFkwAAAA%26pid%3DApi&f=1&ipt=06317ced1d4d1b2bdb15673085501e9361b3d59bf859fa055943b6bb76a1776a&ipo=images",
 					bannerImgUrl:
 						"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.VoXO6QAJnMcud_Oig38WBQHaB2%26pid%3DApi&f=1&ipt=57ff4b15659cbb31bbbb5ba71280eabf6014a6351282c6f43c4d74084d1e4b8f&ipo=images",
 					name: "Joe's Shop",
@@ -64,7 +64,7 @@ module.exports = {
 					city: "Los Angeles",
 					state: "California",
 					profileUrl:
-						"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.V4Q6OWbSOXlhwzBFQAFPdAHaKQ%26pid%3DApi&f=1&ipt=65d50949a637ff99389e6e86a9d9738943259c47349e27f590e0b8706a510eeb&ipo=images",
+						"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.lJKVsRCqX_RT4DHnKzrTlQHaFM%26pid%3DApi&f=1&ipt=d81ac907f654f2816b108cbcbfd639e6b265834de8d45f649f0f4cae771f2a9f&ipo=images",
 					bannerImgUrl:
 						"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.VoXO6QAJnMcud_Oig38WBQHaB2%26pid%3DApi&f=1&ipt=57ff4b15659cbb31bbbb5ba71280eabf6014a6351282c6f43c4d74084d1e4b8f&ipo=images",
 					name: "Pat's Shop",

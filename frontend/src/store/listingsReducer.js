@@ -54,6 +54,7 @@ export const thunkGetDetails = (listingId) => async (dispatch) => {
 		dispatch(actionGetDetails(listingDetails));
 	}
 };
+
 export const thunkCreateListing = (listing, imgObj) => async (dispatch) => {
 	try {
 		const response = await csrfFetch("/api/listings/new", {
@@ -155,6 +156,7 @@ export default function listingsReducer(state = initialState, action) {
 			newState.allListings = normalize(action.payload.Listings);
 			return newState;
 		case GET_DETAILS:
+			//more nested need specific
 			newState.singleListing = { ...action.payload };
 			return newState;
 		case CREATE_LISTING:

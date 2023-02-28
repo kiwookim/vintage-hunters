@@ -30,6 +30,15 @@ export default function ListingDetails() {
 			<button onClick={handleDelete}>Delete Listing</button>
 		</div>
 	);
+	const createAt = new Date(thisListing.createdAt);
+	const dateNow = new Date();
+	const diffInDays = (dateNow - createAt) / (1000 * 3600 * 24);
+	let listedTime;
+	if (diffInDays <= 1) {
+		listedTime = "today";
+	} else {
+		listedTime = `${diffInDays} days ago`;
+	}
 
 	return isLoaded ? (
 		<section id='listing-details-section-container'>
@@ -42,7 +51,10 @@ export default function ListingDetails() {
 							(ev.target.src =
 								"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.jr_ZltLCrkS1ZmAB3-B_IgHaGZ%26pid%3DApi&f=1&ipt=976e27ed4e4601b5fc08f5fc9b8f07ef671de7909421e65a56d3997ada849a9e&ipo=images")
 						}
-						src={thisListing.ListingImages[thisListing.ListingImages.length-1]?.url}
+						src={
+							thisListing.ListingImages[thisListing.ListingImages.length - 1]
+								?.url
+						}
 						alt={thisListing.listingTitle}
 					/>
 				</div>
@@ -50,7 +62,7 @@ export default function ListingDetails() {
 				<div className='ld-top-right'>
 					<div>
 						<Link to={`/shop/${thisListing.Shop.id}`}>
-							<h4>{thisListing.Shop.name}</h4>
+							<h4 id='ld-shop-name'>{thisListing.Shop.name}</h4>
 						</Link>
 						<div className='city-state'>
 							<small>{thisListing.Shop.city},</small>
@@ -100,7 +112,7 @@ export default function ListingDetails() {
 					<ul className='specs-list'>
 						<div className='each-spec-container'>
 							<h5 className='each-spec-name'>Listed</h5>
-							<span>calculate time</span>
+							<span>{listedTime}</span>
 						</div>
 						<div className='each-spec-container'>
 							<h5 className='each-spec-name'>Condition</h5>
@@ -118,16 +130,20 @@ export default function ListingDetails() {
 							<h5 className='each-spec-name'>Categories</h5>
 							<span>{thisListing.category}</span>
 						</div>
-						<div className='each-spec-container'>
-							<h5 className='each-spec-name'>Year</h5>
-							<span>{thisListing.year && thisListing.year}</span>
-						</div>
-						<div className='each-spec-container'>
-							<h5 className='each-spec-name'>Made In</h5>
-							<span>
-								{thisListing.originCountry && thisListing.originCountry}
-							</span>
-						</div>
+						{thisListing.year !== "" && (
+							<div className='each-spec-container'>
+								<h5 className='each-spec-name'>Year</h5>
+								<span>{thisListing.year && thisListing.year}</span>
+							</div>
+						)}
+						{thisListing.originCountry !== "" && (
+							<div className='each-spec-container'>
+								<h5 className='each-spec-name'>Made In</h5>
+								<span>
+									{thisListing.originCountry && thisListing.originCountry}
+								</span>
+							</div>
+						)}
 					</ul>
 				</div>
 			</div>
