@@ -73,8 +73,8 @@ export default function ShopDetails() {
 					<Link className={path ? "select-border-bottom" : ""} to={`${url}`}>
 						Listings <span>({thisShop.Listings.length})</span>
 					</Link>
-
-					<Link>Reviews</Link>
+					{/*
+					<Link>Reviews</Link> */}
 				</nav>
 				<h2 id='results-tag'>{thisShop.Listings.length} Results</h2>
 				{thisShop.Listings.length === 0 && (
