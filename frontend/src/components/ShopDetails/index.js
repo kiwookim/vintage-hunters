@@ -38,7 +38,15 @@ export default function ShopDetails() {
 	return isLoaded ? (
 		<div className='shop-profile-container'>
 			{thisShop.bannerImgUrl && (
-				<img id='banner-img' src={thisShop.bannerImgUrl} alt='banner image' />
+				<img
+					onError={(e) =>
+						(e.target.src =
+							"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.MgzfH47SJ5Jy_Y8n3CmUaQHaC_%26pid%3DApi&f=1&ipt=a98769753f29d4110a2aebf8b7b93911539ac0d27b539a34b4d65385cc32594b&ipo=images")
+					}
+					id='banner-img'
+					src={thisShop.bannerImgUrl}
+					alt='banner image'
+				/>
 			)}
 			<div className='profile-top-container'>
 				<img

@@ -5,11 +5,15 @@ export default function SplashPage() {
 		<>
 			<div id='splash-bg'>
 				<div id='splash-txt'>
-					<h1>Find Your Dream Gear</h1>
-					<small>
+					<h1 id='splash-title'>Find Your Dream Gear</h1>
+					<small className='intro-txt'>
 						Join small community of music lovers who use Vintage Hunters
 						<br /> to find your dream gear
 					</small>
+					<div className='about-container'>
+						<span className='about-links'>LinkedIn</span>
+						<span className='about-links'>GitHub</span>
+					</div>
 				</div>
 			</div>
 			<div id='splash-bottom-half'>
