@@ -2,6 +2,7 @@ const express = require("express");
 const { requireAuth } = require("../../utils/auth");
 const { Shop, Listing, ListingImage } = require("../../db/models");
 const { validateCreateShop } = require("../../utils/validators");
+const { singleMulterUpload, singlePublicFileUpload } = require("../../awsS3");
 const router = express.Router();
 
 router.get("/my", requireAuth, async (req, res) => {
@@ -65,45 +66,64 @@ router.get("/:shopId/listings", requireAuth, async (req, res) => {
 	return res.json({ Listings: payload });
 });
 
-router.post("/", requireAuth, validateCreateShop, async (req, res) => {
-	const currUserId = req.user.id;
-	const { city, state, profileUrl, bannerImgUrl, name, description } = req.body;
-
-	const myShop = await Shop.create({
-		userId: currUserId,
-		city,
-		state,
-		profileUrl:
-			profileUrl === ""
-				? "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.Cl56H6WgxJ8npVqyhefTdQHaHa%26pid%3DApi&f=1&ipt=11e91deec8c46277a423de237d3e38748d21acf60fd2cbb378f9ea8b944f1363&ipo=images"
-				: profileUrl,
-		bannerImgUrl,
-		name,
-		description,
-	});
-	return res.json(myShop);
-});
-//edit myshop
-router.put("/my/edit", requireAuth, validateCreateShop, async (req, res) => {
-	const currUserId = req.user.id;
-	const { city, state, profileUrl, bannerImgUrl, name, description } = req.body;
-	const myShop = await Shop.findOne({
-		where: {
+router.post(
+	"/",
+	requireAuth,
+	singleMulterUpload("image"),
+	validateCreateShop,
+	async (req, res) => {
+		const currUserId = req.user.id;
+		const { city, state, profileUrl, bannerImgUrl, name, description } =
+			req.body;
+		const shopProfileImg = await singlePublicFileUpload(req.file);
+		console.log("profileUrl", profileUrl);
+		console.log("shopProfileImg", shopProfileImg);
+		console.log("INSIDE BACKEND AWS");
+		const myShop = await Shop.create({
 			userId: currUserId,
-		},
-		include: [{ model: Listing }],
-	});
-	const editedShop = await myShop.update({
-		city,
-		state,
-		profileUrl,
-		bannerImgUrl,
-		name,
-		description,
-	});
-	console.log("BACNEND ROUTE", editedShop.toJSON());
-	// console.log("INSIDE EDIT SHOP BACKEND ROUTE", editedShop.toJSON());
-	return res.json(editedShop);
-});
+			city,
+			state,
+			profileUrl: shopProfileImg,
+			// profileUrl === ""
+			// 	? "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.Cl56H6WgxJ8npVqyhefTdQHaHa%26pid%3DApi&f=1&ipt=11e91deec8c46277a423de237d3e38748d21acf60fd2cbb378f9ea8b944f1363&ipo=images"
+			// 	: profileUrl,
+			bannerImgUrl,
+			name,
+			description,
+		});
+		console.log('CREATE SHOP BACKEND IS HIT')
+		return res.json(myShop);
+	}
+);
+//edit myshop
+router.put(
+	"/my/edit",
+	requireAuth,
+	singleMulterUpload("image"),
+	validateCreateShop,
+	async (req, res) => {
+		const currUserId = req.user.id;
+		const { city, state, profileUrl, bannerImgUrl, name, description } =
+			req.body;
+		const shopProfileImg = await singlePublicFileUpload(req.file);
+		const myShop = await Shop.findOne({
+			where: {
+				userId: currUserId,
+			},
+			include: [{ model: Listing }],
+		});
+		const editedShop = await myShop.update({
+			city,
+			state,
+			profileUrl: shopProfileImg,
+			bannerImgUrl,
+			name,
+			description,
+		});
+		console.log("BACNEND ROUTE", editedShop.toJSON());
+		// console.log("INSIDE EDIT SHOP BACKEND ROUTE", editedShop.toJSON());
+		return res.json(editedShop);
+	}
+);
 
 module.exports = router;

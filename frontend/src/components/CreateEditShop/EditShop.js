@@ -10,6 +10,7 @@ export default function EditShop() {
 		dispatch(thunkGetMyShop()).then(() => setIsLoaded(true));
 	}, []);
 	const shop = useSelector((state) => state.shop.myshop);
+	console.log("EDIT_SHOP_myshop", shop);
 	return isLoaded ? (
 		<ShopForm shop={shop} formType='Edit Shop' />
 	) : (

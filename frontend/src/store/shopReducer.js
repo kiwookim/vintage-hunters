@@ -69,13 +69,23 @@ export const thunkAllListingsByShop = (shopId) => async (dispatch) => {
 
 //create shop
 export const thunkCreateShop = (myshop) => async (dispatch) => {
+	const { city, state, profileUrl, bannerImgUrl, name, description } = myshop;
+	const formData = new FormData();
+	formData.append("city", city);
+	formData.append("state", state);
+	formData.append("bannerImgUrl", bannerImgUrl);
+	formData.append("name", name);
+	formData.append("description", description);
+	if (profileUrl) formData.append("image", profileUrl);
+	console.log("INSIDE REDUCER-AWS");
 	try {
 		const response = await csrfFetch("/api/shop", {
 			method: "POST",
 			headers: {
-				"Content-Type": "application/json",
+				"Content-Type": "multipart/form-data",
 			},
-			body: JSON.stringify(myshop),
+			// body: JSON.stringify(myshop),
+			body: formData,
 		});
 		if (response.ok) {
 			const myShop = await response.json();
@@ -90,13 +100,22 @@ export const thunkCreateShop = (myshop) => async (dispatch) => {
 };
 //edit shop
 export const thunkEditShop = (shop) => async (dispatch) => {
+	const { city, state, profileUrl, bannerImgUrl, name, description } = shop;
+	const formData = new FormData();
+	formData.append("city", city);
+	formData.append("state", state);
+	formData.append("bannerImgUrl", bannerImgUrl);
+	formData.append("name", name);
+	formData.append("description", description);
+	if (profileUrl) formData.append("image", profileUrl);
 	try {
 		const response = await csrfFetch("/api/shop/my/edit", {
 			method: "PUT",
 			headers: {
-				"Content-Type": "application/json",
+				"Content-Type": "multipart/form-data",
 			},
-			body: JSON.stringify(shop),
+			body: formData,
+			// body: formData,
 		});
 		console.log("IN EDIT SHOP REDUCER");
 		if (response.ok) {
