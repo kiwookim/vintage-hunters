@@ -11,8 +11,19 @@ export default function SplashPage() {
 						<br /> to find your dream gear
 					</small>
 					<div className='about-container'>
-						<span className='about-links'>LinkedIn</span>
-						<span className='about-links'>GitHub</span>
+						<span className='about-links'>
+							<a
+								href='https://www.linkedin.com/in/kiwookimswe/'
+								target='_blank'
+							>
+								<i class='fa-brands fa-linkedin'></i>
+							</a>
+						</span>
+						<span className='about-links'>
+							<a target='_blank' href='https://github.com/kiwookim'>
+								<i class='fa-brands fa-github'></i>
+							</a>
+						</span>
 					</div>
 				</div>
 			</div>

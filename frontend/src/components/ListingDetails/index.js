@@ -36,8 +36,10 @@ export default function ListingDetails() {
 	let listedTime;
 	if (diffInDays <= 1) {
 		listedTime = "today";
+	} else if (diffInDays > 1 && diffInDays < 2) {
+		listedTime = "1 day ago";
 	} else {
-		listedTime = `${diffInDays} days ago`;
+		listedTime = `${Math.floor(diffInDays)} days ago`;
 	}
 
 	return isLoaded ? (
