@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkCreateShop, thunkEditShop } from "../../store/shopReducer";
+import "./ShopForm.css";
 export default function ShopForm({ shop, formType }) {
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -17,15 +18,13 @@ export default function ShopForm({ shop, formType }) {
 	const [validationErrors, setValidationErrors] = useState([]);
 
 	// const currUserId = useSelector((state) => state.session.user.id);
-	const defaultProfile = ()=> {
-		
-	}
+	console.log("CURRENT PROFILE URL", shop.profileUrl);
 	const updateFile = (e) => {
 		const file = e.target.files[0];
 		console.log("files", e.target.files);
 		if (file) setProfileUrl(file);
 
-		// if (file) setPreviewProfile(URL.createObjectURL(file));
+		if (file) setPreviewProfile(URL.createObjectURL(file));
 	};
 
 	const handleSubmit = async (e) => {
@@ -118,31 +117,32 @@ export default function ShopForm({ shop, formType }) {
 						type='url'
 					/> */}
 					{/* AWS tryout */}
-					<input onChange={updateFile} id='profile-pic' type='file' />
-					{/* {formType === "Edit Shop" ? (
+					{/* <div class="container">
+      <div class="button-wrap">
+        <label class="button" for="upload">Upload File</label>
+        <input id="upload" type="file">
+      </div>
+    </div> */}
+					<div className='img-btn-container'>
+						<div clasName='btn-wrap'>
+							<label className='button' htmlFor='profile-pic'></label>
+							<input
+								name='hi'
+								onChange={updateFile}
+								id='profile-pic'
+								type='file'
+							/>
+						</div>
+					</div>
+
+					{previewProfile !== "" && (
 						<img
+							id='preview-shop-img'
 							style={{ width: "100px", height: "100px", marginTop: "5px" }}
 							src={previewProfile}
-							alt='profile-pic'
+							alt='preview image'
 						/>
-					) : (
-						<img
-							style={{ width: "100px", height: "100px", marginTop: "5px" }}
-							src={previewProfile}
-							alt='profile-pic'
-						/>
-					)} */}
-					{/* <img
-						style={{ width: "100px", height: "100px", marginTop: "5px" }}
-						src={previewProfile}
-						alt='profile-pic'
-					/> */}
-					{/*
-					<img
-						style={{ width: "100px", height: "100px", marginTop: "5px" }}
-						src={formType='Edit Shop'?previewProfile : profileUrl}
-						alt='profile-pic'
-					/> */}
+					)}
 				</div>
 				<div className='each-input-field'>
 					<label className='input-label-container' htmlFor='banner'>

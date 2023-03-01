@@ -75,15 +75,20 @@ router.post(
 		const currUserId = req.user.id;
 		const { city, state, profileUrl, bannerImgUrl, name, description } =
 			req.body;
-		const shopProfileImg = await singlePublicFileUpload(req.file);
-		console.log("profileUrl", profileUrl);
-		console.log("shopProfileImg", shopProfileImg);
-		console.log("INSIDE BACKEND AWS");
+		// console.log("BACKEND POST FOR AWS SHOP IMAGE-INCOMING files", req.file);
+		let outgoingURL =
+			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.Cl56H6WgxJ8npVqyhefTdQHaHa%26pid%3DApi&f=1&ipt=11e91deec8c46277a423de237d3e38748d21acf60fd2cbb378f9ea8b944f1363&ipo=images";
+		if (req.file !== undefined) {
+			outgoingURL = await singlePublicFileUpload(req.file);
+		}
+		// console.log("profileUrl", profileUrl);
+		// console.log("shopProfileImg", shopProfileImg);
+		// console.log("INSIDE BACKEND AWS");
 		const myShop = await Shop.create({
 			userId: currUserId,
 			city,
 			state,
-			profileUrl: shopProfileImg,
+			profileUrl: outgoingURL,
 			// profileUrl === ""
 			// 	? "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.Cl56H6WgxJ8npVqyhefTdQHaHa%26pid%3DApi&f=1&ipt=11e91deec8c46277a423de237d3e38748d21acf60fd2cbb378f9ea8b944f1363&ipo=images"
 			// 	: profileUrl,
@@ -91,7 +96,7 @@ router.post(
 			name,
 			description,
 		});
-		console.log('CREATE SHOP BACKEND IS HIT')
+		// console.log("CREATE SHOP BACKEND IS HIT");
 		return res.json(myShop);
 	}
 );
@@ -105,17 +110,20 @@ router.put(
 		const currUserId = req.user.id;
 		const { city, state, profileUrl, bannerImgUrl, name, description } =
 			req.body;
-		const shopProfileImg = await singlePublicFileUpload(req.file);
 		const myShop = await Shop.findOne({
 			where: {
 				userId: currUserId,
 			},
 			include: [{ model: Listing }],
 		});
+		let outgoingURL = myShop.profileUrl;
+		if (req.file !== undefined) {
+			outgoingURL = await singlePublicFileUpload(req.file);
+		}
 		const editedShop = await myShop.update({
 			city,
 			state,
-			profileUrl: shopProfileImg,
+			profileUrl: outgoingURL,
 			bannerImgUrl,
 			name,
 			description,
