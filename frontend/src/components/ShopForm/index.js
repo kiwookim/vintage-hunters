@@ -17,11 +17,14 @@ export default function ShopForm({ shop, formType }) {
 	const [validationErrors, setValidationErrors] = useState([]);
 
 	// const currUserId = useSelector((state) => state.session.user.id);
-
+	const defaultProfile = ()=> {
+		
+	}
 	const updateFile = (e) => {
 		const file = e.target.files[0];
 		console.log("files", e.target.files);
 		if (file) setProfileUrl(file);
+
 		// if (file) setPreviewProfile(URL.createObjectURL(file));
 	};
 
