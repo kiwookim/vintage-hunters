@@ -122,10 +122,17 @@ export const thunkEditShop = (shop) => async (dispatch) => {
 	const formData = new FormData();
 	formData.append("city", city);
 	formData.append("state", state);
-	formData.append("bannerImgUrl", bannerImgUrl);
 	formData.append("name", name);
 	formData.append("description", description);
-	if (profileUrl) formData.append("image", profileUrl);
+	// if (profileUrl) formData.append("image", profileUrl);
+	if (profileUrl) {
+		formData.append("images", profileUrl);
+		formData.append("profileUrl", profileUrl.name);
+	}
+	if (bannerImgUrl) {
+		formData.append("images", bannerImgUrl);
+		formData.append("bannerImgUrl", bannerImgUrl.name);
+	}
 	try {
 		const response = await csrfFetch("/api/shop/my/edit", {
 			method: "PUT",
@@ -153,7 +160,7 @@ export const thunkEditShop = (shop) => async (dispatch) => {
 };
 const normalize = (arr) => {
 	const resultObj = {};
-	console.log("REDUCER NORMALIZE", arr);
+	// console.log("REDUCER NORMALIZE", arr);
 	arr.forEach((element) => (resultObj[element.id] = element));
 	return resultObj;
 };

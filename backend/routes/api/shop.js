@@ -128,27 +128,44 @@ router.post(
 router.put(
 	"/my/edit",
 	requireAuth,
-	singleMulterUpload("image"),
+	multipleMulterUpload("images"),
 	validateCreateShop,
 	async (req, res) => {
 		const currUserId = req.user.id;
-		const { city, state, profileUrl, bannerImgUrl, name, description } =
-			req.body;
+		const { city, state, name, description } = req.body;
 		const myShop = await Shop.findOne({
 			where: {
 				userId: currUserId,
 			},
 			include: [{ model: Listing }],
 		});
-		let outgoingURL = myShop.profileUrl;
-		if (req.file !== undefined) {
-			outgoingURL = await singlePublicFileUpload(req.file);
+		// let outgoingURL = myShop.profileUrl;
+		// if (req.file !== undefined) {
+		// 	outgoingURL = await singlePublicFileUpload(req.file);
+		// }
+		console.log(req.files);
+		console.log("INSIDE MYSHOP EDIT", req.body);
+		const { profileUrl, bannerImgUrl } = req.body;
+		let profileUrlAWS = myShop.profileUrl;
+		let bannerImgUrlAWS = myShop.bannerImgUrl;
+
+		if (profileUrl !== "undefined") {
+			const profileUrlFILE = req.files.find(
+				(file) => file.originalname === profileUrl
+			);
+			profileUrlAWS = await singlePublicFileUpload(profileUrlFILE);
+		}
+		if (bannerImgUrl !== "undefined") {
+			const bannerImgUrlFILE = req.files.find(
+				(file) => file.originalname === bannerImgUrl
+			);
+			bannerImgUrlAWS = await singlePublicFileUpload(bannerImgUrlFILE);
 		}
 		const editedShop = await myShop.update({
 			city,
 			state,
-			profileUrl: outgoingURL,
-			bannerImgUrl,
+			profileUrl: profileUrlAWS,
+			bannerImgUrl: bannerImgUrlAWS,
 			name,
 			description,
 		});
