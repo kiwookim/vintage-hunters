@@ -73,13 +73,31 @@ export const thunkCreateShop = (myshop) => async (dispatch) => {
 	const formData = new FormData();
 	formData.append("city", city);
 	formData.append("state", state);
-	formData.append("bannerImgUrl", bannerImgUrl);
+	// formData.append("bannerImgUrl", bannerImgUrl);
 	formData.append("name", name);
 	formData.append("description", description);
-	if (profileUrl) formData.append("image", profileUrl);
-	console.log("INSIDE REDUCER-AWS");
+
+	// if (images && images.length !== 0) {
+	//   for (var i = 0; i < images.length; i++) {
+	//     formData.append("images", images[i]);
+	//   }
+	// }
+
+	if (profileUrl) {
+		formData.append("images", profileUrl);
+		formData.append("profileUrl", profileUrl.name);
+	}
+	if (bannerImgUrl) {
+		formData.append("images", bannerImgUrl);
+		formData.append("bannerImgUrl", bannerImgUrl.name);
+	}
+	// if (profileUrl) formData.append("image", profileUrl);
+	// if (bannerImgUrl) formData.append("bannerImgUrl", bannerImgUrl);
+	console.log("profileUrl", profileUrl);
+	console.log("bannerImgUrl", bannerImgUrl);
+	// console.log("INSIDE REDUCER-AWS");
 	try {
-		const response = await csrfFetch("/api/shop", {
+		const response = await csrfFetch("/api/shop/", {
 			method: "POST",
 			headers: {
 				"Content-Type": "multipart/form-data",

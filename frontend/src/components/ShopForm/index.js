@@ -12,19 +12,35 @@ export default function ShopForm({ shop, formType }) {
 	// console.log("PROFILE URL", shop.profileUrl);
 	const [profileUrl, setProfileUrl] = useState(shop.profileUrl);
 	const [previewProfile, setPreviewProfile] = useState(shop.profileUrl);
+	const [previewBanner, setPreviewBanner] = useState(shop.bannerImgUrl);
 	const [bannerImgUrl, setBannerImgUrl] = useState(shop.bannerImgUrl);
 	const [name, setName] = useState(shop.name);
 	const [description, setDescription] = useState(shop.description);
 	const [validationErrors, setValidationErrors] = useState([]);
 
 	// const currUserId = useSelector((state) => state.session.user.id);
-	console.log("CURRENT PROFILE URL", shop.profileUrl);
+	// console.log("CURRENT PROFILE URL", shop.profileUrl);
 	const updateFile = (e) => {
 		const file = e.target.files[0];
-		console.log("files", e.target.files);
-		if (file) setProfileUrl(file);
-
-		if (file) setPreviewProfile(URL.createObjectURL(file));
+		// console.log("files", e.target.files);
+		if (file) {
+			setProfileUrl(file);
+			setPreviewProfile(URL.createObjectURL(file));
+		} else {
+			setProfileUrl(shop.profileUrl);
+			setPreviewProfile(shop.profileUrl);
+		}
+	};
+	const updateBannerUrl = (e) => {
+		const file = e.target.files[0];
+		if (file) setBannerImgUrl(file);
+		if (file) {
+			setBannerImgUrl(file);
+			setPreviewBanner(URL.createObjectURL(file));
+		} else {
+			setBannerImgUrl(shop.bannerImgUrl);
+			setPreviewBanner(shop.bannerImgUrl);
+		}
 	};
 
 	const handleSubmit = async (e) => {
@@ -148,13 +164,21 @@ export default function ShopForm({ shop, formType }) {
 					<label className='input-label-container' htmlFor='banner'>
 						Have Banner for your Shop?
 					</label>
-					<input
+					{/* <input
 						value={bannerImgUrl}
 						onChange={(e) => setBannerImgUrl(e.target.value)}
 						placeholder='banner url here'
 						id='banner'
 						type='url'
-					/>
+					/> */}
+					<input type='file' onChange={updateBannerUrl} id='banner' />
+					{previewBanner !== "" && (
+						<img
+							id='preview-banner-img'
+							src={previewBanner}
+							alt='previewBannerImg'
+						/>
+					)}
 				</div>
 				<div className='each-input-field'>
 					<label className='input-label-container' htmlFor='name'>
