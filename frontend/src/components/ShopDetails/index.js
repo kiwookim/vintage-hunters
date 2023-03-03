@@ -74,7 +74,6 @@ export default function ShopDetails() {
 					<p>{thisShop.description}</p>
 				</div>
 			</div>
-			{/* show all of this shop's listings at the bottom???? */}
 
 			<div className='shop-bottom-profile'>
 				<nav id='nested-navlink'>

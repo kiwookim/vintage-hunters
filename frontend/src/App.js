@@ -1,7 +1,7 @@
 // frontend/src/App.js
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import HomePage from "./components/HomePage";
@@ -12,6 +12,7 @@ import ListingDetails from "./components/ListingDetails";
 import CreateShop from "./components/CreateEditShop/CreateShop";
 import EditShop from "./components/CreateEditShop/EditShop";
 import ShopDetails from "./components/ShopDetails";
+import Category from "./components/Category";
 
 function App() {
 	const dispatch = useDispatch();
@@ -20,19 +21,24 @@ function App() {
 	useEffect(() => {
 		dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
 	}, [dispatch]);
-
+	const { pathname } = useLocation();
+	console.log(pathname);
 	return (
 		<>
 			<Navigation isLoaded={isLoaded} />
 			{isLoaded && (
 				<Switch>
 					<Route path='/' exact>
-						{sessionUser ? <Redirect to='/listings' /> : <SplashPage />}
+						{sessionUser ? (
+							<Redirect to='/listings/categories' />
+						) : (
+							<SplashPage />
+						)}
 					</Route>
-					<Route exact path='/listings'>
+					<Route path='/listings/categories'>
 						{sessionUser ? <HomePage /> : <Redirect to='/' />}
 					</Route>
-					<Route path='/listings/:listingId'>
+					<Route exact path='/listings/:listingId'>
 						<ListingDetails />
 					</Route>
 					<Route path='/sell/listings/new'>
