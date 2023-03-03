@@ -19,7 +19,9 @@ const validateCreateListing = [
 		.withMessage("listing title must be less than 120 characters"),
 	check("description")
 		.isLength({ min: 50 })
-		.withMessage("description must be 50 characters or more"),
+		.withMessage("description must be 50 characters or more")
+		.isLength({ max: 250 })
+		.withMessage("product description must be less than 250 characters"),
 	check("listingPrice")
 		.custom((value, { req }) => {
 			const price = req.body.listingPrice;
@@ -51,7 +53,9 @@ const validateCreateShop = [
 		.withMessage("Shop name must be 40 characters or less"),
 	check("description")
 		.isLength({ min: 50 })
-		.withMessage("shop description must be 50 characters or more"),
+		.withMessage("shop description must be 50 characters or more")
+		.isLength({ max: 250 })
+		.withMessage("shop description must be less than 250 character"),
 
 	handleValidationErrors,
 ];
