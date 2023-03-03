@@ -59,9 +59,11 @@ router.get("/:shopId/listings", requireAuth, async (req, res) => {
 				preview: true,
 			},
 		});
-		const lastPreviewImg = previewUrl[previewUrl.length - 1];
+		// const lastPreviewImg = previewUrl[previewUrl.length - 1];
+		const firstImg = previewUrl[0];
 		if (previewUrl.length) {
-			listing.PreviewImage = lastPreviewImg.url;
+			// listing.PreviewImage = lastPreviewImg.url;
+			listing.PreviewImage = firstImg.url;
 		} else {
 			listing.PreviewImage = "N/A";
 		}

@@ -144,6 +144,7 @@ export default function ShopForm({ shop, formType }) {
 							<label className='button' htmlFor='profile-pic'></label>
 							<input
 								name='hi'
+								accept='image/*'
 								onChange={updateFile}
 								id='profile-pic'
 								type='file'
@@ -171,7 +172,12 @@ export default function ShopForm({ shop, formType }) {
 						id='banner'
 						type='url'
 					/> */}
-					<input type='file' onChange={updateBannerUrl} id='banner' />
+					<input
+						accept='image/*'
+						type='file'
+						onChange={updateBannerUrl}
+						id='banner'
+					/>
 					{previewBanner !== "" && (
 						<img
 							id='preview-banner-img'

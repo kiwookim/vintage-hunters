@@ -98,7 +98,7 @@ export const thunkCreateListing = (listing, images) => async (dispatch) => {
 	}
 };
 //edit listing
-export const thunkEditListing = (listing, imgObj) => async (dispatch) => {
+export const thunkEditListing = (listing) => async (dispatch) => {
 	try {
 		const response = await csrfFetch(`/api/listings/${listing.id}/edit`, {
 			method: "PUT",
@@ -110,22 +110,22 @@ export const thunkEditListing = (listing, imgObj) => async (dispatch) => {
 		// console.log("RESPONSE", response);
 		if (response.ok) {
 			const updatedListing = await response.json();
-			console.log("INSIDE EDIT THUNK", updatedListing);
-			// return updatedListing;
-			const responseAddImage = await csrfFetch(
-				`/api/listings/${updatedListing.id}/images`,
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify(imgObj),
-				}
-			);
-			if (responseAddImage.ok) {
-				dispatch(actionEditListing(updatedListing));
-				return updatedListing;
-			}
+			// console.log("INSIDE EDIT THUNK", updatedListing);
+			// // return updatedListing;
+			// const responseAddImage = await csrfFetch(
+			// 	`/api/listings/${updatedListing.id}/images`,
+			// 	{
+			// 		method: "POST",
+			// 		headers: {
+			// 			"Content-Type": "application/json",
+			// 		},
+			// 		body: JSON.stringify(imgObj),
+			// 	}
+			// );
+			// if (responseAddImage.ok) {
+			dispatch(actionEditListing(updatedListing));
+			return updatedListing;
+			// }
 		}
 	} catch (e) {
 		const error = await e.json();
