@@ -14,6 +14,8 @@ export default function EditShop() {
 	return isLoaded ? (
 		<ShopForm shop={shop} formType='Edit Shop' />
 	) : (
-		<h1>Loading....</h1>
+		<div className='loader-container'>
+			<div className='spinner'></div>
+		</div>
 	);
 }

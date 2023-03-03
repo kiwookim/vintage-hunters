@@ -171,6 +171,8 @@ export default function ListingDetails() {
 			</div>
 		</section>
 	) : (
-		<h1>Loading...</h1>
+		<div className='loader-container'>
+			<div className='spinner'></div>
+		</div>
 	);
 }
