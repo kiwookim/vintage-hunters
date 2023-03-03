@@ -169,7 +169,7 @@ router.put(
 			name,
 			description,
 		});
-		console.log("BACNEND ROUTE", editedShop.toJSON());
+		// console.log("BACNEND ROUTE", editedShop.toJSON());
 		// console.log("INSIDE EDIT SHOP BACKEND ROUTE", editedShop.toJSON());
 		return res.json(editedShop);
 	}

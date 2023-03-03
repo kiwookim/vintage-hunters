@@ -2,7 +2,8 @@
 	border-radius: 50%;
 }
 input[type="file"] {
-	color: #cd7f32;
+	/* color: #cd7f32; */
+	color: transparent;
 }
 
 input::file-selector-button {

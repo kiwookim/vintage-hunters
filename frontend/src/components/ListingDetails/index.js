@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams, useHistory, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -10,11 +10,16 @@ export default function ListingDetails() {
 	const { listingId } = useParams();
 	const history = useHistory();
 	const [isLoaded, setIsLoaded] = useState(false);
+	const [imgIdx, setImgIdx] = useState(0);
+	// const [mainImg, setMainImg] = useState("");
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(thunkGetDetails(listingId)).then(() => setIsLoaded(true));
+		// .then(() => setMainImg(thisListing.ListingImagesges[0].url));
 	}, [dispatch]);
 	const thisListing = useSelector((state) => state.listings.singleListing);
+	// console.log(thisListing);
+	const allImages = thisListing.ListingImages;
 	const currUserId = useSelector((state) => state.session.user.id);
 	const handleDelete = () => {
 		dispatch(thunkDeleteListing(listingId)).then(() =>
@@ -22,6 +27,15 @@ export default function ListingDetails() {
 			history.push("/listings")
 		);
 	};
+	const updateMainImgRight = () => {
+		if (imgIdx === allImages.length - 1) setImgIdx(0);
+		else setImgIdx((prev) => prev + 1);
+	};
+	const updateMainImgLEFT = () => {
+		if (imgIdx === 0) setImgIdx(allImages.length - 1);
+		else setImgIdx((prev) => prev - 1);
+	};
+
 	const buttonContent = (
 		<div className='ld-edit-button-container'>
 			<Link to={`/sell/${listingId}/edit`}>
@@ -51,14 +65,20 @@ export default function ListingDetails() {
 							(ev.target.src =
 								"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.jr_ZltLCrkS1ZmAB3-B_IgHaGZ%26pid%3DApi&f=1&ipt=976e27ed4e4601b5fc08f5fc9b8f07ef671de7909421e65a56d3997ada849a9e&ipo=images")
 						}
-						src={
-							thisListing.ListingImages[thisListing.ListingImages.length - 1]
-								?.url
-						}
+						src={allImages[imgIdx]?.url}
 						alt={thisListing.listingTitle}
 					/>
+					{allImages.length > 1 && (
+						<div className='arrow-container'>
+							<button onClick={updateMainImgLEFT}>
+								<i className='fa-solid fa-chevron-left'></i>
+							</button>
+							<button onClick={updateMainImgRight}>
+								<i className='fa-solid fa-chevron-right'></i>
+							</button>
+						</div>
+					)}
 				</div>
-
 				<div className='ld-top-right'>
 					<div>
 						<Link to={`/shop/${thisListing.Shop.id}`}>

@@ -61,7 +61,7 @@ export const thunkAllListingsByShop = (shopId) => async (dispatch) => {
 	const response = await csrfFetch(`/api/shop/${shopId}/listings`);
 	if (response.ok) {
 		const allListingsByShop = await response.json();
-		console.log("REDUCER", allListingsByShop);
+		// console.log("REDUCER", allListingsByShop);
 		dispatch(actionGetListingsByShop(allListingsByShop));
 		return allListingsByShop;
 	}
@@ -93,8 +93,8 @@ export const thunkCreateShop = (myshop) => async (dispatch) => {
 	}
 	// if (profileUrl) formData.append("image", profileUrl);
 	// if (bannerImgUrl) formData.append("bannerImgUrl", bannerImgUrl);
-	console.log("profileUrl", profileUrl);
-	console.log("bannerImgUrl", bannerImgUrl);
+	// console.log("profileUrl", profileUrl);
+	// console.log("bannerImgUrl", bannerImgUrl);
 	// console.log("INSIDE REDUCER-AWS");
 	try {
 		const response = await csrfFetch("/api/shop/", {
@@ -142,11 +142,11 @@ export const thunkEditShop = (shop) => async (dispatch) => {
 			body: formData,
 			// body: formData,
 		});
-		console.log("IN EDIT SHOP REDUCER");
+		// console.log("IN EDIT SHOP REDUCER");
 		if (response.ok) {
-			console.log("RESPONSE OK?????");
+			// console.log("RESPONSE OK?????");
 			const editedShop = await response.json();
-			console.log("editedShop, REDUCER", editedShop);
+			// console.log("editedShop, REDUCER", editedShop);
 			dispatch(actionEditShop(editedShop));
 			return editedShop;
 		} else {

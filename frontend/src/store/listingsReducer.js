@@ -55,7 +55,7 @@ export const thunkGetDetails = (listingId) => async (dispatch) => {
 	}
 };
 
-export const thunkCreateListing = (listing, imgObj) => async (dispatch) => {
+export const thunkCreateListing = (listing, images) => async (dispatch) => {
 	try {
 		const response = await csrfFetch("/api/listings/new", {
 			method: "POST",
@@ -67,16 +67,22 @@ export const thunkCreateListing = (listing, imgObj) => async (dispatch) => {
 		if (response.ok) {
 			const createdListing = await response.json();
 			// console.log("INSIDE CREATE LISTING THUNK", createdListing);
+			const formData = new FormData();
+			for (let image of images) {
+				formData.append("images", image);
+				console.log("CREATE LISTING REDUCER", image);
+			}
 			const responseAddImage = await csrfFetch(
 				`/api/listings/${createdListing.id}/images`,
 				{
 					method: "POST",
 					headers: {
-						"Content-Type": "application/json",
+						"Content-Type": "multipart/form-data",
 					},
-					body: JSON.stringify(imgObj),
+					body: formData,
 				}
 			);
+
 			if (responseAddImage.ok) {
 				const createdListingImg = await responseAddImage.json();
 				// console.log("INSIDE CREATE LISTING THUNK", createdListingImg);

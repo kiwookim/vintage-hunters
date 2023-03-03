@@ -28,8 +28,34 @@ export default function ListingForm({ mainPhoto, listing, formType }) {
 	const [acceptOffers, setAcceptOffers] = useState(
 		listing.acceptOffers ? "Yes" : "No"
 	);
+	const [listingPhotos, setListingPhotos] = useState([]);
+	const [previewListingPhotos, setPreviewListingPhotos] = useState([]);
 	const [validationErr, setValidationErr] = useState([]);
-	console.log(validationErr);
+	const [fileLenErr, setFileLenErr] = useState("");
+	// console.log(validationErr);
+	useEffect(() => {}, [listingPhotos]);
+	const updateFiles = (e) => {
+		// e.preventDefault();
+		const files = e.target.files;
+		const fileCollection = [...listingPhotos, ...files];
+		setListingPhotos(fileCollection);
+	};
+
+	const handleRemove = (e, i) => {
+		e.preventDefault();
+		// console.log("clicked index!!!!", i);
+		// console.log("before SPLICE", previewListingPhotos);
+		let previewPhotos = [...previewListingPhotos];
+		previewPhotos.splice(i, 1);
+		// console.log("listingPHOTOS ", listingPhotos);
+		let copyListingPhotos = [...listingPhotos];
+		copyListingPhotos.splice(i, 1);
+		// console.log("after SPLICE", previewListingPhotos);
+
+		setPreviewListingPhotos(previewPhotos);
+		setListingPhotos(copyListingPhotos);
+		// console.log("after setState", previewListingPhotos);
+	};
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		listing = {
@@ -52,11 +78,19 @@ export default function ListingForm({ mainPhoto, listing, formType }) {
 			url: photoUrl,
 			preview: true,
 		};
+		const images = [];
+		for (let photo of listingPhotos) {
+			// const imgObj = {
+			// 	url: photo,
+			// 	preview: true,
+			// };
+			images.push(photo);
+		}
 
 		// dispatch based on TYPE (Create Listing or Edit Listing)
 		if (formType === "Create Listing") {
 			const returnedListing = await dispatch(
-				thunkCreateListing(listing, imgObj)
+				thunkCreateListing(listing, images)
 			);
 			if (returnedListing.id) {
 				history.push(`/listings/${returnedListing.id}`);
@@ -175,18 +209,48 @@ export default function ListingForm({ mainPhoto, listing, formType }) {
 
 				<div className='each-input-field'>
 					<label htmlFor='image' className='input-label-container'>
-						Upload Photo <small className='required-tag'>REQUIRED</small>
+						Upload Photo(s) <small className='required-tag'>REQUIRED</small>
 					</label>
-					<input
+					{/* <input
 						id='image'
 						required
 						type='url'
 						value={photoUrl}
 						onChange={(e) => setPhotoUrl(e.target.value)}
 						placeholder='put photo url here'
+					/> */}
+					<input
+						accept='image/*'
+						type='file'
+						multiple
+						onChange={updateFiles}
+						required
 					/>
 				</div>
-
+				{/* {fileLenErr && <p style={{ color: "red" }}>{fileLenErr}</p>} */}
+				{/* <ul className='listing-preview-img-container'>
+					{previewListingPhotos.map((photo, i) => (
+						<li key={i}>
+							<img style={{ width: "100px", height: "100px" }} src={photo} />
+							<button onClick={(e) => handleRemove(e, i)} id='trash-icon'>
+								<i class='fa-solid fa-trash-can'></i>
+							</button>
+						</li>
+					))}
+				</ul> */}
+				<ul className='listing-preview-img-container'>
+					{listingPhotos.map((photo, i) => (
+						<li key={i}>
+							<img
+								style={{ width: "100px", height: "100px" }}
+								src={URL.createObjectURL(photo)}
+							/>
+							<button onClick={(e) => handleRemove(e, i)} id='trash-icon'>
+								<i class='fa-solid fa-trash-can'></i>
+							</button>
+						</li>
+					))}
+				</ul>
 				<div className='each-input-field'>
 					<label htmlFor='condition' className='input-label-container'>
 						Condition <small className='required-tag'>REQUIRED</small>

@@ -2,6 +2,10 @@ const express = require("express");
 const { setTokenCookie, requireAuth } = require("../../utils/auth");
 const { Listing, ListingImage, Shop } = require("../../db/models");
 const { validateCreateListing } = require("../../utils/validators");
+const {
+	multipleMulterUpload,
+	multiplePublicFileUpload,
+} = require("../../awsS3");
 const router = express.Router();
 
 //get all listings for HomePage
@@ -16,9 +20,11 @@ router.get("/", async (req, res) => {
 				preview: true,
 			},
 		});
-		const lastPreviewImg = previewUrl[previewUrl.length - 1];
+		// const lastPreviewImg = previewUrl[previewUrl.length - 1];
+		const firstImg = previewUrl[0];
 		if (previewUrl.length) {
-			listing.PreviewImage = lastPreviewImg.url;
+			// listing.PreviewImage = lastPreviewImg.url;
+			listing.PreviewImage = firstImg.url;
 		} else {
 			listing.PreviewImage = "N/A";
 		}
@@ -84,17 +90,36 @@ router.post("/new", requireAuth, validateCreateListing, async (req, res) => {
 	return res.json(newListing);
 });
 //add listing Image
-router.post("/:listingId/images", requireAuth, async (req, res) => {
-	const { listingId } = req.params;
-	// const specificListing = await Listing.findByPk(listingId);
-	const { url, preview } = req.body;
-	const newListingImg = await ListingImage.create({
-		listingId: Number(listingId),
-		url,
-		preview,
-	});
-	return res.json(newListingImg);
-});
+router.post(
+	"/:listingId/images",
+	requireAuth,
+	multipleMulterUpload("images"),
+	async (req, res) => {
+		const { listingId } = req.params;
+		// const specificListing = await Listing.findByPk(listingId);
+		console.log("BACKEND POST LISTING IMAGES!!!!!!!", req.files);
+		const awsUploadedFiles = await multiplePublicFileUpload(req.files);
+		console.log("AWS UPLOADED FILES", awsUploadedFiles);
+		const newListingImages = [];
+		for (let awsFile of awsUploadedFiles) {
+			const newImage = await ListingImage.create({
+				listingId: Number(listingId),
+				url: awsFile,
+				preview: true,
+			});
+			newListingImages.push(newImage);
+		}
+		console.log("BEFORE RES.json-----", newListingImages);
+		return res.json(newListingImages);
+		// return res.json(newListingImages);
+		// const { url, preview } = req.body;
+		// const newListingImg = await ListingImage.create({
+		// 	listingId: Number(listingId),
+		// 	url,
+		// 	preview,
+		// });
+	}
+);
 //edit listing
 router.put(
 	"/:listingId/edit",
