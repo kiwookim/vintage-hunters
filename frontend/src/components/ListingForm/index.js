@@ -7,6 +7,7 @@ import {
 	thunkEditListing,
 } from "../../store/listingsReducer";
 import "./ListingForm.css";
+import { thunkGetMyShop } from "../../store/shopReducer";
 export default function ListingForm({ mainPhoto, listing, formType }) {
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -28,8 +29,42 @@ export default function ListingForm({ mainPhoto, listing, formType }) {
 	const [acceptOffers, setAcceptOffers] = useState(
 		listing.acceptOffers ? "Yes" : "No"
 	);
+	useEffect(() => {
+		dispatch(thunkGetMyShop());
+	}, []);
+	const [listingPhotos, setListingPhotos] = useState([]);
+	const [previewListingPhotos, setPreviewListingPhotos] = useState([]);
 	const [validationErr, setValidationErr] = useState([]);
-	console.log(validationErr);
+	const [fileLenErr, setFileLenErr] = useState("");
+
+	const updateFiles = (e) => {
+		// e.preventDefault();
+		const files = e.target.files;
+		const fileCollection = [...listingPhotos, ...files];
+
+		setListingPhotos(fileCollection);
+		const previewURLs = [];
+		for (let file of fileCollection) {
+			previewURLs.push(URL.createObjectURL(file));
+		}
+		setPreviewListingPhotos(previewURLs);
+	};
+
+	const handleRemove = (e, i) => {
+		e.preventDefault();
+		// console.log("clicked index!!!!", i);
+		// console.log("before SPLICE", previewListingPhotos);
+		let previewPhotos = [...previewListingPhotos];
+		previewPhotos.splice(i, 1);
+		// console.log("listingPHOTOS ", listingPhotos);
+		let copyListingPhotos = [...listingPhotos];
+		copyListingPhotos.splice(i, 1);
+		// console.log("after SPLICE", previewListingPhotos);
+
+		setPreviewListingPhotos(previewPhotos);
+		setListingPhotos(copyListingPhotos);
+	};
+	// console.log("after delete", previewListingPhotos);
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		listing = {
@@ -52,11 +87,19 @@ export default function ListingForm({ mainPhoto, listing, formType }) {
 			url: photoUrl,
 			preview: true,
 		};
+		const images = [];
+		for (let photo of listingPhotos) {
+			// const imgObj = {
+			// 	url: photo,
+			// 	preview: true,
+			// };
+			images.push(photo);
+		}
 
 		// dispatch based on TYPE (Create Listing or Edit Listing)
 		if (formType === "Create Listing") {
 			const returnedListing = await dispatch(
-				thunkCreateListing(listing, imgObj)
+				thunkCreateListing(listing, images)
 			);
 			if (returnedListing.id) {
 				history.push(`/listings/${returnedListing.id}`);
@@ -67,7 +110,7 @@ export default function ListingForm({ mainPhoto, listing, formType }) {
 		}
 		// Edit Listing
 		if (formType === "Edit Listing") {
-			const editedListing = await dispatch(thunkEditListing(listing, imgObj));
+			const editedListing = await dispatch(thunkEditListing(listing));
 			if (editedListing.id) {
 				history.push(`/listings/${editedListing.id}`);
 			} else {
@@ -172,21 +215,44 @@ export default function ListingForm({ mainPhoto, listing, formType }) {
 						onChange={(e) => setListingTitle(e.target.value)}
 					/>
 				</div>
-
-				<div className='each-input-field'>
-					<label htmlFor='image' className='input-label-container'>
-						Upload Photo <small className='required-tag'>REQUIRED</small>
-					</label>
-					<input
+				{formType === "Create Listing" && (
+					<>
+						<div className='each-input-field'>
+							<label htmlFor='image' className='input-label-container'>
+								Upload Photo(s) <small className='required-tag'>REQUIRED</small>
+							</label>
+							{/* <input
 						id='image'
 						required
 						type='url'
 						value={photoUrl}
 						onChange={(e) => setPhotoUrl(e.target.value)}
 						placeholder='put photo url here'
-					/>
-				</div>
-
+					/> */}
+							<input
+								accept='image/*'
+								type='file'
+								multiple
+								onChange={updateFiles}
+								required
+							/>
+						</div>
+						{/* {fileLenErr && <p style={{ color: "red" }}>{fileLenErr}</p>} */}
+						<ul className='listing-preview-img-container'>
+							{previewListingPhotos.map((photo, i) => (
+								<li key={i}>
+									<img
+										style={{ width: "100px", height: "100px" }}
+										src={photo}
+									/>
+									<button onClick={(e) => handleRemove(e, i)} id='trash-icon'>
+										<i class='fa-solid fa-trash-can'></i>
+									</button>
+								</li>
+							))}
+						</ul>
+					</>
+				)}
 				<div className='each-input-field'>
 					<label htmlFor='condition' className='input-label-container'>
 						Condition <small className='required-tag'>REQUIRED</small>

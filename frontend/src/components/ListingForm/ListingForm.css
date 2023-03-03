@@ -45,3 +45,30 @@ label small {
 .input-label-container {
 	margin-bottom: 8px;
 }
+.listing-preview-img-container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 5px;
+	width: 100%;
+	padding: 0;
+	/* position: relative; */
+}
+/* #trash-icon {
+	position: relative;
+	top: -25px;
+	left: 80px;
+	border: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid red;
+	padding: 2px;
+	font-size: 0.8em;
+} */
+#trash-icon {
+	border: none;
+	padding: 0;
+}
+/* input[type="file"] {
+	color: red;
+} */
