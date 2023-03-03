@@ -17,12 +17,22 @@ export default function ShopForm({ shop, formType }) {
 	const [name, setName] = useState(shop.name);
 	const [description, setDescription] = useState(shop.description);
 	const [validationErrors, setValidationErrors] = useState([]);
-
+	const [fileErrProfile, setFileErrProfile] = useState("");
+	const [fileErrBanner, setFileErrBanner] = useState("");
 	// const currUserId = useSelector((state) => state.session.user.id);
 	// console.log("CURRENT PROFILE URL", shop.profileUrl);
 	const updateFile = (e) => {
 		const file = e.target.files[0];
+		const fileType = file.type.split("/")[0];
 		// console.log("files", e.target.files);
+		// console.log("file", file);
+		// console.log("fileType,", fileType);
+		setFileErrProfile("");
+		if (fileType !== "image") {
+			setFileErrProfile("Please choose image file for your profile image");
+			return;
+		}
+
 		if (file) {
 			setProfileUrl(file);
 			setPreviewProfile(URL.createObjectURL(file));
@@ -31,8 +41,15 @@ export default function ShopForm({ shop, formType }) {
 			setPreviewProfile(shop.profileUrl);
 		}
 	};
+	// fileErrBanner
 	const updateBannerUrl = (e) => {
 		const file = e.target.files[0];
+		const fileType = file.type.split("/")[0];
+		setFileErrBanner("");
+		if (fileType !== "image") {
+			setFileErrBanner("Please choose image file for your banner");
+			return;
+		}
 		if (file) setBannerImgUrl(file);
 		if (file) {
 			setBannerImgUrl(file);
@@ -151,7 +168,9 @@ export default function ShopForm({ shop, formType }) {
 							/>
 						</div>
 					</div>
-
+					{fileErrProfile !== "" && (
+						<span style={{ color: "red" }}>{fileErrProfile}</span>
+					)}
 					{previewProfile !== "" && (
 						<img
 							id='preview-shop-img'
@@ -178,6 +197,9 @@ export default function ShopForm({ shop, formType }) {
 						onChange={updateBannerUrl}
 						id='banner'
 					/>
+					{fileErrBanner !== "" && (
+						<span style={{ color: "red" }}>{fileErrBanner}</span>
+					)}
 					{previewBanner !== "" && (
 						<img
 							id='preview-banner-img'

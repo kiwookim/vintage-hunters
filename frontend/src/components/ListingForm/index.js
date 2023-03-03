@@ -35,14 +35,25 @@ export default function ListingForm({ mainPhoto, listing, formType }) {
 	const [listingPhotos, setListingPhotos] = useState([]);
 	const [previewListingPhotos, setPreviewListingPhotos] = useState([]);
 	const [validationErr, setValidationErr] = useState([]);
-	const [fileLenErr, setFileLenErr] = useState("");
+	const [fileTypeErr, setFileTypeErr] = useState("");
 
 	const updateFiles = (e) => {
 		// e.preventDefault();
 		const files = e.target.files;
 		const fileCollection = [...listingPhotos, ...files];
+		console.log("addedFiles", files);
+		console.log("fileCollection", fileCollection);
+		setFileTypeErr("");
+		for (let file of files) {
+			const fileType = file.type.split("/")[0];
+			if (fileType !== "image") {
+				setFileTypeErr("please choose image file(s)");
+				return;
+			}
+		}
 
 		setListingPhotos(fileCollection);
+
 		const previewURLs = [];
 		for (let file of fileCollection) {
 			previewURLs.push(URL.createObjectURL(file));
@@ -238,6 +249,9 @@ export default function ListingForm({ mainPhoto, listing, formType }) {
 							/>
 						</div>
 						{/* {fileLenErr && <p style={{ color: "red" }}>{fileLenErr}</p>} */}
+						{fileTypeErr !== "" && (
+							<span style={{ color: "red" }}>{fileTypeErr}</span>
+						)}
 						<ul className='listing-preview-img-container'>
 							{previewListingPhotos.map((photo, i) => (
 								<li key={i}>
