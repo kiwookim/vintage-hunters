@@ -29,3 +29,7 @@
 	text-decoration: underline;
 	cursor: pointer;
 }
+#selected-category {
+	color: #cd7f32;
+	font-weight: bolder;
+}

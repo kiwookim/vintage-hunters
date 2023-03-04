@@ -12,6 +12,7 @@ export default function Category() {
 	const filteredListingsObj = useSelector(
 		(state) => state.listings.filteredListings
 	);
+
 	const filteredListingsArr = Object.values(filteredListingsObj);
 	useEffect(() => {
 		dispatch(thunkFilterListings(category)).then(() => setIsLoaded(true));
@@ -19,7 +20,7 @@ export default function Category() {
 	console.log(filteredListingsArr);
 	// ReUse ListingCard component to render listings based on category....
 	return isLoaded ? (
-		<div className='all-listings-container'>
+		<div className='all-listings-by-shop-container'>
 			{filteredListingsArr.map((listing) => (
 				<ListingCard listing={listing} key={listing.id} />
 			))}

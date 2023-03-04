@@ -7,10 +7,17 @@ import { thunkGetMyShop } from "../../store/shopReducer";
 import ListingCard from "../ListingCard";
 import "./HomePage.css";
 import { categories } from "../../choices";
-import { Link, Route, Switch, useRouteMatch } from "react-router-dom";
+import {
+	Link,
+	Route,
+	Switch,
+	useLocation,
+	useRouteMatch,
+} from "react-router-dom";
 import Category from "../Category";
 export default function HomePage() {
 	const dispatch = useDispatch();
+	const { pathname } = useLocation();
 	const [isLoaded, setIsLoaded] = useState(false);
 	const allListingsObj = useSelector((state) => state.listings.allListings);
 	const allListingsArr = Object.values(allListingsObj);
@@ -23,15 +30,19 @@ export default function HomePage() {
 		// const myShop = await dispatch(thunkGetMyShop());
 		// dispatch(thunkGetMyShop());
 	}, [dispatch]);
-	// console.log("url", url);
-	// console.log("path", path);
+	const filteredCategoryName = pathname.split("/")[3];
+	console.log(filteredCategoryName);
 	return isLoaded ? (
 		<>
 			<hr />
 			<nav>
 				<ul className='filter-navlinks'>
 					{categories.map((category, i) => (
-						<li className='each-filter-navli' key={category}>
+						<li
+							id={filteredCategoryName === category ? "selected-category" : ""}
+							className='each-filter-navli'
+							key={category}
+						>
 							<Link to={`${url}/${category}`}>{category}</Link>
 						</li>
 					))}
