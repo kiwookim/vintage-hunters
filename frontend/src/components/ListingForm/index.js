@@ -37,16 +37,35 @@ export default function ListingForm({ mainPhoto, listing, formType }) {
 	const [validationErr, setValidationErr] = useState([]);
 	const [fileTypeErr, setFileTypeErr] = useState("");
 	const [fileLenErr, setFileLenErr] = useState("");
+	const [duplicateFileErr, setDuplicateFileErr] = useState("");
 	useEffect(() => {}, []);
 	const updateFiles = (e) => {
 		// e.preventDefault();
+		const copyFileCollectionName = [...listingPhotos].map((file) => file.name);
+		// console.log("copyFileCollection", copyFileCollectionName);
 		const files = e.target.files;
+		console.log("incoming file or files", files);
+		setDuplicateFileErr("");
+		if (files.length === 1) {
+			if (copyFileCollectionName.includes(files.name)) {
+				setDuplicateFileErr("Duplicate file is not allowed");
+				return;
+			}
+		}
+		for (let file of files) {
+			console.log("inside for lopp[", file);
+			if (copyFileCollectionName.includes(file.name)) {
+				setDuplicateFileErr("Duplicate file is not allowed");
+				return;
+			}
+		}
 		const fileCollection = [...listingPhotos, ...files];
-		console.log("addedFiles", files);
-		console.log("fileCollection", fileCollection);
+		// console.log("addedFiles", files);
+		// console.log("fileCollection", fileCollection);
 		setFileTypeErr("");
 		setFileLenErr("");
 		for (let file of files) {
+			// console.log(file);
 			const fileType = file.type.split("/")[0];
 			if (fileType !== "image") {
 				setFileTypeErr("please choose image file(s)");
@@ -69,6 +88,8 @@ export default function ListingForm({ mainPhoto, listing, formType }) {
 
 	const handleRemove = (e, i) => {
 		e.preventDefault();
+		setDuplicateFileErr("");
+		setFileTypeErr("");
 		// console.log("clicked index!!!!", i);
 		// console.log("before SPLICE", previewListingPhotos);
 		let previewPhotos = [...previewListingPhotos];
@@ -256,6 +277,9 @@ export default function ListingForm({ mainPhoto, listing, formType }) {
 								required
 							/>
 						</div>
+						{duplicateFileErr && (
+							<span style={{ color: "red" }}>{duplicateFileErr}</span>
+						)}
 						{fileLenErr && <span style={{ color: "red" }}>{fileLenErr}</span>}
 						{fileTypeErr !== "" && (
 							<span style={{ color: "red" }}>{fileTypeErr}</span>
