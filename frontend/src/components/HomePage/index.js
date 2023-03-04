@@ -23,8 +23,8 @@ export default function HomePage() {
 		// const myShop = await dispatch(thunkGetMyShop());
 		// dispatch(thunkGetMyShop());
 	}, [dispatch]);
-	console.log("url", url);
-	console.log("path", path);
+	// console.log("url", url);
+	// console.log("path", path);
 	return isLoaded ? (
 		<>
 			<hr />

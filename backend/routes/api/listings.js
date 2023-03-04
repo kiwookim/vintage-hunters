@@ -173,4 +173,28 @@ router.delete("/:listingId/delete", requireAuth, async (req, res) => {
 	});
 });
 
+//filter listing by categories
+router.get("/categories/:category", requireAuth, async (req, res) => {
+	const { category } = req.params;
+	const payload = [];
+	const filteredListings = await Listing.findAll({
+		where: {
+			category: category,
+		},
+	});
+	for (let listing of filteredListings) {
+		listing = listing.toJSON();
+		let previewUrl = await ListingImage.findAll({
+			where: {
+				listingId: listing.id,
+				preview: true,
+			},
+		});
+		const firstImg = previewUrl[0];
+		listing.PreviewImage = firstImg.url;
+		payload.push(listing);
+	}
+	return res.json({ FilteredListings: payload });
+});
+
 module.exports = router;

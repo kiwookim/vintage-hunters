@@ -6,6 +6,7 @@ const GET_DETAILS = "listings/:listingId";
 const CREATE_LISTING = "listings/new";
 const UPDATE_LISTING = "listings/:listingId/edit";
 const DELETE_LISTING = "listings/:listingId/delete";
+const FILTER_LISTINGS = "listings/filter";
 //ACTIONS
 const actionGetAll = (allListings) => {
 	return {
@@ -35,6 +36,12 @@ const actionDeleteListing = (listingId) => {
 	return {
 		type: DELETE_LISTING,
 		payload: listingId,
+	};
+};
+const actionFilterListings = (filteredListings) => {
+	return {
+		type: FILTER_LISTINGS,
+		payload: filteredListings,
 	};
 };
 //THUNKS
@@ -144,6 +151,15 @@ export const thunkDeleteListing = (listingId) => async (dispatch) => {
 		return data;
 	}
 };
+// filter by category
+export const thunkFilterListings = (category) => async (dispatch) => {
+	const response = await csrfFetch(`/api/listings/categories/${category}`);
+	if (response.ok) {
+		const filteredListings = await response.json();
+		dispatch(actionFilterListings(filteredListings));
+		return filteredListings;
+	}
+};
 
 const normalize = (arr) => {
 	const resultObj = {};
@@ -153,7 +169,9 @@ const normalize = (arr) => {
 const initialState = {
 	allListings: {},
 	singleListing: {},
+	filteredListings: {},
 };
+
 // REDUCER
 export default function listingsReducer(state = initialState, action) {
 	const newState = { ...state };
@@ -179,6 +197,9 @@ export default function listingsReducer(state = initialState, action) {
 			return newState;
 		case DELETE_LISTING:
 			delete newState.allListings[action.payload];
+			return newState;
+		case FILTER_LISTINGS:
+			newState.filteredListings = normalize(action.payload.FilteredListings);
 			return newState;
 		default:
 			return state;
