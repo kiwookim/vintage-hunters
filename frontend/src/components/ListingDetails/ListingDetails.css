@@ -109,10 +109,12 @@
 	display: flex;
 	gap: 15px;
 	margin-bottom: 10px;
-	align-items: center;
 }
 .each-spec-name {
 	width: 20%;
+	display: flex;
+	align-items: center;
+	align-content: center;
 }
 #listing-details-page-img {
 	/* padding-top: 5px; */
