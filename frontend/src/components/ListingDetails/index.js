@@ -24,7 +24,7 @@ export default function ListingDetails() {
 	const handleDelete = () => {
 		dispatch(thunkDeleteListing(listingId)).then(() =>
 			//can also redirect to Shop Profile
-			history.push("/listings")
+			history.push("/listings/categories")
 		);
 	};
 	const updateMainImgRight = () => {

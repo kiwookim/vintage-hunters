@@ -36,7 +36,8 @@ export default function ListingForm({ mainPhoto, listing, formType }) {
 	const [previewListingPhotos, setPreviewListingPhotos] = useState([]);
 	const [validationErr, setValidationErr] = useState([]);
 	const [fileTypeErr, setFileTypeErr] = useState("");
-
+	const [fileLenErr, setFileLenErr] = useState("");
+	useEffect(() => {}, []);
 	const updateFiles = (e) => {
 		// e.preventDefault();
 		const files = e.target.files;
@@ -44,12 +45,17 @@ export default function ListingForm({ mainPhoto, listing, formType }) {
 		console.log("addedFiles", files);
 		console.log("fileCollection", fileCollection);
 		setFileTypeErr("");
+		setFileLenErr("");
 		for (let file of files) {
 			const fileType = file.type.split("/")[0];
 			if (fileType !== "image") {
 				setFileTypeErr("please choose image file(s)");
 				return;
 			}
+		}
+		if (fileCollection.length > 6) {
+			setFileLenErr("please choose up to 6 images");
+			return;
 		}
 
 		setListingPhotos(fileCollection);
@@ -71,7 +77,9 @@ export default function ListingForm({ mainPhoto, listing, formType }) {
 		let copyListingPhotos = [...listingPhotos];
 		copyListingPhotos.splice(i, 1);
 		// console.log("after SPLICE", previewListingPhotos);
-
+		if (copyListingPhotos.length < 6) {
+			setFileLenErr("");
+		}
 		setPreviewListingPhotos(previewPhotos);
 		setListingPhotos(copyListingPhotos);
 	};
@@ -248,7 +256,7 @@ export default function ListingForm({ mainPhoto, listing, formType }) {
 								required
 							/>
 						</div>
-						{/* {fileLenErr && <p style={{ color: "red" }}>{fileLenErr}</p>} */}
+						{fileLenErr && <span style={{ color: "red" }}>{fileLenErr}</span>}
 						{fileTypeErr !== "" && (
 							<span style={{ color: "red" }}>{fileTypeErr}</span>
 						)}
