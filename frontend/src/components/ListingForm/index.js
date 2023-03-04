@@ -40,26 +40,21 @@ export default function ListingForm({ mainPhoto, listing, formType }) {
 	const [duplicateFileErr, setDuplicateFileErr] = useState("");
 	useEffect(() => {}, []);
 	const updateFiles = (e) => {
-		// e.preventDefault();
-		const copyFileCollectionName = [...listingPhotos].map((file) => file.name);
-		// console.log("copyFileCollection", copyFileCollectionName);
+		e.preventDefault();
 		const files = e.target.files;
-		console.log("incoming file or files", files);
+		const copyFileCollectionName = [...listingPhotos].map((file) => file.name);
+		const fileCollection = [...listingPhotos];
+
 		setDuplicateFileErr("");
-		if (files.length === 1) {
-			if (copyFileCollectionName.includes(files.name)) {
-				setDuplicateFileErr("Duplicate file is not allowed");
-				return;
-			}
-		}
 		for (let file of files) {
-			console.log("inside for lopp[", file);
+			// console.log("inside for lopp[", file);
 			if (copyFileCollectionName.includes(file.name)) {
 				setDuplicateFileErr("Duplicate file is not allowed");
 				return;
+			} else {
+				fileCollection.push(file);
 			}
 		}
-		const fileCollection = [...listingPhotos, ...files];
 		// console.log("addedFiles", files);
 		// console.log("fileCollection", fileCollection);
 		setFileTypeErr("");
@@ -273,7 +268,7 @@ export default function ListingForm({ mainPhoto, listing, formType }) {
 								accept='image/*'
 								type='file'
 								multiple
-								onChange={updateFiles}
+								onChange={(e) => updateFiles(e)}
 								required
 							/>
 						</div>
