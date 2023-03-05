@@ -20,8 +20,8 @@ const validateCreateListing = [
 	check("description")
 		.isLength({ min: 50 })
 		.withMessage("description must be 50 characters or more")
-		.isLength({ max: 250 })
-		.withMessage("product description must be less than 250 characters"),
+		.isLength({ max: 300 })
+		.withMessage("product description must be less than 300 characters"),
 	check("listingPrice")
 		.custom((value, { req }) => {
 			const price = req.body.listingPrice;
