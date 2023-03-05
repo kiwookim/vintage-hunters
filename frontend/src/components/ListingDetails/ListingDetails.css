@@ -13,11 +13,17 @@
 	border-radius: 4px;
 	display: flex;
 	background-color: #eeeeee;
+	flex-direction: column;
+	gap: 4px;
+	position: relative;
 }
 .ld-img-container img {
 	margin: auto;
 	width: 90%;
 	height: 90%;
+}
+.small-listing-img {
+	padding-bottom: 5px;
 }
 .ld-shop-name {
 	padding-top: 0;
@@ -103,8 +109,22 @@
 	display: flex;
 	gap: 15px;
 	margin-bottom: 10px;
-	align-items: center;
 }
 .each-spec-name {
 	width: 20%;
+	display: flex;
+	align-items: center;
+	align-content: center;
+}
+#listing-details-page-img {
+	/* padding-top: 5px; */
+}
+.arrow-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	gap: 10px;
+	position: relative;
+	top: -10px;
 }

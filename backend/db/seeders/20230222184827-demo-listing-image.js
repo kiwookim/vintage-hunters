@@ -52,6 +52,81 @@ module.exports = {
 					url: "https://images.reverb.com/image/upload/s--cpyQrJea--/a_0/f_auto,t_large/v1675712871/srb6y1njnu9uwd5az3qd.jpg",
 					preview: true,
 				},
+				{
+					listingId: 9,
+					url: "https://images.reverb.com/image/upload/s--1yHJcamo--/a_0/f_auto,t_large/v1667420165/eqmoczmyerngppxbw10s.jpg",
+					preview: true,
+				},
+				{
+					listingId: 9,
+					url: "https://images.reverb.com/image/upload/s--uBcXy6IY--/a_0/f_auto,t_large/v1667420142/wfsobqaeuclc4bcuua96.jpg",
+					preview: true,
+				},
+				{
+					listingId: 10,
+					url: "https://images.reverb.com/image/upload/s--P6x9D66H--/a_0/f_auto,t_large/v1677133348/eajfemmt4tefwen9iknr.jpg",
+					preview: true,
+				},
+				{
+					listingId: 10,
+					url: "https://images.reverb.com/image/upload/s--CgwcpY0i--/a_0/f_auto,t_large/v1677133545/nwtdttnxf9qf64vk49bj.jpg",
+					preview: true,
+				},
+				{
+					listingId: 11,
+					url: "https://images.reverb.com/image/upload/s--jewtpro4--/c_crop,h_1.000,w_0.750,x_0.195,y_0.000/f_auto,t_large/v1537880520/j13gfomicvipdahpvn21.jpg",
+					preview: true,
+				},
+				{
+					listingId: 11,
+					url: "https://images.reverb.com/image/upload/s--PyuOnSTv--/c_crop,h_1.000,w_0.750,x_0.137,y_0.000/f_auto,t_large/v1537880532/nywjhbxwjewwfl8lambc.jpg",
+					preview: true,
+				},
+				{
+					listingId: 11,
+					url: "https://images.reverb.com/image/upload/s--lMcBAd-D--/f_auto,t_large/v1537881106/u9lcaljtdueofnav1oow.jpg",
+					preview: true,
+				},
+				{
+					listingId: 12,
+					url: "https://images.reverb.com/image/upload/s--lmXojzPN--/f_auto,t_large/v1431115400/nqjhgluooxepjtur41bp.jpg",
+					preview: true,
+				},
+				{
+					listingId: 12,
+					url: "https://images.reverb.com/image/upload/s--uWizYl7U--/f_auto,t_large/v1431115391/h18rwyqbtl4dtjcis5kl.jpg",
+					preview: true,
+				},
+				{
+					listingId: 13,
+					url: "https://images.reverb.com/image/upload/s--MPOzTTjh--/a_0/f_auto,t_large/v1677986793/cwt9giq3f6imsss6coiu.jpg",
+					preview: true,
+				},
+				{
+					listingId: 13,
+					url: "https://images.reverb.com/image/upload/s--fPSgyls7--/a_0/f_auto,t_large/v1677986804/f0my7zh73e9fmehu8o7d.jpg",
+					preview: true,
+				},
+				{
+					listingId: 14,
+					url: "https://images.reverb.com/image/upload/s--pK9poUrK--/a_0/f_auto,t_large/v1677815736/d9vp1es97jm1ucv5vfkx.jpg",
+					preview: true,
+				},
+				{
+					listingId: 14,
+					url: "https://images.reverb.com/image/upload/s--PK0O25Xk--/a_0/f_auto,t_large/v1677815736/jyafqfhzjqqzvpabebwd.jpg",
+					preview: true,
+				},
+				{
+					listingId: 15,
+					url: "https://images.reverb.com/image/upload/s--yeqMZNHR--/f_auto,t_large/v1668557873/ngwbpeucr5upzpsrpldp.jpg",
+					preview: true,
+				},
+				{
+					listingId: 15,
+					url: "https://images.reverb.com/image/upload/s--ZAxTydFx--/f_auto,t_large/v1668557877/ym2tozqpzhsqxzvtv78a.jpg",
+					preview: true,
+				},
 			],
 			{}
 		);
@@ -63,7 +138,9 @@ module.exports = {
 		return queryInterface.bulkDelete(
 			options,
 			{
-				listingId: { [Op.in]: [1, 2, 3, 4, 5, 6, 7, 8] },
+				listingId: {
+					[Op.in]: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+				},
 			},
 			{}
 		);

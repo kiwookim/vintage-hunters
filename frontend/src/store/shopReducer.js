@@ -61,7 +61,7 @@ export const thunkAllListingsByShop = (shopId) => async (dispatch) => {
 	const response = await csrfFetch(`/api/shop/${shopId}/listings`);
 	if (response.ok) {
 		const allListingsByShop = await response.json();
-		console.log("REDUCER", allListingsByShop);
+		// console.log("REDUCER", allListingsByShop);
 		dispatch(actionGetListingsByShop(allListingsByShop));
 		return allListingsByShop;
 	}
@@ -69,13 +69,41 @@ export const thunkAllListingsByShop = (shopId) => async (dispatch) => {
 
 //create shop
 export const thunkCreateShop = (myshop) => async (dispatch) => {
+	const { city, state, profileUrl, bannerImgUrl, name, description } = myshop;
+	const formData = new FormData();
+	formData.append("city", city);
+	formData.append("state", state);
+	// formData.append("bannerImgUrl", bannerImgUrl);
+	formData.append("name", name);
+	formData.append("description", description);
+
+	// if (images && images.length !== 0) {
+	//   for (var i = 0; i < images.length; i++) {
+	//     formData.append("images", images[i]);
+	//   }
+	// }
+
+	if (profileUrl) {
+		formData.append("images", profileUrl);
+		formData.append("profileUrl", profileUrl.name);
+	}
+	if (bannerImgUrl) {
+		formData.append("images", bannerImgUrl);
+		formData.append("bannerImgUrl", bannerImgUrl.name);
+	}
+	// if (profileUrl) formData.append("image", profileUrl);
+	// if (bannerImgUrl) formData.append("bannerImgUrl", bannerImgUrl);
+	// console.log("profileUrl", profileUrl);
+	// console.log("bannerImgUrl", bannerImgUrl);
+	// console.log("INSIDE REDUCER-AWS");
 	try {
-		const response = await csrfFetch("/api/shop", {
+		const response = await csrfFetch("/api/shop/", {
 			method: "POST",
 			headers: {
-				"Content-Type": "application/json",
+				"Content-Type": "multipart/form-data",
 			},
-			body: JSON.stringify(myshop),
+			// body: JSON.stringify(myshop),
+			body: formData,
 		});
 		if (response.ok) {
 			const myShop = await response.json();
@@ -90,19 +118,35 @@ export const thunkCreateShop = (myshop) => async (dispatch) => {
 };
 //edit shop
 export const thunkEditShop = (shop) => async (dispatch) => {
+	const { city, state, profileUrl, bannerImgUrl, name, description } = shop;
+	const formData = new FormData();
+	formData.append("city", city);
+	formData.append("state", state);
+	formData.append("name", name);
+	formData.append("description", description);
+	// if (profileUrl) formData.append("image", profileUrl);
+	if (profileUrl) {
+		formData.append("images", profileUrl);
+		formData.append("profileUrl", profileUrl.name);
+	}
+	if (bannerImgUrl) {
+		formData.append("images", bannerImgUrl);
+		formData.append("bannerImgUrl", bannerImgUrl.name);
+	}
 	try {
 		const response = await csrfFetch("/api/shop/my/edit", {
 			method: "PUT",
 			headers: {
-				"Content-Type": "application/json",
+				"Content-Type": "multipart/form-data",
 			},
-			body: JSON.stringify(shop),
+			body: formData,
+			// body: formData,
 		});
-		console.log("IN EDIT SHOP REDUCER");
+		// console.log("IN EDIT SHOP REDUCER");
 		if (response.ok) {
-			console.log("RESPONSE OK?????");
+			// console.log("RESPONSE OK?????");
 			const editedShop = await response.json();
-			console.log("editedShop, REDUCER", editedShop);
+			// console.log("editedShop, REDUCER", editedShop);
 			dispatch(actionEditShop(editedShop));
 			return editedShop;
 		} else {
@@ -116,7 +160,7 @@ export const thunkEditShop = (shop) => async (dispatch) => {
 };
 const normalize = (arr) => {
 	const resultObj = {};
-	console.log("REDUCER NORMALIZE", arr);
+	// console.log("REDUCER NORMALIZE", arr);
 	arr.forEach((element) => (resultObj[element.id] = element));
 	return resultObj;
 };

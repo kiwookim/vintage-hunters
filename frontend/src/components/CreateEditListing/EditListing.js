@@ -21,6 +21,8 @@ export default function EditListing() {
 			formType='Edit Listing'
 		/>
 	) : (
-		<h1>Loading...</h1>
+		<div className='loader-container'>
+			<div className='spinner'></div>
+		</div>
 	);
 }

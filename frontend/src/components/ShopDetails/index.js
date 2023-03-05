@@ -74,7 +74,6 @@ export default function ShopDetails() {
 					<p>{thisShop.description}</p>
 				</div>
 			</div>
-			{/* show all of this shop's listings at the bottom???? */}
 
 			<div className='shop-bottom-profile'>
 				<nav id='nested-navlink'>
@@ -106,6 +105,8 @@ export default function ShopDetails() {
 			</div>
 		</div>
 	) : (
-		<h1>Loading...</h1>
+		<div className='loader-container'>
+			<div className='spinner'></div>
+		</div>
 	);
 }

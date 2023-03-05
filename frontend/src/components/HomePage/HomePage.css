@@ -16,3 +16,20 @@
 	flex-wrap: wrap;
 	padding-bottom: 70px;
 }
+.filter-navlinks {
+	display: flex;
+	gap: 30px;
+	margin-left: 0;
+}
+.each-filter-navli {
+	padding: 5px 0;
+}
+.each-filter-navli:hover {
+	color: #cd7f32;
+	text-decoration: underline;
+	cursor: pointer;
+}
+#selected-category {
+	color: #cd7f32;
+	font-weight: bolder;
+}

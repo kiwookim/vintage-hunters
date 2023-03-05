@@ -6,6 +6,7 @@ const GET_DETAILS = "listings/:listingId";
 const CREATE_LISTING = "listings/new";
 const UPDATE_LISTING = "listings/:listingId/edit";
 const DELETE_LISTING = "listings/:listingId/delete";
+const FILTER_LISTINGS = "listings/filter";
 //ACTIONS
 const actionGetAll = (allListings) => {
 	return {
@@ -37,6 +38,12 @@ const actionDeleteListing = (listingId) => {
 		payload: listingId,
 	};
 };
+const actionFilterListings = (filteredListings) => {
+	return {
+		type: FILTER_LISTINGS,
+		payload: filteredListings,
+	};
+};
 //THUNKS
 export const thunkGetAllListings = () => async (dispatch) => {
 	const response = await csrfFetch("/api/listings");
@@ -55,7 +62,7 @@ export const thunkGetDetails = (listingId) => async (dispatch) => {
 	}
 };
 
-export const thunkCreateListing = (listing, imgObj) => async (dispatch) => {
+export const thunkCreateListing = (listing, images) => async (dispatch) => {
 	try {
 		const response = await csrfFetch("/api/listings/new", {
 			method: "POST",
@@ -67,16 +74,22 @@ export const thunkCreateListing = (listing, imgObj) => async (dispatch) => {
 		if (response.ok) {
 			const createdListing = await response.json();
 			// console.log("INSIDE CREATE LISTING THUNK", createdListing);
+			const formData = new FormData();
+			for (let image of images) {
+				formData.append("images", image);
+				console.log("CREATE LISTING REDUCER", image);
+			}
 			const responseAddImage = await csrfFetch(
 				`/api/listings/${createdListing.id}/images`,
 				{
 					method: "POST",
 					headers: {
-						"Content-Type": "application/json",
+						"Content-Type": "multipart/form-data",
 					},
-					body: JSON.stringify(imgObj),
+					body: formData,
 				}
 			);
+
 			if (responseAddImage.ok) {
 				const createdListingImg = await responseAddImage.json();
 				// console.log("INSIDE CREATE LISTING THUNK", createdListingImg);
@@ -92,7 +105,7 @@ export const thunkCreateListing = (listing, imgObj) => async (dispatch) => {
 	}
 };
 //edit listing
-export const thunkEditListing = (listing, imgObj) => async (dispatch) => {
+export const thunkEditListing = (listing) => async (dispatch) => {
 	try {
 		const response = await csrfFetch(`/api/listings/${listing.id}/edit`, {
 			method: "PUT",
@@ -104,22 +117,22 @@ export const thunkEditListing = (listing, imgObj) => async (dispatch) => {
 		// console.log("RESPONSE", response);
 		if (response.ok) {
 			const updatedListing = await response.json();
-			console.log("INSIDE EDIT THUNK", updatedListing);
-			// return updatedListing;
-			const responseAddImage = await csrfFetch(
-				`/api/listings/${updatedListing.id}/images`,
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify(imgObj),
-				}
-			);
-			if (responseAddImage.ok) {
-				dispatch(actionEditListing(updatedListing));
-				return updatedListing;
-			}
+			// console.log("INSIDE EDIT THUNK", updatedListing);
+			// // return updatedListing;
+			// const responseAddImage = await csrfFetch(
+			// 	`/api/listings/${updatedListing.id}/images`,
+			// 	{
+			// 		method: "POST",
+			// 		headers: {
+			// 			"Content-Type": "application/json",
+			// 		},
+			// 		body: JSON.stringify(imgObj),
+			// 	}
+			// );
+			// if (responseAddImage.ok) {
+			dispatch(actionEditListing(updatedListing));
+			return updatedListing;
+			// }
 		}
 	} catch (e) {
 		const error = await e.json();
@@ -138,6 +151,15 @@ export const thunkDeleteListing = (listingId) => async (dispatch) => {
 		return data;
 	}
 };
+// filter by category
+export const thunkFilterListings = (category) => async (dispatch) => {
+	const response = await csrfFetch(`/api/listings/categories/${category}`);
+	if (response.ok) {
+		const filteredListings = await response.json();
+		dispatch(actionFilterListings(filteredListings));
+		return filteredListings;
+	}
+};
 
 const normalize = (arr) => {
 	const resultObj = {};
@@ -147,7 +169,9 @@ const normalize = (arr) => {
 const initialState = {
 	allListings: {},
 	singleListing: {},
+	filteredListings: {},
 };
+
 // REDUCER
 export default function listingsReducer(state = initialState, action) {
 	const newState = { ...state };
@@ -173,6 +197,9 @@ export default function listingsReducer(state = initialState, action) {
 			return newState;
 		case DELETE_LISTING:
 			delete newState.allListings[action.payload];
+			return newState;
+		case FILTER_LISTINGS:
+			newState.filteredListings = normalize(action.payload.FilteredListings);
 			return newState;
 		default:
 			return state;
