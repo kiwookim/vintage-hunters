@@ -7,9 +7,9 @@ Live Site: [Vintage Hunters](https://vintage-hunters.onrender.com)
 
 Links to Project Wiki:
 
-- [Database Schema]()
-- [Feature List]()
-- [User Stories]()
+- [Database Schema](https://github.com/kiwookim/vintage-hunters/wiki/DB-Schema)
+- [Feature List](https://github.com/kiwookim/vintage-hunters/wiki/Feature-List)
+- [User Stories](https://github.com/kiwookim/vintage-hunters/wiki/User-Stories)
 
 **_This project is built with:_**
 
