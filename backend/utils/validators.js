@@ -42,6 +42,9 @@ const validateCreateListing = [
 		if (price < 0) {
 			throw new ValidationError("shipping cost cannot be a negative number");
 		}
+		if (price.toString().includes(".")) {
+			throw new ValidationError("please round your shipping cost up or down");
+		}
 		return true;
 	}),
 
