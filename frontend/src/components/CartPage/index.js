@@ -26,7 +26,7 @@ export default function CartPage() {
 
 						<div className='cart-item-detail-container'>
 							<h4>Marshall MK II 50 watt 1976 - Black (listingTitle)</h4>
-							<p>Sold By</p>
+							<small>SOLD BY</small>
 							<p>PMM4259 GUITARS AND AMPS</p>
 							<p>Woodland Hills, CA</p>
 							<i class='fa-solid fa-trash'></i>
@@ -47,7 +47,28 @@ export default function CartPage() {
 
 						<div className='cart-item-detail-container'>
 							<h4>Marshall MK II 50 watt 1976 - Black (listingTitle)</h4>
-							<p>Sold By</p>
+							<small>SOLD BY</small>
+							<p>PMM4259 GUITARS AND AMPS</p>
+							<p>Woodland Hills, CA</p>
+							<i class='fa-solid fa-trash'></i>
+						</div>
+					</div>
+					<div className='cart-item-price-container'>
+						<p>$2350</p>
+						<small>+ $175 Shipping</small>
+						<small>+ applicable tax</small>
+					</div>
+				</div>
+
+				<div className='each-cart-item-container'>
+					<div className='cart-item-left-container'>
+						<div className='cart-item-img-container'>
+							<img src='https://images.reverb.com/image/upload/s--48XY5XdC--/a_0/t_card-square/v1677133348/eajfemmt4tefwen9iknr.jpg'></img>
+						</div>
+
+						<div className='cart-item-detail-container'>
+							<h4>Marshall MK II 50 watt 1976 - Black (listingTitle)</h4>
+							<small>SOLD BY</small>
 							<p>PMM4259 GUITARS AND AMPS</p>
 							<p>Woodland Hills, CA</p>
 							<i class='fa-solid fa-trash'></i>

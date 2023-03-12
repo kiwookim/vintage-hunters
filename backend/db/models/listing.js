@@ -16,6 +16,12 @@ module.exports = (sequelize, DataTypes) => {
 				foreignKey: "listingId",
 				onDelete: "cascade",
 			});
+			//many to many through CartItems to Cart
+			Listing.belongsToMany(models.Cart, {
+				through: models.CartItem,
+				foreignKey: "listingId",
+				otherKey: "cartId",
+			});
 		}
 	}
 	Listing.init(
