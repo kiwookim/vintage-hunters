@@ -26,6 +26,7 @@
 	align-content: center;
 	gap: 8px;
 	color: #00adbf;
+	font-weight: bolder;
 }
 #cart-items-container {
 	border: 1px solid #c6c6c6;
@@ -92,4 +93,11 @@
 }
 .cart-listingTitle {
 	width: 100%;
+}
+#total-price {
+	font-weight: bolder;
+	font-size: 1.3em;
+}
+#cart-shop-name {
+	color: #00adbf;
 }

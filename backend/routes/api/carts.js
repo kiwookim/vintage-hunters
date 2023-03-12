@@ -24,7 +24,7 @@ router.get("/", requireAuth, async (req, res) => {
 				include: [
 					{
 						model: Shop,
-						attributes: ["city", "state", "name"],
+						attributes: ["city", "state", "name", "id"],
 					},
 					{
 						model: ListingImage,

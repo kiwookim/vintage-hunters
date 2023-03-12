@@ -1,11 +1,12 @@
 import { csrfFetch } from "./csrf";
-const GET_CART = "/cart/:cartId";
+const GET_CART = "/mycart";
 const actionGetCart = (myCart) => {
 	return {
 		type: GET_CART,
 		payload: myCart,
 	};
 };
+
 export const thunkGetCart = () => async (dispatch) => {
 	const response = await csrfFetch("/api/cart");
 	if (response.ok) {

@@ -24,58 +24,68 @@ export default function CartPage() {
 		dispatch(thunkGetMyShop());
 	}, [dispatch]);
 	return isLoaded ? (
-		<div id='cart-container'>
-			<header id='cart-header-container'>
-				<div id='cartheader-left-container'>
-					<i class='fa-solid fa-cart-shopping'></i>
-					<h1>{`${currCart.length} ${
-						currCart.length === 1 ? "item" : "items"
-					} in Your Cart`}</h1>
-				</div>
-				<Link to='/listings/categories'>
-					<div id='cartheader-right-container'>
-						<span>Keep Shopping </span>
-						<i class='fa-solid fa-arrow-right'></i>
+		currCart.length > 0 ? (
+			<div id='cart-container'>
+				<header id='cart-header-container'>
+					<div id='cartheader-left-container'>
+						<i class='fa-solid fa-cart-shopping'></i>
+						<h1>{`${currCart.length} ${
+							currCart.length === 1 ? "item" : "items"
+						} in Your Cart`}</h1>
 					</div>
-				</Link>
-			</header>
-			<hr id='cartheader-divider' />
-			{/* cart items container begins here */}
-			<div id='cart-items-container'>
-				{currCart.map((item) => (
-					<div className='each-cart-item-container'>
-						<div className='cart-item-left-container'>
-							<div className='cart-item-img-container'>
-								<img src={item.ListingImages[0].url} alt='item-image'></img>
+					<Link to='/listings/categories'>
+						<div id='cartheader-right-container'>
+							<span>Keep Shopping </span>
+							<i class='fa-solid fa-arrow-right'></i>
+						</div>
+					</Link>
+				</header>
+				<hr id='cartheader-divider' />
+				{/* cart items container begins here */}
+				<div id='cart-items-container'>
+					{currCart.map((item) => (
+						<div className='each-cart-item-container'>
+							<div className='cart-item-left-container'>
+								<div className='cart-item-img-container'>
+									<Link to={`/listings/${item.id}`}>
+										<img src={item.ListingImages[0].url} alt='item-image'></img>
+									</Link>
+								</div>
+								<div className='cart-item-detail-container'>
+									<Link to={`/listings/${item.id}`}>
+										<h4 className='cart-listingTitle'>{item.listingTitle}</h4>
+									</Link>
+									<small>SOLD BY</small>
+									<Link to={`/shop/${item.Shop.id}`}>
+										<p id='cart-shop-name'>{item.Shop.name}</p>
+									</Link>
+									<p>{`${item.Shop.city}, ${item.Shop.state}`}</p>
+									<i class='fa-solid fa-trash'></i>
+								</div>
 							</div>
-							<div className='cart-item-detail-container'>
-								<h4 className='cart-listingTitle'>{item.listingTitle}</h4>
-								<small>SOLD BY</small>
-								<p>{item.Shop.name}</p>
-								<p>{`${item.Shop.city}, ${item.Shop.state}`}</p>
-								<i class='fa-solid fa-trash'></i>
+							<div className='cart-item-price-container'>
+								<p>{`$${item.listingPrice}`}</p>
+								<small>{`+ ${item.shippingCost} Shipping`}</small>
+								<small>+ applicable tax</small>
 							</div>
 						</div>
-						<div className='cart-item-price-container'>
-							<p>{`$${item.listingPrice}`}</p>
-							<small>{`+ ${item.shippingCost} Shipping`}</small>
-							<small>+ applicable tax</small>
+					))}
+					{/* purchase container */}
+					<div className='checkout-container'>
+						<div className='checkout-details-container'>
+							<span>Item + Shipping SubTotal</span>
+							<span id='total-price'>{`$${totalBfTx}`}</span>
+							<small>usd</small>
 						</div>
-					</div>
-				))}
-				{/* purchase container */}
-				<div className='checkout-container'>
-					<div className='checkout-details-container'>
-						<span>Item + Shipping SubTotal</span>
-						<span>{`$${totalBfTx}`}</span>
-						<small>usd</small>
-					</div>
-					<div className='purchase-btn-container'>
-						<button id='purchase-btn'>Purchase</button>
+						<div className='purchase-btn-container'>
+							<button id='purchase-btn'>Purchase</button>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		) : (
+			<h1>empty</h1>
+		)
 	) : (
 		<div className='loader-container'>
 			<div className='spinner'></div>
