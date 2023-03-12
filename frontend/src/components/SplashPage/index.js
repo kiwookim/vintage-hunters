@@ -1,4 +1,5 @@
 //splashpage component
+// import "./SplashPage.css";
 import "./SplashPage.css";
 export default function SplashPage() {
 	return (
