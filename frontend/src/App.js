@@ -36,7 +36,7 @@ function App() {
 							<SplashPage />
 						)}
 					</Route>
-					<Route path='/cart/:userId'>
+					<Route path='/mycart'>
 						<CartPage />
 					</Route>
 					<Route path='/listings/categories'>

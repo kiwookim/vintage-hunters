@@ -10,7 +10,7 @@ const {
 const router = express.Router();
 
 router.get("/my", requireAuth, async (req, res) => {
-	console.log("in the backend route(myshop)");
+	// console.log("in the backend route(myshop)");
 	const currUserId = req.user.id;
 	const myShop = await Shop.findOne({
 		where: {

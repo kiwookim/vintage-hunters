@@ -4,12 +4,14 @@ import sessionReducer from "./session";
 import thunk from "redux-thunk";
 import listingsReducer from "./listingsReducer";
 import shopReducer from "./shopReducer";
+import cartReducer from "./cartReducer";
 
 const rootReducer = combineReducers({
 	// add reducer functions here
 	session: sessionReducer,
 	listings: listingsReducer,
 	shop: shopReducer,
+	cart: cartReducer,
 });
 
 let enhancer;

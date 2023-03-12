@@ -1,7 +1,18 @@
 //cartPage Component
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import "./CartPage.css";
+import { thunkGetCart } from "../../store/cartReducer";
 export default function CartPage() {
+	const [isLoaded, setIsLoaded] = useState(false);
+	const dispatch = useDispatch();
+	const currCart = useSelector((state) => state.cart.currCart);
+	console.log("currCart", currCart);
+	//dispatch again when deleting Item.
+	useEffect(() => {
+		dispatch(thunkGetCart()).then(() => setIsLoaded(true));
+	}, [dispatch]);
 	return (
 		<div id='cart-container'>
 			<header id='cart-header-container'>
