@@ -4,21 +4,33 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./CartPage.css";
 import { thunkGetCart } from "../../store/cartReducer";
+import { thunkGetMyShop } from "../../store/shopReducer";
 export default function CartPage() {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const dispatch = useDispatch();
 	const currCart = useSelector((state) => state.cart.currCart);
-	console.log("currCart", currCart);
+	let totalBfTx = 0;
+	for (let item of currCart) {
+		// console.log("currITEM", item);
+		// console.log(item.shippingCost);
+		totalBfTx += item.shippingCost;
+		totalBfTx += item.listingPrice;
+	}
+	// console.log(totalBfTx);
+	// console.log("currCart --useSELECTOR", currCart);
 	//dispatch again when deleting Item.
 	useEffect(() => {
 		dispatch(thunkGetCart()).then(() => setIsLoaded(true));
+		dispatch(thunkGetMyShop());
 	}, [dispatch]);
-	return (
+	return isLoaded ? (
 		<div id='cart-container'>
 			<header id='cart-header-container'>
 				<div id='cartheader-left-container'>
 					<i class='fa-solid fa-cart-shopping'></i>
-					<h1>'X' items in Your Cart</h1>
+					<h1>{`${currCart.length} ${
+						currCart.length === 1 ? "item" : "items"
+					} in Your Cart`}</h1>
 				</div>
 				<Link to='/listings/categories'>
 					<div id='cartheader-right-container'>
@@ -28,75 +40,34 @@ export default function CartPage() {
 				</Link>
 			</header>
 			<hr id='cartheader-divider' />
+			{/* cart items container begins here */}
 			<div id='cart-items-container'>
-				<div className='each-cart-item-container'>
-					<div className='cart-item-left-container'>
-						<div className='cart-item-img-container'>
-							<img src='https://images.reverb.com/image/upload/s--48XY5XdC--/a_0/t_card-square/v1677133348/eajfemmt4tefwen9iknr.jpg'></img>
+				{currCart.map((item) => (
+					<div className='each-cart-item-container'>
+						<div className='cart-item-left-container'>
+							<div className='cart-item-img-container'>
+								<img src={item.ListingImages[0].url} alt='item-image'></img>
+							</div>
+							<div className='cart-item-detail-container'>
+								<h4 className='cart-listingTitle'>{item.listingTitle}</h4>
+								<small>SOLD BY</small>
+								<p>{item.Shop.name}</p>
+								<p>{`${item.Shop.city}, ${item.Shop.state}`}</p>
+								<i class='fa-solid fa-trash'></i>
+							</div>
 						</div>
-
-						<div className='cart-item-detail-container'>
-							<h4>Marshall MK II 50 watt 1976 - Black (listingTitle)</h4>
-							<small>SOLD BY</small>
-							<p>PMM4259 GUITARS AND AMPS</p>
-							<p>Woodland Hills, CA</p>
-							<i class='fa-solid fa-trash'></i>
-						</div>
-					</div>
-					<div className='cart-item-price-container'>
-						<p>$2350</p>
-						<small>+ $175 Shipping</small>
-						<small>+ applicable tax</small>
-					</div>
-				</div>
-
-				<div className='each-cart-item-container'>
-					<div className='cart-item-left-container'>
-						<div className='cart-item-img-container'>
-							<img src='https://images.reverb.com/image/upload/s--48XY5XdC--/a_0/t_card-square/v1677133348/eajfemmt4tefwen9iknr.jpg'></img>
-						</div>
-
-						<div className='cart-item-detail-container'>
-							<h4>Marshall MK II 50 watt 1976 - Black (listingTitle)</h4>
-							<small>SOLD BY</small>
-							<p>PMM4259 GUITARS AND AMPS</p>
-							<p>Woodland Hills, CA</p>
-							<i class='fa-solid fa-trash'></i>
+						<div className='cart-item-price-container'>
+							<p>{`$${item.listingPrice}`}</p>
+							<small>{`+ ${item.shippingCost} Shipping`}</small>
+							<small>+ applicable tax</small>
 						</div>
 					</div>
-					<div className='cart-item-price-container'>
-						<p>$2350</p>
-						<small>+ $175 Shipping</small>
-						<small>+ applicable tax</small>
-					</div>
-				</div>
-
-				<div className='each-cart-item-container'>
-					<div className='cart-item-left-container'>
-						<div className='cart-item-img-container'>
-							<img src='https://images.reverb.com/image/upload/s--48XY5XdC--/a_0/t_card-square/v1677133348/eajfemmt4tefwen9iknr.jpg'></img>
-						</div>
-
-						<div className='cart-item-detail-container'>
-							<h4>Marshall MK II 50 watt 1976 - Black (listingTitle)</h4>
-							<small>SOLD BY</small>
-							<p>PMM4259 GUITARS AND AMPS</p>
-							<p>Woodland Hills, CA</p>
-							<i class='fa-solid fa-trash'></i>
-						</div>
-					</div>
-					<div className='cart-item-price-container'>
-						<p>$2350</p>
-						<small>+ $175 Shipping</small>
-						<small>+ applicable tax</small>
-					</div>
-				</div>
-
+				))}
 				{/* purchase container */}
 				<div className='checkout-container'>
 					<div className='checkout-details-container'>
 						<span>Item + Shipping SubTotal</span>
-						<span>$20220</span>
+						<span>{`$${totalBfTx}`}</span>
 						<small>usd</small>
 					</div>
 					<div className='purchase-btn-container'>
@@ -104,6 +75,10 @@ export default function CartPage() {
 					</div>
 				</div>
 			</div>
+		</div>
+	) : (
+		<div className='loader-container'>
+			<div className='spinner'></div>
 		</div>
 	);
 }

@@ -23,7 +23,7 @@ function App() {
 		dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
 	}, [dispatch]);
 	const { pathname } = useLocation();
-	console.log(pathname);
+	// console.log(pathname);
 	return (
 		<>
 			<Navigation isLoaded={isLoaded} />
