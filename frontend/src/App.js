@@ -13,6 +13,7 @@ import CreateShop from "./components/CreateEditShop/CreateShop";
 import EditShop from "./components/CreateEditShop/EditShop";
 import ShopDetails from "./components/ShopDetails";
 import Category from "./components/Category";
+import CartPage from "./components/CartPage";
 
 function App() {
 	const dispatch = useDispatch();
@@ -34,6 +35,9 @@ function App() {
 						) : (
 							<SplashPage />
 						)}
+					</Route>
+					<Route path='/cart/:userId'>
+						<CartPage />
 					</Route>
 					<Route path='/listings/categories'>
 						{sessionUser ? <HomePage /> : <Redirect to='/' />}

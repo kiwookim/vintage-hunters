@@ -27,6 +27,10 @@ function Navigation({ isLoaded }) {
 						Sell Your Gear
 					</Link>
 				</button>
+				<Link to={`/cart/${sessionUser.id}`}>
+					<i id='cart-icon' class='fa-solid fa-cart-shopping'></i>
+				</Link>
+
 				<li>
 					<ProfileButton user={sessionUser} />
 				</li>

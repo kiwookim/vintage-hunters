@@ -12,14 +12,13 @@
 .top-right-navigation {
 	display: flex;
 	align-items: center;
+	justify-content: space-around;
+	gap: 20px;
 }
 .hidden {
 	display: none;
 }
 
-#sell-btn {
-	margin-right: 10px;
-}
 #logo-text {
 	padding-left: 0;
 	font-family: "Climate Crisis", cursive;
@@ -27,4 +26,8 @@
 #navlogin {
 	display: flex;
 	gap: 10px;
+}
+#cart-icon:hover {
+	cursor: pointer;
+	color: #cd7f32;
 }
